@@ -1,6 +1,8 @@
 using Bloom.App.Services;
 using Bloom.Core;
+using Bloom.Core.Events;
 using Bloom.Core.Settings;
+using Bloom.Launcher.Links;
 using Bloom.Platform.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -21,6 +23,7 @@ public partial class App : Application
     private bool _exiting;
 
     public static IServiceProvider Services { get; private set; } = null!;
+    public static IntPtr MainWindowHandle { get; private set; }
     public static new App Current => (App)Application.Current;
 
     public App(string[] args)
@@ -57,7 +60,17 @@ public partial class App : Application
         AppInstance.GetCurrent().Activated += OnRedirectedActivation;
 
         _main = new MainWindow();
+        MainWindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(_main);
         CreateTray();
+        SubscribeLaunchFeedback();
+        AppServices.StartBackground(Services);
+
+        // Started by the browser through roblox-player:/roblox: — launch without any window.
+        if (LinkParser.FindProtocolArgument(_args) is { } protocol && LinkParser.TryParse(protocol, out var request))
+        {
+            _ = Services.GetRequiredService<LaunchCoordinator>().LaunchAsync(request);
+            return;
+        }
 
         var startInTray = _args.Contains(Autostart.TrayArgument);
         if (startInTray)
@@ -129,8 +142,39 @@ public partial class App : Application
 
     private void OnRedirectedActivation(object? sender, AppActivationArguments e)
     {
-        // Raised on a background thread when a second bloom.exe was started.
+        // Raised on a background thread when a second bloom.exe was started (e.g. by the browser).
+        string? commandLine = null;
+        if (e.Kind == ExtendedActivationKind.Launch && e.Data is Windows.ApplicationModel.Activation.ILaunchActivatedEventArgs launch)
+            commandLine = launch.Arguments;
+
+        if (LinkParser.FindProtocolArgument(commandLine) is { } protocol && LinkParser.TryParse(protocol, out var request))
+        {
+            _dispatcher.TryEnqueue(() => _ = Services.GetRequiredService<LaunchCoordinator>().LaunchAsync(request));
+            return;
+        }
         _dispatcher.TryEnqueue(ShowMainWindow);
+    }
+
+    private void SubscribeLaunchFeedback()
+    {
+        var events = Services.GetRequiredService<IEventBus>();
+        events.Subscribe<LaunchProgressChanged>(p => Dispatch(() =>
+        {
+            if (_tray is null) return;
+            var text = p.Phase switch
+            {
+                LaunchPhase.Checking => Strings.Get("TrayChecking"),
+                LaunchPhase.Downloading => Strings.Format("TrayDownloading", (int)(p.Fraction * 100)),
+                LaunchPhase.Extracting => Strings.Format("TrayExtracting", (int)(p.Fraction * 100)),
+                LaunchPhase.Starting => Strings.Get("TrayStarting"),
+                _ => "bloom",
+            };
+            _tray.SetTooltip(text);
+            if (p.Phase == LaunchPhase.Failed) _tray.ShowNotification("bloom", p.Message ?? Strings.Get("LaunchFailed"));
+            if (p.Phase == LaunchPhase.Fallback) _tray.ShowNotification("bloom", Strings.Get("LaunchFallback"));
+        }));
+        events.Subscribe<BootstrapperPaused>(_ => Dispatch(() =>
+            _tray?.ShowNotification("bloom", Strings.Get("BootstrapperPausedNotice"))));
     }
 
     private void ApplyLanguage(AppLanguage language)

@@ -2,12 +2,96 @@
     x:Class="Bloom.App.Views.ClientPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Bloom.App.Views"
     Background="{StaticResource BloomBgBrush}">
+
     <ScrollViewer Style="{StaticResource PageScrollStyle}">
         <StackPanel MaxWidth="960" HorizontalAlignment="Stretch">
             <TextBlock x:Uid="ClientTitle" Text="Roblox-Client" Style="{StaticResource PageTitleTextStyle}" />
+
+            <TextBlock x:Uid="ClientBootstrapperSection" Text="Starten &amp; Updates" Style="{StaticResource SectionTitleTextStyle}" Margin="0,0,0,8" />
             <Border Style="{StaticResource CardStyle}">
-                <TextBlock x:Uid="ClientPlaceholder" Text="Bootstrapper, Roblox-Version und erlaubte FastFlags kommen in Phase 2." Style="{StaticResource MutedTextStyle}" />
+                <StackPanel Spacing="12">
+                    <ToggleSwitch x:Uid="ClientBootstrapperToggle" Header="Roblox mit bloom laden und starten"
+                                  IsOn="{x:Bind ViewModel.BootstrapperEnabled, Mode=TwoWay}" />
+                    <TextBlock x:Uid="ClientBootstrapperHint" Style="{StaticResource MutedTextStyle}"
+                               Text="bloom lädt den unveränderten offiziellen Client und öffnet Roblox-Links aus dem Browser. Bei Problemen startet Roblox automatisch über die offizielle Installation. Die Download-Adressen von Roblox sind nicht offiziell dokumentiert." />
+                    <TextBlock Text="{x:Bind ViewModel.Status, Mode=OneWay}" Style="{StaticResource BodyTextStyle}" />
+                    <StackPanel Spacing="4" Visibility="{x:Bind ViewModel.Busy, Mode=OneWay}">
+                        <ProgressBar Value="{x:Bind ViewModel.Progress, Mode=OneWay}" Maximum="100" />
+                    </StackPanel>
+                    <TextBlock Text="{x:Bind ViewModel.ProgressText, Mode=OneWay}" Style="{StaticResource MutedTextStyle}" />
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Button x:Uid="ClientUpdateNow" Content="Roblox jetzt aktualisieren" Command="{x:Bind ViewModel.UpdateNowCommand}"
+                                IsEnabled="{x:Bind ViewModel.BootstrapperEnabled, Mode=OneWay}" />
+                        <Button x:Uid="ClientOpenFolder" Content="Roblox-Ordner öffnen" Command="{x:Bind ViewModel.OpenFolderCommand}" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <TextBlock x:Uid="ClientDetectionSection" Text="Spielerkennung" Style="{StaticResource SectionTitleTextStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="8">
+                    <ToggleSwitch x:Uid="ClientLogDetection" Header="Aktuelles Experience aus Roblox-Logs erkennen (experimentell)"
+                                  IsOn="{x:Bind ViewModel.LogDetectionEnabled, Mode=TwoWay}" />
+                    <TextBlock x:Uid="ClientLogDetectionHint" Style="{StaticResource MutedTextStyle}"
+                               Text="Liest nur lokale Logdateien. Grundlage für Verlauf und Discord-Status. Kann nach Roblox-Updates ausfallen." />
+                </StackPanel>
+            </Border>
+
+            <TextBlock x:Uid="ClientFlagsSection" Text="FastFlags" Style="{StaticResource SectionTitleTextStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="12">
+                    <TextBlock x:Uid="ClientFlagsHint" Style="{StaticResource MutedTextStyle}"
+                               Text="Roblox beachtet nur FastFlags auf seiner offiziellen Allowlist. Andere Flags speichert bloom nicht." />
+                    <TextBlock Text="{x:Bind ViewModel.FlagsStatus, Mode=OneWay}" Style="{StaticResource BodyTextStyle}" />
+                    <Grid ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <AutoSuggestBox x:Uid="ClientFlagName" PlaceholderText="Flag-Name"
+                                        Text="{x:Bind ViewModel.NewFlagName, Mode=TwoWay}"
+                                        ItemsSource="{x:Bind ViewModel.FlagSuggestions}" />
+                        <TextBox Grid.Column="1" x:Uid="ClientFlagValue" PlaceholderText="Wert"
+                                 Text="{x:Bind ViewModel.NewFlagValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <Button Grid.Column="2" x:Uid="ClientFlagAdd" Content="Hinzufügen" Command="{x:Bind ViewModel.AddFlagCommand}" />
+                    </Grid>
+                    <ItemsControl ItemsSource="{x:Bind ViewModel.Flags}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="local:FlagItem">
+                                <Grid Padding="0,6" ColumnSpacing="12" BorderBrush="{StaticResource BloomBorderBrush}" BorderThickness="0,1,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{x:Bind Name}" FontFamily="{StaticResource BloomBrandFont}" FontSize="12" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="1" Text="{x:Bind Value}" Style="{StaticResource BodyTextStyle}" VerticalAlignment="Center" />
+                                    <TextBlock Grid.Column="2" Text="{x:Bind StatusText}" Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center" />
+                                    <Button Grid.Column="3" Tag="{x:Bind}" Click="OnRemoveFlag" Padding="10,2">
+                                        <FontIcon Glyph="&#xE74D;" FontSize="12" />
+                                    </Button>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+
+            <TextBlock x:Uid="ClientBackupSection" Text="Sichern &amp; Wiederherstellen" Style="{StaticResource SectionTitleTextStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="8">
+                    <TextBlock x:Uid="ClientBackupHint" Style="{StaticResource MutedTextStyle}"
+                               Text="Exportiert Einstellungen, Favoriten und FastFlags als JSON-Datei. Enthält keine Anmeldedaten." />
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Button x:Uid="ClientExport" Content="Exportieren" Command="{x:Bind ViewModel.ExportCommand}" />
+                        <Button x:Uid="ClientImport" Content="Importieren" Command="{x:Bind ViewModel.ImportCommand}" />
+                    </StackPanel>
+                    <TextBlock Text="{x:Bind ViewModel.BackupStatus, Mode=OneWay}" Style="{StaticResource MutedTextStyle}" />
+                </StackPanel>
             </Border>
         </StackPanel>
     </ScrollViewer>

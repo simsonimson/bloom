@@ -23,6 +23,17 @@ public sealed class SqliteSettingsStore : ISettingsStore
         return false;
     }
 
+    public IReadOnlyDictionary<string, string> GetAll()
+    {
+        using var connection = _db.Open();
+        using var cmd = connection.CreateCommand();
+        cmd.CommandText = "SELECT key, value_json FROM settings ORDER BY key;";
+        using var reader = cmd.ExecuteReader();
+        var result = new Dictionary<string, string>();
+        while (reader.Read()) result[reader.GetString(0)] = reader.GetString(1);
+        return result;
+    }
+
     public void SetRaw(string key, string json)
     {
         using var connection = _db.Open();
