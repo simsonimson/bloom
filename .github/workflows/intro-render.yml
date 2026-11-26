@@ -1,0 +1,31 @@
+name: Intro render
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "tools/intro-render/**"
+      - ".github/workflows/intro-render.yml"
+  workflow_dispatch:
+
+jobs:
+  render:
+    # Windows, damit Consolas verwendet wird – exakt wie im Original.
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r tools/intro-render/requirements.txt
+
+      - name: Render intro
+        run: python tools/intro-render/render.py
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bloom-intro
+          path: tools/intro-render/output/

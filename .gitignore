@@ -1,0 +1,29 @@
+# Build output
+bin/
+obj/
+out/
+artifacts/
+*.user
+*.suo
+.vs/
+.vscode/
+.idea/
+TestResults/
+
+# Velopack
+Releases/
+
+# Intro render intermediates
+tools/intro-render/frames*/
+tools/intro-render/output/
+__pycache__/
+.venv/
+
+# Local secrets
+.env
+*.pfx
+appsettings.Development.json
+
+# Spike logs
+bloom-ptt-test-log.txt
+bloom-ptt-persistenz-test.json

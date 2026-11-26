@@ -1,0 +1,48 @@
+name: Spikes
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "tools/spikes/**"
+      - ".github/workflows/spikes.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  ptt-test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Publish bloom-ptt-test.exe
+        run: dotnet publish tools/spikes/PttSpike/PttSpike.csproj -c Release -o out/ptt-test
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bloom-ptt-test
+          path: |
+            out/ptt-test/bloom-ptt-test.exe
+            tools/spikes/PttSpike/README.md
+
+      - name: Update pre-release "ptt-test"
+        if: github.ref == 'refs/heads/main'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = "ptt-test"
+          $notes = "Phase-0-Testprogramm fuer Push-to-Talk (Spikes S1 + S2). Anleitung: tools/spikes/PttSpike/README.md. Build $env:GITHUB_SHA"
+          gh release view $tag 2>$null
+          if ($LASTEXITCODE -ne 0) {
+            gh release create $tag out/ptt-test/bloom-ptt-test.exe --prerelease --title "PTT-Test (Phase 0)" --notes $notes --target $env:GITHUB_SHA
+          } else {
+            gh release upload $tag out/ptt-test/bloom-ptt-test.exe --clobber
+            gh release edit $tag --notes $notes
+          }
