@@ -31,6 +31,7 @@ python render.py
 
 Unter Windows wird Consolas verwendet (wie im Original). Unter Linux fällt pygame auf DejaVu Sans Mono zurück, die Optik weicht dann leicht ab. Maßgeblich ist der Build im Workflow „Intro render“.
 
-## Messwerte (Testlauf unter Linux, 26.11.2026)
+## Messwerte (26.11.2026)
 
-Kalibrierter Glow-Faktor 1,13 · `intro-full.mp4` 7,5 MB · `intro-short.mp4` 4,4 MB · HEVC 10 Bit 7,9 MB · Renderzeit ca. 4 Minuten.
+Linux (DejaVu): Glow-Faktor 1,13, `intro-full.mp4` 7,5 MB, `intro-short.mp4` 4,4 MB, Renderzeit ca. 4 min.
+Windows-CI (Consolas): Glow-Faktor 0,93, `intro-full.mp4` 8,3 MB, `intro-short.mp4` 5,1 MB, HEVC 10 Bit 9,2 MB.
