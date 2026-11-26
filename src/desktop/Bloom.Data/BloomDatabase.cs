@@ -85,5 +85,33 @@ public static class Migrations
                 updated_at TEXT NOT NULL
             );
             """),
+        new(2, """
+            CREATE TABLE favorites (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                place_id INTEGER NOT NULL UNIQUE,
+                name TEXT NOT NULL,
+                icon_url TEXT,
+                sort_order INTEGER NOT NULL DEFAULT 0,
+                added_at TEXT NOT NULL
+            );
+            CREATE TABLE experience_cache (
+                place_id INTEGER PRIMARY KEY,
+                universe_id INTEGER NOT NULL,
+                root_place_id INTEGER NOT NULL,
+                name TEXT NOT NULL,
+                icon_url TEXT,
+                fetched_at TEXT NOT NULL
+            );
+            CREATE TABLE sessions (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                started_at TEXT NOT NULL,
+                ended_at TEXT,
+                place_id INTEGER,
+                universe_id INTEGER,
+                job_id TEXT,
+                experience_name TEXT
+            );
+            CREATE INDEX ix_sessions_started ON sessions (started_at DESC);
+            """),
     ];
 }

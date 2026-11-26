@@ -15,6 +15,7 @@ public sealed class BloomPaths
     public string Data => Path.Combine(Root, "data");
     public string Logs => Path.Combine(Root, "logs");
     public string Database => Path.Combine(Data, "bloom.db");
+    public string Roblox => Path.Combine(Root, "Roblox");
 
     public void EnsureCreated()
     {

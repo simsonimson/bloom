@@ -49,6 +49,12 @@ jobs:
       - name: Test (Data)
         run: dotnet test tests/Bloom.Data.Tests -c Release
 
+      - name: Test (Launcher)
+        run: dotnet test tests/Bloom.Launcher.Tests -c Release
+
+      - name: Test (Activity)
+        run: dotnet test tests/Bloom.Activity.Tests -c Release
+
       - name: Publish bloom.exe
         run: dotnet publish src/desktop/Bloom.App/Bloom.App.csproj -c Release -r win-x64 --self-contained -o publish
 

@@ -36,6 +36,10 @@ public sealed class AppSettings
         public const string CloseToTray = "app.closeToTray";
         public const string OnboardingCompleted = "app.onboardingCompleted";
         public const string UpdateChannel = "app.updateChannel";
+        public const string BootstrapperEnabled = "launcher.bootstrapperEnabled";
+        public const string BootstrapperFailures = "launcher.bootstrapperFailures";
+        public const string ProtocolBackup = "launcher.protocolBackup";
+        public const string LogDetectionEnabled = "activity.logDetectionEnabled";
     }
 
     private static readonly JsonSerializerOptions Json = new(JsonSerializerDefaults.Web);
@@ -82,6 +86,34 @@ public sealed class AppSettings
     {
         get => Get(Keys.UpdateChannel, "beta");
         set => Set(Keys.UpdateChannel, value);
+    }
+
+    /// <summary>bloom downloads and starts Roblox itself (opt-in, ADR-002).</summary>
+    public bool BootstrapperEnabled
+    {
+        get => Get(Keys.BootstrapperEnabled, false);
+        set => Set(Keys.BootstrapperEnabled, value);
+    }
+
+    /// <summary>Consecutive bootstrapper failures; at 3 the bootstrapper pauses itself.</summary>
+    public int BootstrapperFailures
+    {
+        get => Get(Keys.BootstrapperFailures, 0);
+        set => Set(Keys.BootstrapperFailures, value);
+    }
+
+    /// <summary>Protocol handlers that existed before bloom registered itself (scheme → command).</summary>
+    public Dictionary<string, string?> ProtocolBackup
+    {
+        get => Get(Keys.ProtocolBackup, new Dictionary<string, string?>());
+        set => Set(Keys.ProtocolBackup, value);
+    }
+
+    /// <summary>Experimental experience detection from Roblox logs (Blueprint E1).</summary>
+    public bool LogDetectionEnabled
+    {
+        get => Get(Keys.LogDetectionEnabled, true);
+        set => Set(Keys.LogDetectionEnabled, value);
     }
 
     public T Get<T>(string key, T fallback)

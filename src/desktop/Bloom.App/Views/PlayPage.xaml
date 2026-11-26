@@ -2,12 +2,100 @@
     x:Class="Bloom.App.Views.PlayPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Bloom.App.Views"
     Background="{StaticResource BloomBgBrush}">
+
     <ScrollViewer Style="{StaticResource PageScrollStyle}">
         <StackPanel MaxWidth="960" HorizontalAlignment="Stretch">
             <TextBlock x:Uid="PlayTitle" Text="Spielen" Style="{StaticResource PageTitleTextStyle}" />
+
             <Border Style="{StaticResource CardStyle}">
-                <TextBlock x:Uid="PlayPlaceholder" Text="Favoriten, zuletzt gespielte Experiences und Roblox-Links kommen in Phase 2." Style="{StaticResource MutedTextStyle}" />
+                <StackPanel Spacing="8">
+                    <Grid ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Uid="PlayLinkBox" PlaceholderText="Roblox-Link, Privatserver-Link oder Place-ID"
+                                 Text="{x:Bind ViewModel.LinkText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <Button Grid.Column="1" x:Uid="PlayLaunchLink" Content="Starten" Style="{StaticResource AccentButtonStyle}"
+                                Command="{x:Bind ViewModel.LaunchLinkCommand}" />
+                        <Button Grid.Column="2" x:Uid="PlayAddFavorite" Content="Zu Favoriten" Command="{x:Bind ViewModel.AddFavoriteCommand}" />
+                    </Grid>
+                    <TextBlock Text="{x:Bind ViewModel.Message, Mode=OneWay}" Style="{StaticResource MutedTextStyle}" />
+                </StackPanel>
+            </Border>
+
+            <TextBlock x:Uid="PlayFavorites" Text="Favoriten" Style="{StaticResource SectionTitleTextStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <Grid>
+                    <TextBlock x:Uid="PlayNoFavorites" Text="Noch keine Favoriten. Füge oben einen Link hinzu."
+                               Style="{StaticResource MutedTextStyle}" Visibility="{x:Bind ViewModel.HasNoFavorites, Mode=OneWay}" />
+                    <ItemsControl ItemsSource="{x:Bind ViewModel.Favorites}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate><ItemsWrapGrid Orientation="Horizontal" ItemWidth="216" /></ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="local:FavoriteItem">
+                                <Border Margin="0,0,12,12" Padding="10" CornerRadius="8" BorderThickness="1"
+                                        BorderBrush="{StaticResource BloomBorderBrush}" Background="{StaticResource BloomSurfaceRaisedBrush}">
+                                    <Grid ColumnSpacing="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="44" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border Width="44" Height="44" CornerRadius="6" Background="{StaticResource BloomSurfaceBrush}">
+                                            <Image Source="{x:Bind Icon}" Stretch="UniformToFill" />
+                                        </Border>
+                                        <StackPanel Grid.Column="1" Spacing="6">
+                                            <TextBlock Text="{x:Bind Name}" Style="{StaticResource BodyTextStyle}" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" />
+                                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                                <Button Tag="{x:Bind}" Click="OnLaunchFavorite" Padding="10,2" Style="{StaticResource AccentButtonStyle}">
+                                                    <FontIcon Glyph="&#xE768;" FontSize="12" />
+                                                </Button>
+                                                <Button Tag="{x:Bind}" Click="OnRemoveFavorite" Padding="10,2">
+                                                    <FontIcon Glyph="&#xE74D;" FontSize="12" />
+                                                </Button>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </Border>
+
+            <TextBlock x:Uid="PlayRecent" Text="Zuletzt gespielt" Style="{StaticResource SectionTitleTextStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <Grid>
+                    <TextBlock x:Uid="PlayNoRecent" Text="Noch nichts gespielt. Die Erkennung des Spiels ist experimentell und kann unter „Roblox-Client“ abgeschaltet werden."
+                               Style="{StaticResource MutedTextStyle}" Visibility="{x:Bind ViewModel.HasNoRecent, Mode=OneWay}" />
+                    <ItemsControl ItemsSource="{x:Bind ViewModel.Recent}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="local:RecentItem">
+                                <Grid Padding="0,6" ColumnSpacing="12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{x:Bind Title}" Style="{StaticResource BodyTextStyle}" VerticalAlignment="Center" />
+                                    <TextBlock Grid.Column="1" Text="{x:Bind Subtitle}" Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center" />
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="4" Visibility="{x:Bind CanLaunch}">
+                                        <Button Tag="{x:Bind}" Click="OnLaunchRecent" Padding="10,2">
+                                            <FontIcon Glyph="&#xE768;" FontSize="12" />
+                                        </Button>
+                                        <Button Tag="{x:Bind}" Click="OnFavoriteRecent" Padding="10,2">
+                                            <FontIcon Glyph="&#xE734;" FontSize="12" />
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
             </Border>
         </StackPanel>
     </ScrollViewer>

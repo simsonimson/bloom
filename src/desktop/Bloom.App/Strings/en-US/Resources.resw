@@ -20,7 +20,7 @@
   <data name="OverviewAccount.Text" xml:space="preserve"><value>Roblox account</value></data>
   <data name="OverviewAccountValue.Text" xml:space="preserve"><value>Not connected</value></data>
   <data name="OverviewQuickLaunch.Text" xml:space="preserve"><value>Quick launch</value></data>
-  <data name="OverviewQuickLaunchEmpty.Text" xml:space="preserve"><value>No favourites yet. Your experiences will appear here from phase 2.</value></data>
+  <data name="OverviewQuickLaunchEmpty.Text" xml:space="preserve"><value>No favourites yet. Add them under “Play”.</value></data>
   <data name="OverviewActivity.Text" xml:space="preserve"><value>Recent activity</value></data>
   <data name="OverviewActivityEmpty.Text" xml:space="preserve"><value>No activity yet.</value></data>
   <data name="PlayTitle.Text" xml:space="preserve"><value>Play</value></data>
@@ -65,4 +65,60 @@
   <data name="UpdateAvailable" xml:space="preserve"><value>Version {0} is available.</value></data>
   <data name="UpdateFailed" xml:space="preserve"><value>Update check failed. See the log for details.</value></data>
   <data name="UpdateDownloading" xml:space="preserve"><value>Downloading update … {0} %</value></data>
+  <data name="PlayLinkBox.PlaceholderText" xml:space="preserve"><value>Roblox link, private server link or place ID</value></data>
+  <data name="PlayLaunchLink.Content" xml:space="preserve"><value>Launch</value></data>
+  <data name="PlayAddFavorite.Content" xml:space="preserve"><value>Add to favourites</value></data>
+  <data name="PlayFavorites.Text" xml:space="preserve"><value>Favourites</value></data>
+  <data name="PlayNoFavorites.Text" xml:space="preserve"><value>No favourites yet. Add a link above.</value></data>
+  <data name="PlayRecent.Text" xml:space="preserve"><value>Recently played</value></data>
+  <data name="PlayNoRecent.Text" xml:space="preserve"><value>Nothing played yet. Experience detection is experimental and can be turned off under “Roblox client”.</value></data>
+  <data name="ClientBootstrapperSection.Text" xml:space="preserve"><value>Launching &amp; updates</value></data>
+  <data name="ClientBootstrapperToggle.Header" xml:space="preserve"><value>Download and launch Roblox with bloom</value></data>
+  <data name="ClientBootstrapperHint.Text" xml:space="preserve"><value>bloom downloads the unmodified official client and opens Roblox links from your browser. If anything goes wrong, Roblox starts through the official installation instead. Roblox's download addresses are not officially documented.</value></data>
+  <data name="ClientUpdateNow.Content" xml:space="preserve"><value>Update Roblox now</value></data>
+  <data name="ClientOpenFolder.Content" xml:space="preserve"><value>Open Roblox folder</value></data>
+  <data name="ClientDetectionSection.Text" xml:space="preserve"><value>Experience detection</value></data>
+  <data name="ClientLogDetection.Header" xml:space="preserve"><value>Detect the current experience from Roblox logs (experimental)</value></data>
+  <data name="ClientLogDetectionHint.Text" xml:space="preserve"><value>Reads local log files only. Powers history and Discord status. May stop working after Roblox updates.</value></data>
+  <data name="ClientFlagsSection.Text" xml:space="preserve"><value>FastFlags</value></data>
+  <data name="ClientFlagsHint.Text" xml:space="preserve"><value>Roblox only honours FastFlags on its official allowlist. bloom does not save other flags.</value></data>
+  <data name="ClientFlagName.PlaceholderText" xml:space="preserve"><value>Flag name</value></data>
+  <data name="ClientFlagValue.PlaceholderText" xml:space="preserve"><value>Value</value></data>
+  <data name="ClientFlagAdd.Content" xml:space="preserve"><value>Add</value></data>
+  <data name="ClientBackupSection.Text" xml:space="preserve"><value>Backup &amp; restore</value></data>
+  <data name="ClientBackupHint.Text" xml:space="preserve"><value>Exports settings, favourites and FastFlags as a JSON file. Contains no sign-in data.</value></data>
+  <data name="ClientExport.Content" xml:space="preserve"><value>Export</value></data>
+  <data name="ClientImport.Content" xml:space="preserve"><value>Import</value></data>
+  <data name="StatusNotRunning" xml:space="preserve"><value>Not running</value></data>
+  <data name="StatusInApp" xml:space="preserve"><value>In the Roblox menu</value></data>
+  <data name="PlayStarting" xml:space="preserve"><value>Starting Roblox …</value></data>
+  <data name="PlayInvalidLink" xml:space="preserve"><value>Not a valid Roblox link or place ID.</value></data>
+  <data name="PlayAddingFavorite" xml:space="preserve"><value>Looking up experience …</value></data>
+  <data name="FlagAllowed" xml:space="preserve"><value>allowed</value></data>
+  <data name="FlagNotAllowed" xml:space="preserve"><value>no longer allowed</value></data>
+  <data name="FlagUnknown" xml:space="preserve"><value>allowlist unknown</value></data>
+  <data name="ClientToggleFailed" xml:space="preserve"><value>Switching failed: {0}</value></data>
+  <data name="ClientNotInstalledYet" xml:space="preserve"><value>Roblox will be downloaded on the next launch.</value></data>
+  <data name="ClientInstalled" xml:space="preserve"><value>Installed: {0}</value></data>
+  <data name="ClientOfficial" xml:space="preserve"><value>Official installation: {0}</value></data>
+  <data name="ClientOfficialMissing" xml:space="preserve"><value>No official Roblox installation found.</value></data>
+  <data name="FlagsLoadingAllowlist" xml:space="preserve"><value>Loading allowlist …</value></data>
+  <data name="FlagsAllowlistUnavailable" xml:space="preserve"><value>Allowlist unavailable. Flags are saved without validation.</value></data>
+  <data name="FlagsAllowlistCached" xml:space="preserve"><value>Cached allowlist: {0} flags (as of {1})</value></data>
+  <data name="FlagsAllowlistLoaded" xml:space="preserve"><value>Allowlist loaded: {0} flags (as of {1})</value></data>
+  <data name="FlagsInvalidName" xml:space="preserve"><value>Invalid flag name.</value></data>
+  <data name="FlagsNotOnAllowlist" xml:space="preserve"><value>This flag is not on the allowlist and would have no effect.</value></data>
+  <data name="FlagsInvalidValue" xml:space="preserve"><value>The value does not match the flag type (true/false or a number).</value></data>
+  <data name="FlagsSaved" xml:space="preserve"><value>Saved. Takes effect on the next Roblox start.</value></data>
+  <data name="BackupExported" xml:space="preserve"><value>Saved as {0}.</value></data>
+  <data name="BackupImported" xml:space="preserve"><value>{0} entries restored.</value></data>
+  <data name="BackupFailed" xml:space="preserve"><value>Failed. See the log for details.</value></data>
+  <data name="TrayChecking" xml:space="preserve"><value>Checking Roblox version …</value></data>
+  <data name="TrayDownloading" xml:space="preserve"><value>Downloading Roblox … {0} %</value></data>
+  <data name="TrayExtracting" xml:space="preserve"><value>Unpacking Roblox … {0} %</value></data>
+  <data name="TrayStarting" xml:space="preserve"><value>Starting Roblox …</value></data>
+  <data name="LaunchFailed" xml:space="preserve"><value>Roblox could not be started.</value></data>
+  <data name="LaunchFallback" xml:space="preserve"><value>Launching through bloom failed, starting Roblox through the official installation.</value></data>
+  <data name="LaunchNoRoblox" xml:space="preserve"><value>No Roblox installation found. Opening the download page.</value></data>
+  <data name="BootstrapperPausedNotice" xml:space="preserve"><value>The bloom bootstrapper failed three times and was paused. Roblox starts through the official installation.</value></data>
 </root>

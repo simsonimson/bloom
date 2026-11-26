@@ -1,3 +1,4 @@
+using Bloom.App.Services;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
@@ -17,7 +18,9 @@ public static class Program
     [STAThread]
     private static int Main(string[] args)
     {
-        VelopackApp.Build().Run();
+        VelopackApp.Build()
+            .OnBeforeUninstallFastCallback(_ => UninstallCleanup.Run())
+            .Run();
 
         WinRT.ComWrappersSupport.InitializeComWrappers();
 
