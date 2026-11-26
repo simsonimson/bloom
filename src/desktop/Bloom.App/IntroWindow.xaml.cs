@@ -8,7 +8,7 @@ using Microsoft.UI.Xaml.Media.Animation;
 using Windows.Graphics;
 using Windows.Media.Core;
 using Windows.Media.Playback;
-using Windows.System;
+using VirtualKey = Windows.System.VirtualKey;
 using WinRT.Interop;
 
 namespace Bloom.App;
