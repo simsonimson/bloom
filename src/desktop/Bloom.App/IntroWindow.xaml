@@ -1,0 +1,17 @@
+<Window
+    x:Class="Bloom.App.IntroWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="bloom">
+
+    <Grid x:Name="Root" Background="#FF000000">
+        <MediaPlayerElement x:Name="Player"
+                            AreTransportControlsEnabled="False"
+                            Stretch="Uniform"
+                            IsTabStop="True" />
+        <Image x:Name="Still"
+               Stretch="Uniform"
+               Visibility="Collapsed"
+               Source="ms-appx:///Assets/intro/intro-still.png" />
+    </Grid>
+</Window>

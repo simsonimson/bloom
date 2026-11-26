@@ -1,0 +1,74 @@
+<Page
+    x:Class="Bloom.App.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="{StaticResource BloomBgBrush}">
+
+    <ScrollViewer Style="{StaticResource PageScrollStyle}">
+        <StackPanel MaxWidth="720" HorizontalAlignment="Stretch">
+            <TextBlock x:Uid="SettingsTitle" Text="Einstellungen" Style="{StaticResource PageTitleTextStyle}" />
+
+            <TextBlock x:Uid="SettingsStartSection" Text="Start &amp; Intro" Style="{StaticResource SectionTitleTextStyle}" Margin="0,0,0,8" />
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="16">
+                    <RadioButtons x:Uid="SettingsIntro" Header="Startanimation"
+                                  SelectedIndex="{x:Bind ViewModel.IntroIndex, Mode=TwoWay}">
+                        <RadioButton x:Uid="IntroFull" Content="Voll (ca. 8 Sekunden)" />
+                        <RadioButton x:Uid="IntroShort" Content="Kurz (ca. 4 Sekunden)" />
+                        <RadioButton x:Uid="IntroOff" Content="Aus" />
+                    </RadioButtons>
+                    <ToggleSwitch x:Uid="SettingsAutostart" Header="Mit Windows starten (im Infobereich)"
+                                  IsOn="{x:Bind ViewModel.StartWithWindows, Mode=TwoWay}" />
+                    <ToggleSwitch x:Uid="SettingsCloseToTray" Header="Beim Schließen im Infobereich weiterlaufen"
+                                  IsOn="{x:Bind ViewModel.CloseToTray, Mode=TwoWay}" />
+                </StackPanel>
+            </Border>
+
+            <TextBlock x:Uid="SettingsLanguageSection" Text="Sprache" Style="{StaticResource SectionTitleTextStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="8">
+                    <ComboBox x:Uid="SettingsLanguage" Header="Anzeigesprache" MinWidth="240"
+                              SelectedIndex="{x:Bind ViewModel.LanguageIndex, Mode=TwoWay}">
+                        <ComboBoxItem x:Uid="LanguageSystem" Content="Wie Windows" />
+                        <ComboBoxItem x:Uid="LanguageGerman" Content="Deutsch" />
+                        <ComboBoxItem x:Uid="LanguageEnglish" Content="English" />
+                    </ComboBox>
+                    <TextBlock x:Uid="SettingsLanguageHint" Text="Wird beim nächsten Start übernommen." Style="{StaticResource MutedTextStyle}" />
+                </StackPanel>
+            </Border>
+
+            <TextBlock x:Uid="SettingsUpdatesSection" Text="Updates" Style="{StaticResource SectionTitleTextStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="{x:Bind ViewModel.VersionText}" Style="{StaticResource BodyTextStyle}" />
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Button x:Uid="SettingsCheckUpdates" Content="Nach Updates suchen" Command="{x:Bind ViewModel.CheckUpdatesCommand}" />
+                        <Button x:Uid="SettingsInstallUpdate" Content="Installieren und neu starten"
+                                Style="{StaticResource AccentButtonStyle}"
+                                Command="{x:Bind ViewModel.InstallUpdateCommand}"
+                                Visibility="{x:Bind ViewModel.CanInstall, Mode=OneWay}" />
+                    </StackPanel>
+                    <TextBlock Text="{x:Bind ViewModel.UpdateStatus, Mode=OneWay}" Style="{StaticResource MutedTextStyle}" />
+                </StackPanel>
+            </Border>
+
+            <TextBlock x:Uid="SettingsDiagnosticsSection" Text="Diagnose" Style="{StaticResource SectionTitleTextStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <Button x:Uid="SettingsOpenLogs" Content="Log-Ordner öffnen" Command="{x:Bind ViewModel.OpenLogsCommand}" />
+            </Border>
+
+            <TextBlock x:Uid="SettingsAboutSection" Text="Über &amp; Lizenzen" Style="{StaticResource SectionTitleTextStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="8">
+                    <TextBlock x:Uid="SettingsAboutLicense" Text="bloom ist Open Source unter der MIT-Lizenz." Style="{StaticResource BodyTextStyle}" />
+                    <TextBlock x:Uid="SettingsAboutIntro" Text="Die Intro-Animation basiert auf bloom3d.py von Edward Jones (MIT-Lizenz)." Style="{StaticResource BodyTextStyle}" />
+                    <StackPanel Orientation="Horizontal" Spacing="4" Margin="-12,0,0,0">
+                        <HyperlinkButton x:Uid="SettingsAboutRepoLink" Content="bloom auf GitHub" NavigateUri="https://github.com/simsonimson/bloom" />
+                        <HyperlinkButton x:Uid="SettingsAboutIntroLink" Content="ascii-art von Edward Jones" NavigateUri="https://github.com/edwardjones7/ascii-art" />
+                    </StackPanel>
+                    <TextBlock x:Uid="SettingsAboutDisclaimer" Text="bloom ist nicht mit Roblox Corporation oder Discord Inc. verbunden." Style="{StaticResource MutedTextStyle}" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
