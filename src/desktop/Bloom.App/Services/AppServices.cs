@@ -8,6 +8,7 @@ using Bloom.Data;
 using Bloom.Launcher.Bootstrapper;
 using Bloom.Launcher.FastFlags;
 using Bloom.Launcher.Installation;
+using Bloom.Voice;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -77,6 +78,12 @@ public static class AppServices
             sp.GetRequiredService<IEventBus>(), sp.GetRequiredService<ISessionStore>(),
             sp.GetRequiredService<ExperienceResolver>(), LogTo<ActivityTracker>(sp)));
 
+        // Voice
+        services.AddSingleton(_ => new JournalStore(paths.AudioJournal));
+        services.AddSingleton(sp => new VoiceService(
+            sp.GetRequiredService<IEventBus>(), sp.GetRequiredService<JournalStore>(), LogTo<VoiceService>(sp)));
+        services.AddSingleton<VoiceCoordinator>();
+
         // App
         services.AddSingleton<UpdateService>();
         services.AddSingleton<BackupService>();
@@ -94,7 +101,10 @@ public static class AppServices
         {
             if (e.Key == AppSettings.Keys.LogDetectionEnabled) logWatcher.Enabled = settings.LogDetectionEnabled;
         });
-        services.GetRequiredService<ProcessWatcher>().Start();
+        var processes = services.GetRequiredService<ProcessWatcher>();
+        // Voice subscribes to process events before the watcher reports the first Roblox process.
+        services.GetRequiredService<VoiceCoordinator>().Start(processes.RunningProcessIds);
+        processes.Start();
         services.GetRequiredService<LaunchCoordinator>().EnsureProtocolRegistration();
     }
 

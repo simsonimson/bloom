@@ -2,6 +2,9 @@ using System.Collections.ObjectModel;
 using Bloom.App.Services;
 using Bloom.Core.Events;
 using Bloom.Core.Roblox;
+using Bloom.Core.Settings;
+using Bloom.Core.Voice;
+using Bloom.Voice;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Dispatching;
 
@@ -13,11 +16,17 @@ public sealed class OverviewViewModel : ObservableObject, IDisposable
     private readonly IFavoritesStore _favorites;
     private readonly ISessionStore _sessions;
     private readonly IDisposable _subscription;
+    private readonly IDisposable _pttSubscription;
+    private readonly AppSettings _settings;
+    private PttState _ptt;
     private readonly DispatcherQueueTimer _timer;
     private ActivityState _state;
 
-    public OverviewViewModel(Bloom.Activity.ActivityTracker activity, IFavoritesStore favorites, ISessionStore sessions, IEventBus events)
+    public OverviewViewModel(Bloom.Activity.ActivityTracker activity, IFavoritesStore favorites, ISessionStore sessions, IEventBus events,
+        AppSettings settings, VoiceService voice)
     {
+        _settings = settings;
+        _ptt = voice.Snapshot.State;
         _activity = activity;
         _favorites = favorites;
         _sessions = sessions;
@@ -28,6 +37,12 @@ public sealed class OverviewViewModel : ObservableObject, IDisposable
             _state = e.State;
             OnPropertyChanged(string.Empty);
             if (!e.State.RobloxRunning) Reload();
+        }));
+        _pttSubscription = events.Subscribe<PttStateChanged>(e => dispatcher.TryEnqueue(() =>
+        {
+            _ptt = e.State;
+            OnPropertyChanged(nameof(PttStatus));
+            OnPropertyChanged(nameof(PttLive));
         }));
         _timer = dispatcher.CreateTimer();
         _timer.Interval = TimeSpan.FromSeconds(1);
@@ -53,6 +68,12 @@ public sealed class OverviewViewModel : ObservableObject, IDisposable
         }
     }
 
+    public string PttStatus => !_settings.PttEnabled
+        ? Strings.Get("PttStateDisabled")
+        : _ptt == PttState.Off ? Strings.Get("PttStateWaiting") : Strings.Get(VoiceText.StateKey(_ptt));
+
+    public bool PttLive => _ptt is PttState.Transmitting or PttState.Open;
+
     public bool HasQuickLaunch => QuickLaunch.Count > 0;
     public bool HasNoQuickLaunch => QuickLaunch.Count == 0;
     public bool HasRecent => Recent.Count > 0;
@@ -74,5 +95,6 @@ public sealed class OverviewViewModel : ObservableObject, IDisposable
     {
         _timer.Stop();
         _subscription.Dispose();
+        _pttSubscription.Dispose();
     }
 }

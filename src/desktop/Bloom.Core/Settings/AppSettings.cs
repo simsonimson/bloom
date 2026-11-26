@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Bloom.Core.Voice;
 
 namespace Bloom.Core.Settings;
 
@@ -40,6 +41,18 @@ public sealed class AppSettings
         public const string BootstrapperFailures = "launcher.bootstrapperFailures";
         public const string ProtocolBackup = "launcher.protocolBackup";
         public const string LogDetectionEnabled = "activity.logDetectionEnabled";
+        public const string PttEnabled = "voice.enabled";
+        public const string PttMode = "voice.mode";
+        public const string PttKey = "voice.key";
+        public const string PttMethod = "voice.method";
+        public const string PttForegroundOnly = "voice.foregroundOnly";
+        public const string PttDeviceId = "voice.deviceId";
+        public const string PttOnRobloxExit = "voice.onRobloxExit";
+        public const string PttButton = "voice.buttonPosition";
+        public const string PttSounds = "voice.sounds";
+        public const string PttSystemWideConfirmed = "voice.systemWideConfirmed";
+
+        public static bool IsVoiceKey(string key) => key.StartsWith("voice.", StringComparison.Ordinal);
     }
 
     private static readonly JsonSerializerOptions Json = new(JsonSerializerDefaults.Web);
@@ -115,6 +128,71 @@ public sealed class AppSettings
         get => Get(Keys.LogDetectionEnabled, true);
         set => Set(Keys.LogDetectionEnabled, value);
     }
+
+    public bool PttEnabled
+    {
+        get => Get(Keys.PttEnabled, false);
+        set => Set(Keys.PttEnabled, value);
+    }
+
+    public PttMode PttMode
+    {
+        get => Get(Keys.PttMode, PttMode.Hold);
+        set => Set(Keys.PttMode, value);
+    }
+
+    /// <summary>Virtual-key code of the PTT key or mouse button; 0 = not set.</summary>
+    public int PttKey
+    {
+        get => Get(Keys.PttKey, 0);
+        set => Set(Keys.PttKey, value);
+    }
+
+    public PttMethod PttMethod
+    {
+        get => Get(Keys.PttMethod, PttMethod.SystemWide);
+        set => Set(Keys.PttMethod, value);
+    }
+
+    public bool PttForegroundOnly
+    {
+        get => Get(Keys.PttForegroundOnly, true);
+        set => Set(Keys.PttForegroundOnly, value);
+    }
+
+    /// <summary>Preferred microphone; null = the one Roblox uses, otherwise the Windows default.</summary>
+    public string? PttDeviceId
+    {
+        get => Get<string?>(Keys.PttDeviceId, null);
+        set => Set(Keys.PttDeviceId, value);
+    }
+
+    public RobloxExitBehavior PttOnRobloxExit
+    {
+        get => Get(Keys.PttOnRobloxExit, RobloxExitBehavior.Restore);
+        set => Set(Keys.PttOnRobloxExit, value);
+    }
+
+    public ButtonPosition? PttButton
+    {
+        get => Get<ButtonPosition?>(Keys.PttButton, null);
+        set => Set(Keys.PttButton, value);
+    }
+
+    public bool PttSounds
+    {
+        get => Get(Keys.PttSounds, false);
+        set => Set(Keys.PttSounds, value);
+    }
+
+    /// <summary>The user confirmed that the system-wide method also mutes Discord and other apps.</summary>
+    public bool PttSystemWideConfirmed
+    {
+        get => Get(Keys.PttSystemWideConfirmed, false);
+        set => Set(Keys.PttSystemWideConfirmed, value);
+    }
+
+    public PttConfig PttConfig => new(PttEnabled, PttMode, PttKey, PttMethod, PttForegroundOnly, PttDeviceId, PttOnRobloxExit, PttButton, PttSounds);
 
     public T Get<T>(string key, T fallback)
     {

@@ -30,9 +30,12 @@
                     <TextBlock Grid.Row="0" Grid.Column="1" x:Uid="OverviewRoblox" Text="Roblox" Style="{StaticResource BodyTextStyle}" />
                     <TextBlock Grid.Row="0" Grid.Column="2" Text="{x:Bind ViewModel.RobloxStatus, Mode=OneWay}" Style="{StaticResource BodyTextStyle}" Foreground="{StaticResource BloomTextMutedBrush}" />
 
-                    <Ellipse Grid.Row="1" Grid.Column="0" Width="8" Height="8" Fill="{StaticResource BloomTextMutedBrush}" VerticalAlignment="Center" />
+                    <Grid Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">
+                        <Ellipse Width="8" Height="8" Fill="{StaticResource BloomTextMutedBrush}" />
+                        <Ellipse Width="8" Height="8" Fill="{StaticResource BloomSuccessBrush}" Visibility="{x:Bind ViewModel.PttLive, Mode=OneWay}" />
+                    </Grid>
                     <TextBlock Grid.Row="1" Grid.Column="1" x:Uid="OverviewPtt" Text="Push-to-Talk" Style="{StaticResource BodyTextStyle}" />
-                    <TextBlock Grid.Row="1" Grid.Column="2" x:Uid="OverviewPttValue" Text="Aus" Style="{StaticResource BodyTextStyle}" Foreground="{StaticResource BloomTextMutedBrush}" />
+                    <TextBlock Grid.Row="1" Grid.Column="2" Text="{x:Bind ViewModel.PttStatus, Mode=OneWay}" Style="{StaticResource BodyTextStyle}" Foreground="{StaticResource BloomTextMutedBrush}" />
 
                     <Ellipse Grid.Row="2" Grid.Column="0" Width="8" Height="8" Fill="{StaticResource BloomTextMutedBrush}" VerticalAlignment="Center" />
                     <TextBlock Grid.Row="2" Grid.Column="1" x:Uid="OverviewDiscord" Text="Discord" Style="{StaticResource BodyTextStyle}" />

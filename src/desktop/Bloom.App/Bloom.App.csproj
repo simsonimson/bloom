@@ -39,6 +39,7 @@
     <ProjectReference Include="..\Bloom.Platform.Windows\Bloom.Platform.Windows.csproj" />
     <ProjectReference Include="..\Bloom.Launcher\Bloom.Launcher.csproj" />
     <ProjectReference Include="..\Bloom.Activity\Bloom.Activity.csproj" />
+    <ProjectReference Include="..\Bloom.Voice\Bloom.Voice.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -55,6 +55,13 @@ jobs:
       - name: Test (Activity)
         run: dotnet test tests/Bloom.Activity.Tests -c Release
 
+      - name: Test (Voice)
+        run: dotnet test tests/Bloom.Voice.Tests -c Release
+
+      # Bloom.Guard ships next to bloom.exe and shares its self-contained runtime files.
+      - name: Publish Bloom.Guard.exe
+        run: dotnet publish src/desktop/Bloom.Guard/Bloom.Guard.csproj -c Release -r win-x64 --self-contained -o publish
+
       - name: Publish bloom.exe
         run: dotnet publish src/desktop/Bloom.App/Bloom.App.csproj -c Release -r win-x64 --self-contained -o publish
 

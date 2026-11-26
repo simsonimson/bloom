@@ -2,13 +2,177 @@
     x:Class="Bloom.App.Views.VoicePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Bloom.App.Views"
     Background="{StaticResource BloomBgBrush}">
+
     <ScrollViewer Style="{StaticResource PageScrollStyle}">
         <StackPanel MaxWidth="960" HorizontalAlignment="Stretch">
             <TextBlock x:Uid="VoiceTitle" Text="Voice &amp; Audio" Style="{StaticResource PageTitleTextStyle}" />
+
+            <!-- Push-to-Talk -->
             <Border Style="{StaticResource CardStyle}">
-                <TextBlock x:Uid="VoicePlaceholder" Text="Push-to-Talk und Mikrofon-Verwaltung kommen in Phase 3." Style="{StaticResource MutedTextStyle}" />
+                <StackPanel Spacing="14">
+                    <Grid ColumnSpacing="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ToggleSwitch x:Uid="PttEnable" Header="Push-to-Talk für Roblox" IsOn="{x:Bind ViewModel.PttEnabled, Mode=TwoWay}" />
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <Ellipse Width="10" Height="10" Fill="{x:Bind ViewModel.StateBrush, Mode=OneWay}" />
+                            <TextBlock Text="{x:Bind ViewModel.StateText, Mode=OneWay}" Style="{StaticResource BodyTextStyle}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <InfoBar IsOpen="{x:Bind ViewModel.HasSetupHint, Mode=OneWay}" IsClosable="False" Severity="Informational"
+                             Message="{x:Bind ViewModel.SetupHint, Mode=OneWay}" />
+                    <InfoBar IsOpen="{x:Bind ViewModel.HasInputError, Mode=OneWay}" IsClosable="False" Severity="Error"
+                             x:Uid="PttInputErrorBar" Title="Tasten können nicht gelesen werden" Message="{x:Bind ViewModel.InputError, Mode=OneWay}" />
+
+                    <Grid ColumnSpacing="12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Spacing="4">
+                            <TextBlock x:Uid="PttKeyLabel" Text="Taste" Style="{StaticResource MutedTextStyle}" />
+                            <StackPanel Orientation="Horizontal" Spacing="8">
+                                <Border Padding="12,6" CornerRadius="6" Background="{StaticResource BloomSurfaceRaisedBrush}"
+                                        BorderBrush="{StaticResource BloomBorderBrush}" BorderThickness="1" MinWidth="120">
+                                    <TextBlock Text="{x:Bind ViewModel.KeyText, Mode=OneWay}" FontFamily="{StaticResource BloomBrandFont}" HorizontalAlignment="Center" />
+                                </Border>
+                                <Button x:Uid="PttSetKey" Content="Taste festlegen" Command="{x:Bind ViewModel.SetKeyCommand}" />
+                            </StackPanel>
+                        </StackPanel>
+                        <RadioButtons Grid.Column="1" x:Uid="PttMode" Header="Modus" MaxColumns="2" Margin="24,0,0,0"
+                                      SelectedIndex="{x:Bind ViewModel.ModeIndex, Mode=TwoWay}" IsEnabled="{x:Bind ViewModel.ModeSelectable, Mode=OneWay}">
+                            <RadioButton x:Uid="PttModeHold" Content="Halten" />
+                            <RadioButton x:Uid="PttModeToggle" Content="Umschalten" />
+                        </RadioButtons>
+                    </Grid>
+                    <InfoBar IsOpen="{x:Bind ViewModel.KeyConflict, Mode=OneWay}" IsClosable="False" Severity="Warning"
+                             x:Uid="PttKeyConflict" Message="Diese Taste benutzen viele Roblox-Spiele (Laufen, Springen, Chat). Wähle besser eine freie Taste oder Maus 4/5." />
+
+                    <StackPanel Spacing="4" Visibility="{x:Bind ViewModel.IsAudioMethod, Mode=OneWay}">
+                        <TextBlock x:Uid="PttLiveTest" Text="Live-Test: Halte die Taste und sprich. Der Pegel zeigt, was am Mikrofon ankommt." Style="{StaticResource MutedTextStyle}" />
+                        <ProgressBar Value="{x:Bind ViewModel.LiveLevel, Mode=OneWay}" Maximum="100" Height="6" />
+                    </StackPanel>
+
+                    <ToggleSwitch x:Uid="PttForegroundOnly" Header="Nur reagieren, wenn Roblox im Vordergrund ist"
+                                  IsOn="{x:Bind ViewModel.ForegroundOnly, Mode=TwoWay}" />
+                    <ToggleSwitch x:Uid="PttSounds" Header="Klick-Ton beim Ein- und Ausschalten"
+                                  IsOn="{x:Bind ViewModel.Sounds, Mode=TwoWay}" />
+                </StackPanel>
             </Border>
+
+            <!-- Method -->
+            <TextBlock x:Uid="PttMethodSection" Text="Methode" Style="{StaticResource SectionTitleTextStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="12">
+                    <RadioButtons SelectedIndex="{x:Bind ViewModel.MethodIndex, Mode=TwoWay}">
+                        <RadioButton>
+                            <StackPanel Spacing="2">
+                                <TextBlock x:Uid="PttMethodSystem" Text="Systemweit (empfohlen)" Style="{StaticResource BodyTextStyle}" />
+                                <TextBlock x:Uid="PttMethodSystemHint" Style="{StaticResource MutedTextStyle}"
+                                           Text="Schaltet das Mikrofon in Windows stumm. Zuverlässig, betrifft aber auch Discord und andere Apps auf diesem Mikrofon." />
+                            </StackPanel>
+                        </RadioButton>
+                        <RadioButton>
+                            <StackPanel Spacing="2">
+                                <TextBlock x:Uid="PttMethodSession" Text="Nur Roblox (experimentell)" Style="{StaticResource BodyTextStyle}" />
+                                <TextBlock x:Uid="PttMethodSessionHint" Style="{StaticResource MutedTextStyle}"
+                                           Text="Schaltet nur die Aufnahme von Roblox stumm. Windows garantiert nicht, dass Roblox dann wirklich Stille bekommt – prüfe es mit einem Freund." />
+                            </StackPanel>
+                        </RadioButton>
+                        <RadioButton>
+                            <StackPanel Spacing="2">
+                                <TextBlock x:Uid="PttMethodButton" Text="Roblox-Mikroknopf klicken" Style="{StaticResource BodyTextStyle}" />
+                                <TextBlock x:Uid="PttMethodButtonHint" Style="{StaticResource MutedTextStyle}"
+                                           Text="bloom wechselt zu Roblox und klickt auf das Mikro-Symbol. Nur Umschalten. Klappt nicht in der Ego-Ansicht oder mit Shift-Lock, und bloom sieht den echten Zustand nicht." />
+                            </StackPanel>
+                        </RadioButton>
+                    </RadioButtons>
+
+                    <TextBlock x:Uid="PttKeepRobloxMicOn" Visibility="{x:Bind ViewModel.IsAudioMethod, Mode=OneWay}" Style="{StaticResource MutedTextStyle}"
+                               Text="Lass das Mikrofon in Roblox selbst eingeschaltet – bloom schaltet darunter stumm." />
+
+                    <StackPanel Spacing="10" Visibility="{x:Bind ViewModel.IsButtonMethod, Mode=OneWay}">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Button x:Uid="PttCalibrate" Content="Position festlegen" Command="{x:Bind ViewModel.CalibrateCommand}" />
+                            <TextBlock Text="{x:Bind ViewModel.CalibrationText, Mode=OneWay}" Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center" TextWrapping="Wrap" MaxWidth="560" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Button x:Uid="PttToggleRobloxMic" Content="Roblox-Mikro jetzt umschalten" Style="{StaticResource AccentButtonStyle}"
+                                    Command="{x:Bind ViewModel.ToggleRobloxMicCommand}" />
+                            <Button x:Uid="PttCorrectState" Content="Anzeige stimmt nicht – korrigieren" Command="{x:Bind ViewModel.CorrectStateCommand}"
+                                    IsEnabled="{x:Bind ViewModel.IsAssumedState, Mode=OneWay}" />
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Microphones -->
+            <TextBlock x:Uid="PttDevicesSection" Text="Mikrofon" Style="{StaticResource SectionTitleTextStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="12">
+                    <StackPanel Spacing="8" Visibility="{x:Bind ViewModel.NoDevices, Mode=OneWay}">
+                        <TextBlock x:Uid="PttNoDevices" Text="Kein Mikrofon gefunden. Prüfe den Anschluss und ob Desktop-Apps auf das Mikrofon zugreifen dürfen." Style="{StaticResource BodyTextStyle}" />
+                        <HyperlinkButton x:Uid="PttPrivacyLink" Content="Windows-Datenschutz: Mikrofonzugriff öffnen" NavigateUri="ms-settings:privacy-microphone" />
+                    </StackPanel>
+
+                    <StackPanel Spacing="12" Visibility="{x:Bind ViewModel.HasDevices, Mode=OneWay}">
+                        <ComboBox x:Uid="PttDeviceChoice" Header="Mikrofon für Push-to-Talk" MinWidth="320"
+                                  ItemsSource="{x:Bind ViewModel.DeviceChoices}" SelectedItem="{x:Bind ViewModel.SelectedDevice, Mode=TwoWay}"
+                                  IsEnabled="{x:Bind ViewModel.IsSystemWide, Mode=OneWay}" />
+                        <InfoBar IsOpen="{x:Bind ViewModel.DeviceMismatch, Mode=OneWay}" IsClosable="False" Severity="Warning"
+                                 x:Uid="PttDeviceMismatch" Message="Roblox nimmt gerade über ein anderes Mikrofon auf. bloom stellt das nicht selbst um – ändere es in Roblox (Einstellungen → Mikrofon) oder in Windows." />
+                        <ItemsControl ItemsSource="{x:Bind ViewModel.Devices}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="local:DeviceItem">
+                                    <Grid Padding="0,6" ColumnSpacing="16">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="200" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel>
+                                            <TextBlock Text="{x:Bind Name, Mode=OneWay}" Style="{StaticResource BodyTextStyle}" TextTrimming="CharacterEllipsis" />
+                                            <TextBlock Text="{x:Bind Badges, Mode=OneWay}" Style="{StaticResource MutedTextStyle}" />
+                                        </StackPanel>
+                                        <ProgressBar Grid.Column="1" Value="{x:Bind Level, Mode=OneWay}" Maximum="100" VerticalAlignment="Center" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Mic test -->
+            <TextBlock x:Uid="MicTestSection" Text="Mikrofon-Test" Style="{StaticResource SectionTitleTextStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="8">
+                    <TextBlock x:Uid="MicTestHint" Text="Nimmt 5 Sekunden auf und spielt sie dir sofort vor. Es wird nichts gespeichert." Style="{StaticResource MutedTextStyle}" />
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <Button x:Uid="MicTestStart" Content="Test starten" Command="{x:Bind ViewModel.MicTestCommand}" />
+                        <ProgressBar Width="240" Value="{x:Bind ViewModel.MicTestProgress, Mode=OneWay}" Maximum="100"
+                                     Visibility="{x:Bind ViewModel.MicTestRunning, Mode=OneWay}" VerticalAlignment="Center" />
+                    </StackPanel>
+                    <TextBlock Text="{x:Bind ViewModel.MicTestStatus, Mode=OneWay}" Style="{StaticResource BodyTextStyle}" TextWrapping="Wrap" />
+                    <HyperlinkButton x:Uid="PttPrivacyLink2" Content="Windows-Datenschutz: Mikrofonzugriff öffnen" NavigateUri="ms-settings:privacy-microphone"
+                                     Visibility="{x:Bind ViewModel.MicAccessDenied, Mode=OneWay}" />
+                </StackPanel>
+            </Border>
+
+            <!-- Roblox exit -->
+            <StackPanel Visibility="{x:Bind ViewModel.IsSystemWide, Mode=OneWay}">
+                <TextBlock x:Uid="PttExitSection" Text="Wenn Roblox beendet wird" Style="{StaticResource SectionTitleTextStyle}" />
+                <Border Style="{StaticResource CardStyle}">
+                    <RadioButtons SelectedIndex="{x:Bind ViewModel.ExitBehaviorIndex, Mode=TwoWay}">
+                        <RadioButton x:Uid="PttExitRestore" Content="Mikrofon wieder so einstellen wie vorher" />
+                        <RadioButton x:Uid="PttExitKeepMuted" Content="Mikrofon stumm lassen" />
+                    </RadioButtons>
+                </Border>
+            </StackPanel>
         </StackPanel>
     </ScrollViewer>
 </Page>
