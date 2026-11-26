@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="NavOverview.Content" xml:space="preserve"><value>Übersicht</value></data>
+  <data name="NavPlay.Content" xml:space="preserve"><value>Spielen</value></data>
+  <data name="NavClient.Content" xml:space="preserve"><value>Roblox-Client</value></data>
+  <data name="NavVoice.Content" xml:space="preserve"><value>Voice &amp; Audio</value></data>
+  <data name="NavConnections.Content" xml:space="preserve"><value>Verbindungen</value></data>
+  <data name="NavSettings.Content" xml:space="preserve"><value>Einstellungen</value></data>
+  <data name="OverviewTitle.Text" xml:space="preserve"><value>Übersicht</value></data>
+  <data name="OverviewRoblox.Text" xml:space="preserve"><value>Roblox</value></data>
+  <data name="OverviewRobloxValue.Text" xml:space="preserve"><value>Nicht erkannt</value></data>
+  <data name="OverviewPtt.Text" xml:space="preserve"><value>Push-to-Talk</value></data>
+  <data name="OverviewPttValue.Text" xml:space="preserve"><value>Aus</value></data>
+  <data name="OverviewDiscord.Text" xml:space="preserve"><value>Discord</value></data>
+  <data name="OverviewDiscordValue.Text" xml:space="preserve"><value>Nicht verbunden</value></data>
+  <data name="OverviewAccount.Text" xml:space="preserve"><value>Roblox-Konto</value></data>
+  <data name="OverviewAccountValue.Text" xml:space="preserve"><value>Nicht verbunden</value></data>
+  <data name="OverviewQuickLaunch.Text" xml:space="preserve"><value>Schnellstart</value></data>
+  <data name="OverviewQuickLaunchEmpty.Text" xml:space="preserve"><value>Noch keine Favoriten. Ab Phase 2 erscheinen hier deine Experiences.</value></data>
+  <data name="OverviewActivity.Text" xml:space="preserve"><value>Letzte Aktivität</value></data>
+  <data name="OverviewActivityEmpty.Text" xml:space="preserve"><value>Noch keine Aktivität.</value></data>
+  <data name="PlayTitle.Text" xml:space="preserve"><value>Spielen</value></data>
+  <data name="PlayPlaceholder.Text" xml:space="preserve"><value>Favoriten, zuletzt gespielte Experiences und Roblox-Links kommen in Phase 2.</value></data>
+  <data name="ClientTitle.Text" xml:space="preserve"><value>Roblox-Client</value></data>
+  <data name="ClientPlaceholder.Text" xml:space="preserve"><value>Bootstrapper, Roblox-Version und erlaubte FastFlags kommen in Phase 2.</value></data>
+  <data name="VoiceTitle.Text" xml:space="preserve"><value>Voice &amp; Audio</value></data>
+  <data name="VoicePlaceholder.Text" xml:space="preserve"><value>Push-to-Talk und Mikrofon-Verwaltung kommen in Phase 3.</value></data>
+  <data name="ConnectionsTitle.Text" xml:space="preserve"><value>Verbindungen</value></data>
+  <data name="ConnectionsPlaceholder.Text" xml:space="preserve"><value>Discord Rich Presence und Roblox-Konto kommen in Phase 4.</value></data>
+  <data name="SettingsTitle.Text" xml:space="preserve"><value>Einstellungen</value></data>
+  <data name="SettingsStartSection.Text" xml:space="preserve"><value>Start &amp; Intro</value></data>
+  <data name="SettingsIntro.Header" xml:space="preserve"><value>Startanimation</value></data>
+  <data name="IntroFull.Content" xml:space="preserve"><value>Voll (ca. 8 Sekunden)</value></data>
+  <data name="IntroShort.Content" xml:space="preserve"><value>Kurz (ca. 4 Sekunden)</value></data>
+  <data name="IntroOff.Content" xml:space="preserve"><value>Aus</value></data>
+  <data name="SettingsAutostart.Header" xml:space="preserve"><value>Mit Windows starten (im Infobereich)</value></data>
+  <data name="SettingsCloseToTray.Header" xml:space="preserve"><value>Beim Schließen im Infobereich weiterlaufen</value></data>
+  <data name="SettingsLanguageSection.Text" xml:space="preserve"><value>Sprache</value></data>
+  <data name="SettingsLanguage.Header" xml:space="preserve"><value>Anzeigesprache</value></data>
+  <data name="LanguageSystem.Content" xml:space="preserve"><value>Wie Windows</value></data>
+  <data name="LanguageGerman.Content" xml:space="preserve"><value>Deutsch</value></data>
+  <data name="LanguageEnglish.Content" xml:space="preserve"><value>English</value></data>
+  <data name="SettingsLanguageHint.Text" xml:space="preserve"><value>Wird beim nächsten Start übernommen.</value></data>
+  <data name="SettingsUpdatesSection.Text" xml:space="preserve"><value>Updates</value></data>
+  <data name="SettingsCheckUpdates.Content" xml:space="preserve"><value>Nach Updates suchen</value></data>
+  <data name="SettingsInstallUpdate.Content" xml:space="preserve"><value>Installieren und neu starten</value></data>
+  <data name="SettingsDiagnosticsSection.Text" xml:space="preserve"><value>Diagnose</value></data>
+  <data name="SettingsOpenLogs.Content" xml:space="preserve"><value>Log-Ordner öffnen</value></data>
+  <data name="SettingsAboutSection.Text" xml:space="preserve"><value>Über &amp; Lizenzen</value></data>
+  <data name="SettingsAboutLicense.Text" xml:space="preserve"><value>bloom ist Open Source unter der MIT-Lizenz.</value></data>
+  <data name="SettingsAboutIntro.Text" xml:space="preserve"><value>Die Intro-Animation basiert auf bloom3d.py von Edward Jones (MIT-Lizenz).</value></data>
+  <data name="SettingsAboutRepoLink.Content" xml:space="preserve"><value>bloom auf GitHub</value></data>
+  <data name="SettingsAboutIntroLink.Content" xml:space="preserve"><value>ascii-art von Edward Jones</value></data>
+  <data name="SettingsAboutDisclaimer.Text" xml:space="preserve"><value>bloom ist nicht mit Roblox Corporation oder Discord Inc. verbunden.</value></data>
+  <data name="TrayOpen" xml:space="preserve"><value>bloom öffnen</value></data>
+  <data name="TrayQuit" xml:space="preserve"><value>Beenden</value></data>
+  <data name="SettingsVersion" xml:space="preserve"><value>Version {0}</value></data>
+  <data name="UpdateNotInstalled" xml:space="preserve"><value>Updates funktionieren nur in der installierten Version.</value></data>
+  <data name="UpdateChecking" xml:space="preserve"><value>Suche nach Updates …</value></data>
+  <data name="UpdateNone" xml:space="preserve"><value>bloom ist aktuell.</value></data>
+  <data name="UpdateAvailable" xml:space="preserve"><value>Version {0} ist verfügbar.</value></data>
+  <data name="UpdateFailed" xml:space="preserve"><value>Update-Suche fehlgeschlagen. Details im Log.</value></data>
+  <data name="UpdateDownloading" xml:space="preserve"><value>Update wird geladen … {0} %</value></data>
+</root>

@@ -1,0 +1,14 @@
+<Page
+    x:Class="Bloom.App.Views.ConnectionsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="{StaticResource BloomBgBrush}">
+    <ScrollViewer Style="{StaticResource PageScrollStyle}">
+        <StackPanel MaxWidth="960" HorizontalAlignment="Stretch">
+            <TextBlock x:Uid="ConnectionsTitle" Text="Verbindungen" Style="{StaticResource PageTitleTextStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <TextBlock x:Uid="ConnectionsPlaceholder" Text="Discord Rich Presence und Roblox-Konto kommen in Phase 4." Style="{StaticResource MutedTextStyle}" />
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

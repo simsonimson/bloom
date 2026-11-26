@@ -1,0 +1,85 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Design tokens (Blueprint 5). Accent colours come from the STOPS in bloom3d.py. -->
+    <Color x:Key="BloomBgColor">#FF0A0A0B</Color>
+    <Color x:Key="BloomSurfaceColor">#FF141416</Color>
+    <Color x:Key="BloomSurfaceRaisedColor">#FF1C1C1F</Color>
+    <Color x:Key="BloomBorderColor">#FF2A2A2E</Color>
+    <Color x:Key="BloomTextColor">#FFF2F2F3</Color>
+    <Color x:Key="BloomTextMutedColor">#FFA1A1A8</Color>
+    <Color x:Key="BloomAccentColor">#FFFF6B9E</Color>
+    <Color x:Key="BloomAccentStrongColor">#FFFF1F61</Color>
+    <Color x:Key="BloomSuccessColor">#FF3DD68C</Color>
+    <Color x:Key="BloomWarningColor">#FFF5A524</Color>
+    <Color x:Key="BloomDangerColor">#FFEF4444</Color>
+
+    <SolidColorBrush x:Key="BloomBgBrush" Color="{StaticResource BloomBgColor}" />
+    <SolidColorBrush x:Key="BloomSurfaceBrush" Color="{StaticResource BloomSurfaceColor}" />
+    <SolidColorBrush x:Key="BloomSurfaceRaisedBrush" Color="{StaticResource BloomSurfaceRaisedColor}" />
+    <SolidColorBrush x:Key="BloomBorderBrush" Color="{StaticResource BloomBorderColor}" />
+    <SolidColorBrush x:Key="BloomTextBrush" Color="{StaticResource BloomTextColor}" />
+    <SolidColorBrush x:Key="BloomTextMutedBrush" Color="{StaticResource BloomTextMutedColor}" />
+    <SolidColorBrush x:Key="BloomAccentBrush" Color="{StaticResource BloomAccentColor}" />
+    <SolidColorBrush x:Key="BloomAccentStrongBrush" Color="{StaticResource BloomAccentStrongColor}" />
+    <SolidColorBrush x:Key="BloomSuccessBrush" Color="{StaticResource BloomSuccessColor}" />
+    <SolidColorBrush x:Key="BloomWarningBrush" Color="{StaticResource BloomWarningColor}" />
+    <SolidColorBrush x:Key="BloomDangerBrush" Color="{StaticResource BloomDangerColor}" />
+
+    <FontFamily x:Key="BloomBrandFont">Cascadia Mono, Consolas</FontFamily>
+
+    <!-- System accent overrides so built-in controls (toggles, radio buttons, focus) use the bloom pink. -->
+    <Color x:Key="SystemAccentColor">#FFFF6B9E</Color>
+    <Color x:Key="SystemAccentColorLight1">#FFFF85B0</Color>
+    <Color x:Key="SystemAccentColorLight2">#FFFF9FC2</Color>
+    <Color x:Key="SystemAccentColorLight3">#FFFFB9D4</Color>
+    <Color x:Key="SystemAccentColorDark1">#FFE5557F</Color>
+    <Color x:Key="SystemAccentColorDark2">#FFCC4069</Color>
+    <Color x:Key="SystemAccentColorDark3">#FFB32B53</Color>
+
+    <!-- NavigationView surfaces -->
+    <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="{StaticResource BloomSurfaceColor}" />
+    <SolidColorBrush x:Key="NavigationViewDefaultPaneBackground" Color="{StaticResource BloomSurfaceColor}" />
+    <SolidColorBrush x:Key="NavigationViewContentBackground" Color="{StaticResource BloomBgColor}" />
+    <SolidColorBrush x:Key="NavigationViewContentGridBorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground" Color="{StaticResource BloomAccentColor}" />
+
+    <!-- Typography -->
+    <Style x:Key="PageTitleTextStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{StaticResource BloomTextBrush}" />
+        <Setter Property="Margin" Value="0,0,0,24" />
+    </Style>
+    <Style x:Key="SectionTitleTextStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{StaticResource BloomTextBrush}" />
+        <Setter Property="Margin" Value="0,24,0,8" />
+    </Style>
+    <Style x:Key="BodyTextStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="{StaticResource BloomTextBrush}" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+    <Style x:Key="MutedTextStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Foreground" Value="{StaticResource BloomTextMutedBrush}" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+
+    <!-- Cards: flat surface, 1 px border, 8 px radius. No shadows, no gradients. -->
+    <Style x:Key="CardStyle" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource BloomSurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource BloomBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Padding" Value="16" />
+    </Style>
+
+    <Style x:Key="PageScrollStyle" TargetType="ScrollViewer">
+        <Setter Property="Padding" Value="32,24,32,32" />
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+    </Style>
+</ResourceDictionary>

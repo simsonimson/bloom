@@ -1,0 +1,48 @@
+<Page
+    x:Class="Bloom.App.Views.OverviewPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="{StaticResource BloomBgBrush}">
+    <ScrollViewer Style="{StaticResource PageScrollStyle}">
+        <StackPanel MaxWidth="960" HorizontalAlignment="Stretch">
+            <TextBlock x:Uid="OverviewTitle" Text="Übersicht" Style="{StaticResource PageTitleTextStyle}" FontSize="28" />
+            <Border Style="{StaticResource CardStyle}">
+                <Grid ColumnSpacing="12" RowSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="160" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Ellipse Grid.Row="0" Grid.Column="0" Width="8" Height="8" Fill="{StaticResource BloomTextMutedBrush}" VerticalAlignment="Center" />
+                    <TextBlock Grid.Row="0" Grid.Column="1" x:Uid="OverviewRoblox" Text="Roblox" Style="{StaticResource BodyTextStyle}" />
+                    <TextBlock Grid.Row="0" Grid.Column="2" x:Uid="OverviewRobloxValue" Text="Nicht erkannt" Style="{StaticResource BodyTextStyle}" Foreground="{StaticResource BloomTextMutedBrush}" />
+                    <Ellipse Grid.Row="1" Grid.Column="0" Width="8" Height="8" Fill="{StaticResource BloomTextMutedBrush}" VerticalAlignment="Center" />
+                    <TextBlock Grid.Row="1" Grid.Column="1" x:Uid="OverviewPtt" Text="Push-to-Talk" Style="{StaticResource BodyTextStyle}" />
+                    <TextBlock Grid.Row="1" Grid.Column="2" x:Uid="OverviewPttValue" Text="Aus" Style="{StaticResource BodyTextStyle}" Foreground="{StaticResource BloomTextMutedBrush}" />
+                    <Ellipse Grid.Row="2" Grid.Column="0" Width="8" Height="8" Fill="{StaticResource BloomTextMutedBrush}" VerticalAlignment="Center" />
+                    <TextBlock Grid.Row="2" Grid.Column="1" x:Uid="OverviewDiscord" Text="Discord" Style="{StaticResource BodyTextStyle}" />
+                    <TextBlock Grid.Row="2" Grid.Column="2" x:Uid="OverviewDiscordValue" Text="Nicht verbunden" Style="{StaticResource BodyTextStyle}" Foreground="{StaticResource BloomTextMutedBrush}" />
+                    <Ellipse Grid.Row="3" Grid.Column="0" Width="8" Height="8" Fill="{StaticResource BloomTextMutedBrush}" VerticalAlignment="Center" />
+                    <TextBlock Grid.Row="3" Grid.Column="1" x:Uid="OverviewAccount" Text="Roblox-Konto" Style="{StaticResource BodyTextStyle}" />
+                    <TextBlock Grid.Row="3" Grid.Column="2" x:Uid="OverviewAccountValue" Text="Nicht verbunden" Style="{StaticResource BodyTextStyle}" Foreground="{StaticResource BloomTextMutedBrush}" />
+                </Grid>
+            </Border>
+
+            <TextBlock x:Uid="OverviewQuickLaunch" Text="Schnellstart" Style="{StaticResource SectionTitleTextStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <TextBlock x:Uid="OverviewQuickLaunchEmpty" Text="Noch keine Favoriten. Ab Phase 2 erscheinen hier deine Experiences." Style="{StaticResource MutedTextStyle}" />
+            </Border>
+
+            <TextBlock x:Uid="OverviewActivity" Text="Letzte Aktivität" Style="{StaticResource SectionTitleTextStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <TextBlock x:Uid="OverviewActivityEmpty" Text="Noch keine Aktivität." Style="{StaticResource MutedTextStyle}" />
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

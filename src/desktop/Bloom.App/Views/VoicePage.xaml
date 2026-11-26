@@ -1,0 +1,14 @@
+<Page
+    x:Class="Bloom.App.Views.VoicePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="{StaticResource BloomBgBrush}">
+    <ScrollViewer Style="{StaticResource PageScrollStyle}">
+        <StackPanel MaxWidth="960" HorizontalAlignment="Stretch">
+            <TextBlock x:Uid="VoiceTitle" Text="Voice &amp; Audio" Style="{StaticResource PageTitleTextStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <TextBlock x:Uid="VoicePlaceholder" Text="Push-to-Talk und Mikrofon-Verwaltung kommen in Phase 3." Style="{StaticResource MutedTextStyle}" />
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

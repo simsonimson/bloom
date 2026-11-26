@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="NavOverview.Content" xml:space="preserve"><value>Overview</value></data>
+  <data name="NavPlay.Content" xml:space="preserve"><value>Play</value></data>
+  <data name="NavClient.Content" xml:space="preserve"><value>Roblox client</value></data>
+  <data name="NavVoice.Content" xml:space="preserve"><value>Voice &amp; audio</value></data>
+  <data name="NavConnections.Content" xml:space="preserve"><value>Connections</value></data>
+  <data name="NavSettings.Content" xml:space="preserve"><value>Settings</value></data>
+  <data name="OverviewTitle.Text" xml:space="preserve"><value>Overview</value></data>
+  <data name="OverviewRoblox.Text" xml:space="preserve"><value>Roblox</value></data>
+  <data name="OverviewRobloxValue.Text" xml:space="preserve"><value>Not detected</value></data>
+  <data name="OverviewPtt.Text" xml:space="preserve"><value>Push-to-talk</value></data>
+  <data name="OverviewPttValue.Text" xml:space="preserve"><value>Off</value></data>
+  <data name="OverviewDiscord.Text" xml:space="preserve"><value>Discord</value></data>
+  <data name="OverviewDiscordValue.Text" xml:space="preserve"><value>Not connected</value></data>
+  <data name="OverviewAccount.Text" xml:space="preserve"><value>Roblox account</value></data>
+  <data name="OverviewAccountValue.Text" xml:space="preserve"><value>Not connected</value></data>
+  <data name="OverviewQuickLaunch.Text" xml:space="preserve"><value>Quick launch</value></data>
+  <data name="OverviewQuickLaunchEmpty.Text" xml:space="preserve"><value>No favourites yet. Your experiences will appear here from phase 2.</value></data>
+  <data name="OverviewActivity.Text" xml:space="preserve"><value>Recent activity</value></data>
+  <data name="OverviewActivityEmpty.Text" xml:space="preserve"><value>No activity yet.</value></data>
+  <data name="PlayTitle.Text" xml:space="preserve"><value>Play</value></data>
+  <data name="PlayPlaceholder.Text" xml:space="preserve"><value>Favourites, recently played experiences and Roblox links arrive in phase 2.</value></data>
+  <data name="ClientTitle.Text" xml:space="preserve"><value>Roblox client</value></data>
+  <data name="ClientPlaceholder.Text" xml:space="preserve"><value>Bootstrapper, Roblox version and allowed FastFlags arrive in phase 2.</value></data>
+  <data name="VoiceTitle.Text" xml:space="preserve"><value>Voice &amp; audio</value></data>
+  <data name="VoicePlaceholder.Text" xml:space="preserve"><value>Push-to-talk and microphone management arrive in phase 3.</value></data>
+  <data name="ConnectionsTitle.Text" xml:space="preserve"><value>Connections</value></data>
+  <data name="ConnectionsPlaceholder.Text" xml:space="preserve"><value>Discord Rich Presence and Roblox account arrive in phase 4.</value></data>
+  <data name="SettingsTitle.Text" xml:space="preserve"><value>Settings</value></data>
+  <data name="SettingsStartSection.Text" xml:space="preserve"><value>Startup &amp; intro</value></data>
+  <data name="SettingsIntro.Header" xml:space="preserve"><value>Startup animation</value></data>
+  <data name="IntroFull.Content" xml:space="preserve"><value>Full (about 8 seconds)</value></data>
+  <data name="IntroShort.Content" xml:space="preserve"><value>Short (about 4 seconds)</value></data>
+  <data name="IntroOff.Content" xml:space="preserve"><value>Off</value></data>
+  <data name="SettingsAutostart.Header" xml:space="preserve"><value>Start with Windows (in the notification area)</value></data>
+  <data name="SettingsCloseToTray.Header" xml:space="preserve"><value>Keep running in the notification area when closed</value></data>
+  <data name="SettingsLanguageSection.Text" xml:space="preserve"><value>Language</value></data>
+  <data name="SettingsLanguage.Header" xml:space="preserve"><value>Display language</value></data>
+  <data name="LanguageSystem.Content" xml:space="preserve"><value>Same as Windows</value></data>
+  <data name="LanguageGerman.Content" xml:space="preserve"><value>Deutsch</value></data>
+  <data name="LanguageEnglish.Content" xml:space="preserve"><value>English</value></data>
+  <data name="SettingsLanguageHint.Text" xml:space="preserve"><value>Applied on next start.</value></data>
+  <data name="SettingsUpdatesSection.Text" xml:space="preserve"><value>Updates</value></data>
+  <data name="SettingsCheckUpdates.Content" xml:space="preserve"><value>Check for updates</value></data>
+  <data name="SettingsInstallUpdate.Content" xml:space="preserve"><value>Install and restart</value></data>
+  <data name="SettingsDiagnosticsSection.Text" xml:space="preserve"><value>Diagnostics</value></data>
+  <data name="SettingsOpenLogs.Content" xml:space="preserve"><value>Open log folder</value></data>
+  <data name="SettingsAboutSection.Text" xml:space="preserve"><value>About &amp; licences</value></data>
+  <data name="SettingsAboutLicense.Text" xml:space="preserve"><value>bloom is open source under the MIT licence.</value></data>
+  <data name="SettingsAboutIntro.Text" xml:space="preserve"><value>The intro animation is based on bloom3d.py by Edward Jones (MIT licence).</value></data>
+  <data name="SettingsAboutRepoLink.Content" xml:space="preserve"><value>bloom on GitHub</value></data>
+  <data name="SettingsAboutIntroLink.Content" xml:space="preserve"><value>ascii-art by Edward Jones</value></data>
+  <data name="SettingsAboutDisclaimer.Text" xml:space="preserve"><value>bloom is not affiliated with Roblox Corporation or Discord Inc.</value></data>
+  <data name="TrayOpen" xml:space="preserve"><value>Open bloom</value></data>
+  <data name="TrayQuit" xml:space="preserve"><value>Quit</value></data>
+  <data name="SettingsVersion" xml:space="preserve"><value>Version {0}</value></data>
+  <data name="UpdateNotInstalled" xml:space="preserve"><value>Updates only work in the installed version.</value></data>
+  <data name="UpdateChecking" xml:space="preserve"><value>Checking for updates …</value></data>
+  <data name="UpdateNone" xml:space="preserve"><value>bloom is up to date.</value></data>
+  <data name="UpdateAvailable" xml:space="preserve"><value>Version {0} is available.</value></data>
+  <data name="UpdateFailed" xml:space="preserve"><value>Update check failed. See the log for details.</value></data>
+  <data name="UpdateDownloading" xml:space="preserve"><value>Downloading update … {0} %</value></data>
+</root>

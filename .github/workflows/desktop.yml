@@ -1,0 +1,101 @@
+name: Desktop
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "tests/**"
+      - "Directory.*"
+      - "global.json"
+      - "Bloom.slnx"
+      - ".github/workflows/desktop.yml"
+  pull_request:
+    paths:
+      - "src/**"
+      - "tests/**"
+      - "Directory.*"
+      - "global.json"
+      - "Bloom.slnx"
+      - ".github/workflows/desktop.yml"
+  workflow_dispatch:
+    inputs:
+      release:
+        description: "Beta-Release auf GitHub veröffentlichen"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+env:
+  DOTNET_NOLOGO: "1"
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+  DOTNET_ROLL_FORWARD: Major
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Test (Core)
+        run: dotnet test tests/Bloom.Core.Tests -c Release
+
+      - name: Test (Data)
+        run: dotnet test tests/Bloom.Data.Tests -c Release
+
+      - name: Publish bloom.exe
+        run: dotnet publish src/desktop/Bloom.App/Bloom.App.csproj -c Release -r win-x64 --self-contained -o publish
+
+      - name: Version
+        id: version
+        shell: pwsh
+        run: echo "value=0.1.0-beta.${{ github.run_number }}" >> $env:GITHUB_OUTPUT
+
+      - name: Velopack pack
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          dotnet tool install -g vpk --version 1.2.161
+          # Previous release for delta packages (fails harmlessly on the first release).
+          vpk download github --repoUrl "https://github.com/${{ github.repository }}" --token $env:GH_TOKEN --channel beta --pre
+          if ($LASTEXITCODE -ne 0) { Write-Host "No previous release"; $global:LASTEXITCODE = 0 }
+          vpk pack --packId bloom --packVersion ${{ steps.version.outputs.value }} --packDir publish --mainExe bloom.exe --packTitle bloom --channel beta --runtime win-x64 --icon src/desktop/Bloom.App/Assets/bloom.ico
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bloom-${{ steps.version.outputs.value }}
+          path: Releases/
+
+      - name: Publish beta release
+        if: (github.event_name == 'workflow_dispatch' && inputs.release) || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $v = "${{ steps.version.outputs.value }}"
+          vpk upload github --repoUrl "https://github.com/${{ github.repository }}" --token $env:GH_TOKEN --publish --pre --releaseName "bloom $v" --tag "desktop-v$v" --channel beta
+
+      - name: Preview build for pull requests
+        if: github.event_name == 'pull_request'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Setup + portable zip only (no Velopack feed files), so the update feed ignores this release.
+          $tag = "desktop-preview"
+          $files = Get-ChildItem Releases -File | Where-Object { $_.Name -like "*-Setup.exe" -or $_.Name -like "*-Portable.zip" } | ForEach-Object { $_.FullName }
+          $notes = "Vorschau-Build aus PR #${{ github.event.pull_request.number }} (${{ steps.version.outputs.value }}). Nicht fuer Updates gedacht."
+          gh release view $tag 2>$null
+          if ($LASTEXITCODE -ne 0) {
+            gh release create $tag @files --prerelease --title "bloom Vorschau (PR)" --notes $notes --target ${{ github.event.pull_request.head.sha }}
+          } else {
+            gh release upload $tag @files --clobber
+            gh release edit $tag --notes $notes
+          }
