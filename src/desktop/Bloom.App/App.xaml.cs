@@ -2,6 +2,8 @@ using Bloom.App.Services;
 using Bloom.Core;
 using Bloom.Core.Events;
 using Bloom.Core.Settings;
+using Bloom.Core.Voice;
+using Bloom.Voice;
 using Bloom.Launcher.Links;
 using Bloom.Platform.Windows;
 using Microsoft.Extensions.DependencyInjection;
@@ -63,6 +65,7 @@ public partial class App : Application
         MainWindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(_main);
         CreateTray();
         SubscribeLaunchFeedback();
+        SubscribeVoiceFeedback();
         AppServices.StartBackground(Services);
 
         // Started by the browser through roblox-player:/roblox: — launch without any window.
@@ -111,6 +114,7 @@ public partial class App : Application
         if (_exiting) return;
         _exiting = true;
         _logger?.LogInformation("bloom exiting");
+        Services.GetRequiredService<VoiceCoordinator>().Exit();
         _tray?.Dispose();
         _main?.CloseForExit();
         _intro?.Close();
@@ -125,12 +129,7 @@ public partial class App : Application
             var iconPath = Path.Combine(AppContext.BaseDirectory, "Assets", "bloom.ico");
             _tray = new TrayIcon(iconPath, "bloom")
             {
-                MenuProvider = () =>
-                [
-                    new TrayMenuItem(Strings.Get("TrayOpen"), ShowMainWindow),
-                    null,
-                    new TrayMenuItem(Strings.Get("TrayQuit"), Quit),
-                ],
+                MenuProvider = BuildTrayMenu,
             };
             _tray.Activated += (_, _) => ShowMainWindow();
         }
@@ -138,6 +137,51 @@ public partial class App : Application
         {
             _logger?.LogError(ex, "Tray icon could not be created");
         }
+    }
+
+    private IReadOnlyList<TrayMenuItem?> BuildTrayMenu()
+    {
+        var settings = Services.GetRequiredService<AppSettings>();
+        var voice = Services.GetRequiredService<VoiceService>();
+        var items = new List<TrayMenuItem?>
+        {
+            new(Strings.Get("TrayOpen"), ShowMainWindow),
+            null,
+            new(Strings.Get(settings.PttEnabled ? "TrayPttOff" : "TrayPttOn"), () =>
+            {
+                // Setup (key, system-wide confirmation) happens on the Voice page.
+                if (!settings.PttEnabled && !VoiceText.ReadyToEnable(settings)) ShowMainWindow();
+                else settings.PttEnabled = !settings.PttEnabled;
+            }),
+        };
+        if (settings.PttEnabled && settings.PttMethod == PttMethod.RobloxButton)
+            items.Add(new(Strings.Get("TrayToggleRobloxMic"), voice.ToggleFromUi));
+        items.Add(null);
+        items.Add(new(Strings.Get("TrayQuit"), Quit));
+        return items;
+    }
+
+    private void SubscribeVoiceFeedback()
+    {
+        var events = Services.GetRequiredService<IEventBus>();
+        var assets = Path.Combine(AppContext.BaseDirectory, "Assets");
+        events.Subscribe<PttStateChanged>(e => Dispatch(() =>
+        {
+            if (_tray is null) return;
+            var icon = e.State switch
+            {
+                PttState.Ready => "bloom-ptt-ready.ico",
+                PttState.Transmitting or PttState.Open => "bloom-ptt-live.ico",
+                PttState.Error => "bloom-ptt-error.ico",
+                _ => "bloom.ico",
+            };
+            try { _tray.SetIcon(Path.Combine(assets, icon)); }
+            catch (Exception ex) { _logger?.LogWarning(ex, "Tray icon change failed"); }
+            _tray.SetTooltip(e.State == PttState.Off ? "bloom" : $"bloom · {Strings.Get(VoiceText.StateKey(e.State))}");
+            if (e.State == PttState.Error) _tray.ShowNotification("bloom", Strings.Get("PttErrorNotice"));
+        }));
+        events.Subscribe<PttActionFailed>(e => Dispatch(() =>
+            _tray?.ShowNotification("bloom", Strings.Get(VoiceText.FailureKey(e.Reason)))));
     }
 
     private void OnRedirectedActivation(object? sender, AppActivationArguments e)

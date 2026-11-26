@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Bloom.Voice</RootNamespace>
+    <!-- Core Audio and Win32 input are only called on Windows. -->
+    <NoWarn>$(NoWarn);CA1416</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Bloom.Core\Bloom.Core.csproj" />
+    <ProjectReference Include="..\Bloom.Platform.Windows\Bloom.Platform.Windows.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Bloom.Voice.Tests" />
+  </ItemGroup>
+</Project>

@@ -14,7 +14,6 @@
   <data name="OverviewRoblox.Text" xml:space="preserve"><value>Roblox</value></data>
   <data name="OverviewRobloxValue.Text" xml:space="preserve"><value>Nicht erkannt</value></data>
   <data name="OverviewPtt.Text" xml:space="preserve"><value>Push-to-Talk</value></data>
-  <data name="OverviewPttValue.Text" xml:space="preserve"><value>Aus</value></data>
   <data name="OverviewDiscord.Text" xml:space="preserve"><value>Discord</value></data>
   <data name="OverviewDiscordValue.Text" xml:space="preserve"><value>Nicht verbunden</value></data>
   <data name="OverviewAccount.Text" xml:space="preserve"><value>Roblox-Konto</value></data>
@@ -28,7 +27,6 @@
   <data name="ClientTitle.Text" xml:space="preserve"><value>Roblox-Client</value></data>
   <data name="ClientPlaceholder.Text" xml:space="preserve"><value>Bootstrapper, Roblox-Version und erlaubte FastFlags kommen in Phase 2.</value></data>
   <data name="VoiceTitle.Text" xml:space="preserve"><value>Voice &amp; Audio</value></data>
-  <data name="VoicePlaceholder.Text" xml:space="preserve"><value>Push-to-Talk und Mikrofon-Verwaltung kommen in Phase 3.</value></data>
   <data name="ConnectionsTitle.Text" xml:space="preserve"><value>Verbindungen</value></data>
   <data name="ConnectionsPlaceholder.Text" xml:space="preserve"><value>Discord Rich Presence und Roblox-Konto kommen in Phase 4.</value></data>
   <data name="SettingsTitle.Text" xml:space="preserve"><value>Einstellungen</value></data>
@@ -121,4 +119,84 @@
   <data name="LaunchFallback" xml:space="preserve"><value>Start über bloom fehlgeschlagen, Roblox startet über die offizielle Installation.</value></data>
   <data name="LaunchNoRoblox" xml:space="preserve"><value>Keine Roblox-Installation gefunden. Die Download-Seite wird geöffnet.</value></data>
   <data name="BootstrapperPausedNotice" xml:space="preserve"><value>Der bloom-Bootstrapper ist dreimal fehlgeschlagen und wurde pausiert. Roblox startet über die offizielle Installation.</value></data>
+  <data name="PttEnable.Header" xml:space="preserve"><value>Push-to-Talk für Roblox</value></data>
+  <data name="PttInputErrorBar.Title" xml:space="preserve"><value>Tasten können nicht gelesen werden</value></data>
+  <data name="PttKeyLabel.Text" xml:space="preserve"><value>Taste</value></data>
+  <data name="PttSetKey.Content" xml:space="preserve"><value>Taste festlegen</value></data>
+  <data name="PttMode.Header" xml:space="preserve"><value>Modus</value></data>
+  <data name="PttModeHold.Content" xml:space="preserve"><value>Halten</value></data>
+  <data name="PttModeToggle.Content" xml:space="preserve"><value>Umschalten</value></data>
+  <data name="PttKeyConflict.Message" xml:space="preserve"><value>Diese Taste benutzen viele Roblox-Spiele (Laufen, Springen, Chat, Kamera). Nimm besser eine freie Taste oder Maus 4/5.</value></data>
+  <data name="PttLiveTest.Text" xml:space="preserve"><value>Live-Test: Halte die Taste und sprich. Der Balken zeigt, was am Mikrofon ankommt.</value></data>
+  <data name="PttForegroundOnly.Header" xml:space="preserve"><value>Nur reagieren, wenn Roblox im Vordergrund ist</value></data>
+  <data name="PttSounds.Header" xml:space="preserve"><value>Klick-Ton beim Ein- und Ausschalten</value></data>
+  <data name="PttMethodSection.Text" xml:space="preserve"><value>Methode</value></data>
+  <data name="PttMethodSystem.Text" xml:space="preserve"><value>Systemweit (empfohlen)</value></data>
+  <data name="PttMethodSystemHint.Text" xml:space="preserve"><value>Schaltet das Mikrofon in Windows stumm. Zuverlässig, betrifft aber auch Discord und andere Apps auf diesem Mikrofon.</value></data>
+  <data name="PttMethodSession.Text" xml:space="preserve"><value>Nur Roblox (experimentell)</value></data>
+  <data name="PttMethodSessionHint.Text" xml:space="preserve"><value>Schaltet nur die Aufnahme von Roblox stumm. Windows garantiert nicht, dass Roblox dann wirklich Stille bekommt – prüfe es mit einem Freund.</value></data>
+  <data name="PttMethodButton.Text" xml:space="preserve"><value>Roblox-Mikroknopf klicken</value></data>
+  <data name="PttMethodButtonHint.Text" xml:space="preserve"><value>bloom wechselt zu Roblox und klickt auf das Mikro-Symbol. Nur Umschalten. Klappt nicht in der Ego-Ansicht oder mit Shift-Lock, und bloom sieht den echten Zustand nicht.</value></data>
+  <data name="PttKeepRobloxMicOn.Text" xml:space="preserve"><value>Lass das Mikrofon in Roblox selbst eingeschaltet – bloom schaltet darunter stumm.</value></data>
+  <data name="PttCalibrate.Content" xml:space="preserve"><value>Position festlegen</value></data>
+  <data name="PttToggleRobloxMic.Content" xml:space="preserve"><value>Roblox-Mikro jetzt umschalten</value></data>
+  <data name="PttCorrectState.Content" xml:space="preserve"><value>Anzeige stimmt nicht – korrigieren</value></data>
+  <data name="PttDevicesSection.Text" xml:space="preserve"><value>Mikrofon</value></data>
+  <data name="PttNoDevices.Text" xml:space="preserve"><value>Kein Mikrofon gefunden. Prüfe den Anschluss und ob Desktop-Apps auf das Mikrofon zugreifen dürfen.</value></data>
+  <data name="PttPrivacyLink.Content" xml:space="preserve"><value>Windows-Datenschutz: Mikrofonzugriff öffnen</value></data>
+  <data name="PttPrivacyLink2.Content" xml:space="preserve"><value>Windows-Datenschutz: Mikrofonzugriff öffnen</value></data>
+  <data name="PttDeviceChoice.Header" xml:space="preserve"><value>Mikrofon für Push-to-Talk</value></data>
+  <data name="PttDeviceMismatch.Message" xml:space="preserve"><value>Roblox nimmt gerade über ein anderes Mikrofon auf. bloom stellt das nicht selbst um – ändere es in Roblox (Einstellungen → Mikrofon) oder in Windows.</value></data>
+  <data name="MicTestSection.Text" xml:space="preserve"><value>Mikrofon-Test</value></data>
+  <data name="MicTestHint.Text" xml:space="preserve"><value>Nimmt 5 Sekunden auf und spielt sie dir sofort vor. Es wird nichts gespeichert.</value></data>
+  <data name="MicTestStart.Content" xml:space="preserve"><value>Test starten</value></data>
+  <data name="PttExitSection.Text" xml:space="preserve"><value>Wenn Roblox beendet wird</value></data>
+  <data name="PttExitRestore.Content" xml:space="preserve"><value>Mikrofon wieder so einstellen wie vorher</value></data>
+  <data name="PttExitKeepMuted.Content" xml:space="preserve"><value>Mikrofon stumm lassen</value></data>
+  <data name="GuardLanguage" xml:space="preserve"><value>de</value></data>
+  <data name="TrayPttOn" xml:space="preserve"><value>Push-to-Talk einschalten</value></data>
+  <data name="TrayPttOff" xml:space="preserve"><value>Push-to-Talk ausschalten</value></data>
+  <data name="TrayToggleRobloxMic" xml:space="preserve"><value>Roblox-Mikro umschalten</value></data>
+  <data name="PttErrorNotice" xml:space="preserve"><value>Problem mit dem Mikrofon. bloom hält es sicherheitshalber stumm und versucht es weiter.</value></data>
+  <data name="PttStateOff" xml:space="preserve"><value>Aus</value></data>
+  <data name="PttStateReady" xml:space="preserve"><value>Bereit – stumm</value></data>
+  <data name="PttStateTransmitting" xml:space="preserve"><value>Sendet</value></data>
+  <data name="PttStateOpen" xml:space="preserve"><value>Mikro offen</value></data>
+  <data name="PttStateError" xml:space="preserve"><value>Fehler – Mikro bleibt stumm</value></data>
+  <data name="PttStateDisabled" xml:space="preserve"><value>Aus</value></data>
+  <data name="PttStateWaiting" xml:space="preserve"><value>Wartet auf Roblox</value></data>
+  <data name="PttStateStarting" xml:space="preserve"><value>Wird scharf geschaltet …</value></data>
+  <data name="PttAssumed" xml:space="preserve"><value>(angenommen)</value></data>
+  <data name="PttFailNotCalibrated" xml:space="preserve"><value>Die Position des Roblox-Mikroknopfs ist noch nicht festgelegt.</value></data>
+  <data name="PttFailNoWindow" xml:space="preserve"><value>Kein Roblox-Fenster gefunden.</value></data>
+  <data name="PttFailFocus" xml:space="preserve"><value>Windows hat den Wechsel zu Roblox nicht erlaubt. Klicke einmal in Roblox und versuche es erneut.</value></data>
+  <data name="PttFailMouseLocked" xml:space="preserve"><value>Roblox hat die Maus gesperrt (Ego-Ansicht oder Shift-Lock). Nicht geklickt.</value></data>
+  <data name="PttNoKey" xml:space="preserve"><value>Keine</value></data>
+  <data name="PttPressKey" xml:space="preserve"><value>Drücke eine Taste … (Esc bricht ab)</value></data>
+  <data name="KeyMouseLeft" xml:space="preserve"><value>Linke Maustaste</value></data>
+  <data name="KeyMouseRight" xml:space="preserve"><value>Rechte Maustaste</value></data>
+  <data name="KeyMouseMiddle" xml:space="preserve"><value>Mittlere Maustaste</value></data>
+  <data name="KeyMouse4" xml:space="preserve"><value>Maus 4</value></data>
+  <data name="KeyMouse5" xml:space="preserve"><value>Maus 5</value></data>
+  <data name="PttHintKey" xml:space="preserve"><value>Leg noch eine Taste fest, sonst kann Push-to-Talk nicht senden.</value></data>
+  <data name="PttHintCalibrate" xml:space="preserve"><value>Leg noch die Position des Roblox-Mikroknopfs fest.</value></data>
+  <data name="PttButtonNotSet" xml:space="preserve"><value>Noch nicht festgelegt.</value></data>
+  <data name="PttButtonSet" xml:space="preserve"><value>Position gespeichert.</value></data>
+  <data name="PttCalibrating" xml:space="preserve"><value>Wechsle jetzt zu Roblox und klicke auf das Mikro-Symbol (30 s). Dieser Klick schaltet das Mikro einmal um – bloom berücksichtigt das.</value></data>
+  <data name="PttCalibrationTimeout" xml:space="preserve"><value>Kein Klick in Roblox erkannt. Versuch es noch einmal.</value></data>
+  <data name="PttCalibrationDone" xml:space="preserve"><value>Position gespeichert.</value></data>
+  <data name="DeviceDefault" xml:space="preserve"><value>Windows-Standard</value></data>
+  <data name="DeviceUsedByRoblox" xml:space="preserve"><value>von Roblox benutzt</value></data>
+  <data name="DeviceControlled" xml:space="preserve"><value>von bloom gesteuert</value></data>
+  <data name="DeviceAutomatic" xml:space="preserve"><value>Automatisch (das Mikrofon, das Roblox benutzt)</value></data>
+  <data name="MicTestRecording" xml:space="preserve"><value>Aufnahme läuft – sprich jetzt …</value></data>
+  <data name="MicTestPlaying" xml:space="preserve"><value>Wiedergabe …</value></data>
+  <data name="MicTestDone" xml:space="preserve"><value>Fertig.</value></data>
+  <data name="MicTestDoneMuted" xml:space="preserve"><value>Fertig. Hörst du nichts? Push-to-Talk hält das Mikrofon gerade stumm – halte beim Test die Taste.</value></data>
+  <data name="MicAccessDenied" xml:space="preserve"><value>Windows verweigert den Mikrofonzugriff für Desktop-Apps.</value></data>
+  <data name="MicTestFailed" xml:space="preserve"><value>Der Test ist fehlgeschlagen. Details im Log.</value></data>
+  <data name="PttConfirmTitle" xml:space="preserve"><value>Systemweit stummschalten?</value></data>
+  <data name="PttConfirmText" xml:space="preserve"><value>Diese Methode schaltet das Mikrofon in Windows stumm. Solange Roblox läuft und du die Taste nicht drückst, hören dich auch Discord und andere Apps nicht.</value></data>
+  <data name="PttConfirmYes" xml:space="preserve"><value>Verstanden, einschalten</value></data>
+  <data name="PttConfirmNo" xml:space="preserve"><value>Abbrechen</value></data>
 </root>

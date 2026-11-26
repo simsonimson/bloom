@@ -20,6 +20,8 @@ public sealed class BackupService(SqliteSettingsStore settings, IFavoritesStore 
         AppSettings.Keys.BootstrapperFailures,
         AppSettings.Keys.StartWithWindows,
         AppSettings.Keys.BootstrapperEnabled,
+        AppSettings.Keys.PttDeviceId,
+        AppSettings.Keys.PttButton,
     ];
 
     public async Task ExportAsync(string path)

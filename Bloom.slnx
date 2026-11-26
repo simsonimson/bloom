@@ -7,13 +7,16 @@
     </Project>
     <Project Path="src/desktop/Bloom.Core/Bloom.Core.csproj" />
     <Project Path="src/desktop/Bloom.Data/Bloom.Data.csproj" />
+    <Project Path="src/desktop/Bloom.Guard/Bloom.Guard.csproj" />
     <Project Path="src/desktop/Bloom.Launcher/Bloom.Launcher.csproj" />
     <Project Path="src/desktop/Bloom.Platform.Windows/Bloom.Platform.Windows.csproj" />
+    <Project Path="src/desktop/Bloom.Voice/Bloom.Voice.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Bloom.Activity.Tests/Bloom.Activity.Tests.csproj" />
     <Project Path="tests/Bloom.Core.Tests/Bloom.Core.Tests.csproj" />
     <Project Path="tests/Bloom.Data.Tests/Bloom.Data.Tests.csproj" />
     <Project Path="tests/Bloom.Launcher.Tests/Bloom.Launcher.Tests.csproj" />
+    <Project Path="tests/Bloom.Voice.Tests/Bloom.Voice.Tests.csproj" />
   </Folder>
 </Solution>

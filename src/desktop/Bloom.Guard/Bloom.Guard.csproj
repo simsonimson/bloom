@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Standalone helper without UI (Blueprint 6.4): watches bloom and restores the safe audio state. -->
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Bloom.Guard</RootNamespace>
+    <AssemblyName>Bloom.Guard</AssemblyName>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <ApplicationIcon>..\Bloom.App\Assets\bloom.ico</ApplicationIcon>
+    <NoWarn>$(NoWarn);CA1416</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Bloom.Voice\Bloom.Voice.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Bloom.Voice.Tests" />
+  </ItemGroup>
+</Project>

@@ -11,11 +11,13 @@ public sealed class UpdateService
     private const string RepositoryUrl = "https://github.com/simsonimson/bloom";
     private readonly ILogger<UpdateService> _logger;
     private readonly UpdateManager _manager;
+    private readonly VoiceCoordinator _voice;
     private UpdateInfo? _pending;
 
-    public UpdateService(AppSettings settings, ILogger<UpdateService> logger)
+    public UpdateService(AppSettings settings, VoiceCoordinator voice, ILogger<UpdateService> logger)
     {
         _logger = logger;
+        _voice = voice;
         var channel = settings.UpdateChannel;
         _manager = new UpdateManager(
             new GithubSource(RepositoryUrl, null, prerelease: channel != "stable"),
@@ -50,6 +52,8 @@ public sealed class UpdateService
         if (_pending is null) return;
         await _manager.DownloadUpdatesAsync(_pending, progress);
         _logger.LogInformation("Applying update {Version}", _pending.TargetFullRelease.Version);
+        // Restore the microphone and release Bloom.Guard before the files are replaced.
+        _voice.Exit();
         _manager.ApplyUpdatesAndRestart(_pending.TargetFullRelease);
     }
 }
