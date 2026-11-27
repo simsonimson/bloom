@@ -61,6 +61,9 @@ jobs:
       - name: Test (Connect)
         run: dotnet test tests/Bloom.Connect.Tests -c Release
 
+      - name: Test (Performance)
+        run: dotnet test tests/Bloom.Performance.Tests -c Release
+
       # Bloom.Guard ships next to bloom.exe and shares its self-contained runtime files.
       - name: Publish Bloom.Guard.exe
         run: dotnet publish src/desktop/Bloom.Guard/Bloom.Guard.csproj -c Release -r win-x64 --self-contained -o publish

@@ -41,6 +41,7 @@
     <ProjectReference Include="..\Bloom.Activity\Bloom.Activity.csproj" />
     <ProjectReference Include="..\Bloom.Voice\Bloom.Voice.csproj" />
     <ProjectReference Include="..\Bloom.Connect\Bloom.Connect.csproj" />
+    <ProjectReference Include="..\Bloom.Performance\Bloom.Performance.csproj" />
   </ItemGroup>
 
   <ItemGroup>

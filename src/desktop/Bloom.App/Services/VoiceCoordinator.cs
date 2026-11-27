@@ -30,7 +30,7 @@ public sealed class VoiceCoordinator : IDisposable
         _cleanExit = new EventWaitHandle(false, EventResetMode.ManualReset, GuardNames.CleanEvent(Environment.ProcessId));
         _subscription = events.Subscribe<SettingChanged>(e =>
         {
-            if (AppSettings.Keys.IsVoiceKey(e.Key)) _voice.UpdateConfig(_settings.PttConfig);
+            if (AppSettings.Keys.IsVoiceKey(e.Key)) _voice.UpdateConfig(Config);
         });
     }
 
@@ -38,9 +38,25 @@ public sealed class VoiceCoordinator : IDisposable
     public void Start(IEnumerable<int> runningRobloxPids)
     {
         TakeOverFromPreviousGuard();
-        _voice.Start(_settings.PttConfig, runningRobloxPids);
+        _voice.Start(Config, runningRobloxPids);
         StartGuard();
     }
+
+    private bool? _pttOverride;
+
+    /// <summary>A game profile can switch push-to-talk on or off for that game; null = the normal setting.</summary>
+    public bool? PttOverride
+    {
+        get => _pttOverride;
+        set
+        {
+            if (_pttOverride == value) return;
+            _pttOverride = value;
+            _voice.UpdateConfig(Config);
+        }
+    }
+
+    private Bloom.Core.Voice.PttConfig Config => _settings.PttConfig with { Enabled = _pttOverride ?? _settings.PttEnabled };
 
     /// <summary>Clean exit. Safe to call more than once.</summary>
     public void Exit()

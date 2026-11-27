@@ -2,6 +2,7 @@
     x:Class="Bloom.App.Views.SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Bloom.App.Views"
     Background="{StaticResource BloomBgBrush}">
 
     <ScrollViewer Style="{StaticResource PageScrollStyle}">
@@ -34,6 +35,42 @@
                         <ComboBoxItem x:Uid="LanguageEnglish" Content="English" />
                     </ComboBox>
                     <TextBlock x:Uid="SettingsLanguageHint" Text="Wird beim nächsten Start übernommen." Style="{StaticResource MutedTextStyle}" />
+                </StackPanel>
+            </Border>
+
+            <TextBlock x:Uid="SettingsHotkeysSection" Text="Tastenkürzel" Style="{StaticResource SectionTitleTextStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="8">
+                    <TextBlock x:Uid="SettingsHotkeysHint" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap"
+                               Text="Funktionieren überall, auch im Spiel. Jede Kombination braucht Strg, Alt, Umschalt oder Win, damit sie nicht mit Spieltasten kollidiert." />
+                    <ItemsControl ItemsSource="{x:Bind Hotkeys.Rows}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="local:HotkeyRow">
+                                <Grid Padding="0,6" ColumnSpacing="8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="200" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel VerticalAlignment="Center">
+                                        <TextBlock Text="{x:Bind Title}" Style="{StaticResource BodyTextStyle}" />
+                                        <TextBlock x:Uid="HotkeyConflict" Text="Wird schon von einem anderen Programm benutzt." Style="{StaticResource MutedTextStyle}"
+                                                   Foreground="{StaticResource BloomWarningBrush}" Visibility="{x:Bind Conflict, Mode=OneWay}" />
+                                    </StackPanel>
+                                    <Border Grid.Column="1" Padding="10,5" CornerRadius="6" Background="{StaticResource BloomSurfaceRaisedBrush}"
+                                            BorderBrush="{StaticResource BloomBorderBrush}" BorderThickness="1">
+                                        <TextBlock Text="{x:Bind Combo, Mode=OneWay}" FontFamily="{StaticResource BloomBrandFont}" FontSize="12" TextTrimming="CharacterEllipsis" />
+                                    </Border>
+                                    <Button Grid.Column="2" x:Uid="HotkeyChange" Content="Ändern" Tag="{x:Bind}" Click="OnChangeHotkey" />
+                                    <Button Grid.Column="3" Tag="{x:Bind}" Click="OnClearHotkey" Padding="10,4">
+                                        <FontIcon Glyph="&#xE74D;" FontSize="12" />
+                                    </Button>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <Button x:Uid="HotkeysReset" Content="Standard wiederherstellen" Click="OnResetHotkeys" />
                 </StackPanel>
             </Border>
 

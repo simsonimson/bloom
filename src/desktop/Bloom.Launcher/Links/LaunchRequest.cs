@@ -25,6 +25,12 @@ public sealed record LaunchRequest
 
     public static LaunchRequest ForPlace(long placeId) => new() { PlaceId = placeId };
 
+    public static LaunchRequest ForServer(long placeId, string jobId) => new() { PlaceId = placeId, GameInstanceId = jobId };
+
+    /// <summary>Web link that opens Roblox in a given server (shareable, also for people without bloom).</summary>
+    public static string ServerWebLink(long placeId, string jobId) =>
+        $"https://www.roblox.com/games/start?placeId={placeId}&gameInstanceId={Uri.EscapeDataString(jobId)}";
+
     /// <summary>
     /// Official deep link (create.roblox.com/docs/production/promotion/deeplinks):
     /// roblox://placeId=&lt;id&gt;[&amp;gameInstanceId|accessCode|linkCode|launchData]  or  roblox://userId=&lt;id&gt;.

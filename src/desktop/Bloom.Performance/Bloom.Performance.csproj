@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Bloom.Performance</RootNamespace>
+    <NoWarn>$(NoWarn);CA1416</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Bloom.Core\Bloom.Core.csproj" />
+    <ProjectReference Include="..\Bloom.Platform.Windows\Bloom.Platform.Windows.csproj" />
+    <ProjectReference Include="..\Bloom.Launcher\Bloom.Launcher.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Bloom.Performance.Tests" />
+  </ItemGroup>
+</Project>

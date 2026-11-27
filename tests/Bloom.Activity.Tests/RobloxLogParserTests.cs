@@ -42,4 +42,11 @@ public sealed class RobloxLogParserTests
     [InlineData("random line")]
     [InlineData("! Joining game 'not-a-guid' place 1")]
     public void Ignores_other_lines(string line) => Assert.Null(RobloxLogParser.Parse(line));
+
+    [Fact]
+    public void Parses_udmux_relay_address()
+    {
+        var e = RobloxLogParser.Parse("x [FLog::Network] UDMUX Address = 128.116.50.7, Port = 49152 | RCC Server Address = 10.1.2.3, Port = 62000");
+        Assert.Equal("128.116.50.7", Assert.IsType<UdmuxAddress>(e).Address);
+    }
 }

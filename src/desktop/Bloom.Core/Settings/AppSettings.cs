@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Bloom.Core.Voice;
+using Bloom.Core.Performance;
 
 namespace Bloom.Core.Settings;
 
@@ -57,6 +58,21 @@ public sealed class AppSettings
         public const string DiscordShowJoin = "discord.showJoin";
         public const string DiscordAppId = "discord.appId";
         public const string RobloxClientId = "roblox.oauthClientId";
+
+        public const string PerfModeEnabled = "perf.modeEnabled";
+        public const string PerfPriority = "perf.priority";
+        public const string PerfPowerPlan = "perf.powerPlan";
+        public const string PerfGpuHighPerformance = "perf.gpuHighPerformance";
+        public const string PerfRestorePowerScheme = "perf.restorePowerScheme";
+        public const string PerfGpuBackup = "perf.gpuPreferenceBackup";
+        public const string PerfPreset = "perf.preset";
+        public const string PerfFpsCap = "perf.fpsCap";
+        public const string PerfOverlay = "perf.overlay";
+        public const string PerfOverlayCorner = "perf.overlayCorner";
+        public const string ServerGeolocation = "server.geolocation";
+        public const string Hotkeys = "hotkeys";
+
+        public static bool IsPerformanceKey(string key) => key.StartsWith("perf.", StringComparison.Ordinal);
 
         public static bool IsDiscordKey(string key) => key.StartsWith("discord.", StringComparison.Ordinal);
 
@@ -233,6 +249,93 @@ public sealed class AppSettings
         get => Get<string?>(Keys.RobloxClientId, null);
         set => Set(Keys.RobloxClientId, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
     }
+
+    /// <summary>Raise priority, power plan and GPU preference while Roblox runs (restored afterwards).</summary>
+    public bool PerfModeEnabled
+    {
+        get => Get(Keys.PerfModeEnabled, false);
+        set => Set(Keys.PerfModeEnabled, value);
+    }
+
+    public ProcessPriority PerfPriority
+    {
+        get => Get(Keys.PerfPriority, ProcessPriority.AboveNormal);
+        set => Set(Keys.PerfPriority, value);
+    }
+
+    public bool PerfPowerPlan
+    {
+        get => Get(Keys.PerfPowerPlan, true);
+        set => Set(Keys.PerfPowerPlan, value);
+    }
+
+    public bool PerfGpuHighPerformance
+    {
+        get => Get(Keys.PerfGpuHighPerformance, true);
+        set => Set(Keys.PerfGpuHighPerformance, value);
+    }
+
+    /// <summary>Power scheme to restore if bloom ended while the performance mode was active.</summary>
+    public Guid? PerfRestorePowerScheme
+    {
+        get => Get<Guid?>(Keys.PerfRestorePowerScheme, null);
+        set => Set(Keys.PerfRestorePowerScheme, value);
+    }
+
+    /// <summary>Roblox executable path → previous GPU preference value (null = there was none).</summary>
+    public Dictionary<string, string?> PerfGpuBackup
+    {
+        get => Get(Keys.PerfGpuBackup, new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase));
+        set => Set(Keys.PerfGpuBackup, value);
+    }
+
+    public GraphicsPreset PerfPreset
+    {
+        get => Get(Keys.PerfPreset, GraphicsPreset.Default);
+        set => Set(Keys.PerfPreset, value);
+    }
+
+    /// <summary>Frame rate limit; 0 = whatever the preset says.</summary>
+    public int PerfFpsCap
+    {
+        get => Get(Keys.PerfFpsCap, 0);
+        set => Set(Keys.PerfFpsCap, value);
+    }
+
+    public bool PerfOverlay
+    {
+        get => Get(Keys.PerfOverlay, false);
+        set => Set(Keys.PerfOverlay, value);
+    }
+
+    public OverlayCorner PerfOverlayCorner
+    {
+        get => Get(Keys.PerfOverlayCorner, OverlayCorner.TopRight);
+        set => Set(Keys.PerfOverlayCorner, value);
+    }
+
+    /// <summary>Opt-in: the server IP is sent to ipinfo.io to show its location (E4).</summary>
+    public bool ServerGeolocation
+    {
+        get => Get(Keys.ServerGeolocation, false);
+        set => Set(Keys.ServerGeolocation, value);
+    }
+
+    public Dictionary<HotkeyAction, HotkeyBinding?> Hotkeys
+    {
+        get => Get(Keys.Hotkeys, DefaultHotkeys());
+        set => Set(Keys.Hotkeys, value);
+    }
+
+    public static Dictionary<HotkeyAction, HotkeyBinding?> DefaultHotkeys() => new()
+    {
+        [HotkeyAction.Rejoin] = new(HotkeyModifiers.Control | HotkeyModifiers.Alt, 0x52),               // Ctrl+Alt+R
+        [HotkeyAction.CopyServerLink] = new(HotkeyModifiers.Control | HotkeyModifiers.Alt, 0x4C),       // Ctrl+Alt+L
+        [HotkeyAction.ToggleOverlay] = new(HotkeyModifiers.Control | HotkeyModifiers.Alt, 0x4F),        // Ctrl+Alt+O
+        [HotkeyAction.TogglePerformanceMode] = new(HotkeyModifiers.Control | HotkeyModifiers.Alt, 0x50), // Ctrl+Alt+P
+        [HotkeyAction.TogglePushToTalk] = null,
+        [HotkeyAction.ShowBloom] = new(HotkeyModifiers.Control | HotkeyModifiers.Alt, 0x42),            // Ctrl+Alt+B
+    };
 
     public PttConfig PttConfig => new(PttEnabled, PttMode, PttKey, PttMethod, PttForegroundOnly, PttDeviceId, PttOnRobloxExit, PttButton, PttSounds);
 

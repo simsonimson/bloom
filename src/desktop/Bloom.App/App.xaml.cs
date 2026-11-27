@@ -4,6 +4,7 @@ using Bloom.Core.Events;
 using Bloom.Core.Settings;
 using Bloom.Core.Voice;
 using Bloom.Voice;
+using Bloom.Core.Performance;
 using Bloom.Connect.Roblox;
 using Bloom.Launcher.Links;
 using Bloom.Platform.Windows;
@@ -67,6 +68,7 @@ public partial class App : Application
         CreateTray();
         SubscribeLaunchFeedback();
         SubscribeVoiceFeedback();
+        SubscribeHotkeys();
         AppServices.StartBackground(Services);
 
         // Returning from the Roblox sign-in page in a fresh bloom process: the sign-in that started
@@ -123,7 +125,7 @@ public partial class App : Application
         if (_exiting) return;
         _exiting = true;
         _logger?.LogInformation("bloom exiting");
-        Services.GetRequiredService<VoiceCoordinator>().Exit();
+        AppServices.CleanExit(Services);
         _tray?.Dispose();
         _main?.CloseForExit();
         _intro?.Close();
@@ -168,6 +170,46 @@ public partial class App : Application
         items.Add(null);
         items.Add(new(Strings.Get("TrayQuit"), Quit));
         return items;
+    }
+
+    private void SubscribeHotkeys()
+    {
+        var events = Services.GetRequiredService<IEventBus>();
+        var settings = Services.GetRequiredService<AppSettings>();
+        var control = Services.GetRequiredService<RobloxControl>();
+        events.Subscribe<HotkeyPressed>(e => Dispatch(async () =>
+        {
+            try
+            {
+            switch (e.Action)
+            {
+                case HotkeyAction.Rejoin:
+                    if (!await control.RejoinAsync(sameServer: true)) _tray?.ShowNotification("bloom", Strings.Get("ServerNoGame"));
+                    break;
+                case HotkeyAction.CopyServerLink:
+                    _tray?.ShowNotification("bloom", Strings.Get(control.CopyServerLink() ? "ServerLinkCopied" : "ServerNoGame"));
+                    break;
+                case HotkeyAction.ToggleOverlay:
+                    settings.PerfOverlay = !settings.PerfOverlay;
+                    break;
+                case HotkeyAction.TogglePerformanceMode:
+                    settings.PerfModeEnabled = !settings.PerfModeEnabled;
+                    _tray?.ShowNotification("bloom", Strings.Get(settings.PerfModeEnabled ? "PerfModeOnNotice" : "PerfModeOffNotice"));
+                    break;
+                case HotkeyAction.TogglePushToTalk:
+                    if (!settings.PttEnabled && !VoiceText.ReadyToEnable(settings)) ShowMainWindow();
+                    else settings.PttEnabled = !settings.PttEnabled;
+                    break;
+                case HotkeyAction.ShowBloom:
+                    ShowMainWindow();
+                    break;
+            }
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogWarning(ex, "Hotkey action {Action} failed", e.Action);
+            }
+        }));
     }
 
     private void SubscribeVoiceFeedback()

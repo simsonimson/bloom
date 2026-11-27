@@ -48,6 +48,7 @@ public sealed class VoiceService : IDisposable
     private string? _inputError;
     private volatile VoiceSnapshot _snapshot = VoiceSnapshot.Empty;
     private volatile TaskCompletionSource<int>? _keyCapture;
+    private volatile TaskCompletionSource<(int Modifiers, int Key)>? _comboCapture;
     private volatile TaskCompletionSource<ButtonPosition?>? _calibration;
     private volatile bool _stopping;
 
@@ -98,6 +99,18 @@ public sealed class VoiceService : IDisposable
         var tcs = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
         ct.Register(() => tcs.TrySetResult(0));
         _keyCapture = tcs;
+        return tcs.Task;
+    }
+
+    /// <summary>
+    /// Next key together with the modifiers held at that moment (Win32 MOD_* flags: Alt 1, Ctrl 2,
+    /// Shift 4, Win 8). Modifier keys alone do not end the capture. Esc cancels and returns (0, 0).
+    /// </summary>
+    public Task<(int Modifiers, int Key)> CaptureComboAsync(CancellationToken ct)
+    {
+        var tcs = new TaskCompletionSource<(int, int)>(TaskCreationOptions.RunContinuationsAsynchronously);
+        ct.Register(() => tcs.TrySetResult((0, 0)));
+        _comboCapture = tcs;
         return tcs.Task;
     }
 
@@ -254,8 +267,26 @@ public sealed class VoiceService : IDisposable
 
     // ------------------------------------------------------------------ input thread
 
+    private static bool IsModifier(int vk) => vk is 0x10 or 0x11 or 0x12 or 0x5B or 0x5C or (>= 0xA0 and <= 0xA5);
+
     private void OnInput(RawInputEvent e)
     {
+        if (_comboCapture is { } combo && e.Down && e.VirtualKey > 0x06 && !IsModifier(e.VirtualKey))
+        {
+            _comboCapture = null;
+            if (e.VirtualKey == VkEscape)
+            {
+                combo.TrySetResult((0, 0));
+                return;
+            }
+            var modifiers = (RawInputListener.IsPhysicallyDown(0x12) ? 1 : 0)
+                            | (RawInputListener.IsPhysicallyDown(0x11) ? 2 : 0)
+                            | (RawInputListener.IsPhysicallyDown(0x10) ? 4 : 0)
+                            | (RawInputListener.IsPhysicallyDown(0x5B) || RawInputListener.IsPhysicallyDown(0x5C) ? 8 : 0);
+            combo.TrySetResult((modifiers, e.VirtualKey));
+            return;
+        }
+
         if (_keyCapture is { } capture && e.Down && e.VirtualKey != VkLeftButton)
         {
             _keyCapture = null;

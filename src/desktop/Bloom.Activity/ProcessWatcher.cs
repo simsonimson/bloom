@@ -58,7 +58,8 @@ public sealed class ProcessWatcher : IDisposable
                     var started = DateTimeOffset.Now;
                     try
                     {
-                        path = process.MainModule?.FileName;
+                        // Least-privilege query; never reads Roblox's memory (unlike Process.MainModule).
+                        path = Bloom.Platform.Windows.Hardware.ProcessInfo.ImagePath(process.Id);
                         started = process.StartTime;
                     }
                     catch (Exception)

@@ -19,6 +19,8 @@ public sealed partial class MainWindow : Window
         ["overview"] = typeof(OverviewPage),
         ["play"] = typeof(PlayPage),
         ["client"] = typeof(ClientPage),
+        ["performance"] = typeof(PerformancePage),
+        ["servers"] = typeof(ServersPage),
         ["voice"] = typeof(VoicePage),
         ["connections"] = typeof(ConnectionsPage),
         ["settings"] = typeof(SettingsPage),

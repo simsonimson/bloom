@@ -21,6 +21,7 @@ public sealed class ClientViewModel : ObservableObject, IDisposable
     private readonly RobloxBootstrapper _bootstrapper;
     private readonly FastFlagService _fastFlags;
     private readonly BackupService _backup;
+    private readonly LaunchPreparation _preparation;
     private readonly ILogger<ClientViewModel> _logger;
     private readonly IDisposable _subscription;
     private FastFlagAllowlist _allowlist = FastFlagAllowlist.Empty;
@@ -34,8 +35,9 @@ public sealed class ClientViewModel : ObservableObject, IDisposable
     private string _backupStatus = "";
 
     public ClientViewModel(AppSettings settings, LaunchCoordinator launcher, RobloxBootstrapper bootstrapper,
-        FastFlagService fastFlags, BackupService backup, IEventBus events, ILogger<ClientViewModel> logger)
+        FastFlagService fastFlags, BackupService backup, LaunchPreparation preparation, IEventBus events, ILogger<ClientViewModel> logger)
     {
+        _preparation = preparation;
         _settings = settings;
         _launcher = launcher;
         _bootstrapper = bootstrapper;
@@ -152,7 +154,7 @@ public sealed class ClientViewModel : ObservableObject, IDisposable
         var client = await _launcher.UpdateClientAsync();
         if (client is not null)
         {
-            try { _fastFlags.Apply(client.Directory); } catch (Exception ex) { _logger.LogWarning(ex, "Applying FastFlags failed"); }
+            await _preparation.ApplyFlagsAsync(client.Directory);
             ProgressText = Strings.Format("ClientInstalled", client.VersionGuid);
         }
         RefreshStatus();
@@ -225,7 +227,7 @@ public sealed class ClientViewModel : ObservableObject, IDisposable
         var target = _settings.BootstrapperEnabled ? _bootstrapper.GetInstalled()?.Directory : RobloxInstallation.FindOfficial().VersionDirectory;
         if (target is not null)
         {
-            try { _fastFlags.Apply(target, flags); } catch (Exception ex) { _logger.LogWarning(ex, "Applying FastFlags failed"); }
+            _ = _preparation.ApplyFlagsAsync(target);
         }
         FlagsStatus = Strings.Get("FlagsSaved");
         LoadFlags();

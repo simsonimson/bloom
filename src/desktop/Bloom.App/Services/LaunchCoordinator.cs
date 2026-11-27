@@ -32,10 +32,12 @@ public sealed class LaunchCoordinator
     private readonly IEventBus _events;
     private readonly ILogger<LaunchCoordinator> _logger;
     private readonly SemaphoreSlim _busy = new(1, 1);
+    private readonly LaunchPreparation _preparation;
 
     public LaunchCoordinator(AppSettings settings, RobloxBootstrapper bootstrapper, FastFlagService fastFlags,
-        IEventBus events, ILogger<LaunchCoordinator> logger)
+        LaunchPreparation preparation, IEventBus events, ILogger<LaunchCoordinator> logger)
     {
+        _preparation = preparation;
         _settings = settings;
         _bootstrapper = bootstrapper;
         _fastFlags = fastFlags;
@@ -59,7 +61,7 @@ public sealed class LaunchCoordinator
         {
             _logger.LogInformation("Launch requested: {Request}", request.ToLogString());
             if (_settings.BootstrapperEnabled && await TryBootstrapperAsync(request)) return;
-            LaunchOfficial(request);
+            await LaunchOfficialAsync(request);
         }
         finally
         {
@@ -94,7 +96,7 @@ public sealed class LaunchCoordinator
         try
         {
             var client = await _bootstrapper.EnsureCurrentAsync(Progress());
-            TryApplyFastFlags(client.Directory);
+            await _preparation.PrepareAsync(client.Directory, client.PlayerExe, request.PlaceId);
 
             _events.Publish(new LaunchProgressChanged(LaunchPhase.Starting, 1));
             using var process = _bootstrapper.Launch(client, request);
@@ -122,11 +124,12 @@ public sealed class LaunchCoordinator
         }
     }
 
-    private void LaunchOfficial(LaunchRequest request)
+    private async Task LaunchOfficialAsync(LaunchRequest request)
     {
         var backup = _settings.ProtocolBackup;
         var official = RobloxInstallation.FindOfficial(BloomExecutable, backup.GetValueOrDefault("roblox-player"));
-        if (official.VersionDirectory is not null) TryApplyFastFlags(official.VersionDirectory);
+        if (official.VersionDirectory is not null)
+            await _preparation.PrepareAsync(official.VersionDirectory, official.PlayerExe, request.PlaceId);
 
         var argument = request.OpensAppOnly ? null : request.ToDeepLink();
         try
@@ -219,12 +222,6 @@ public sealed class LaunchCoordinator
         {
             _logger.LogWarning(ex, "Protocol check failed");
         }
-    }
-
-    private void TryApplyFastFlags(string versionDirectory)
-    {
-        try { _fastFlags.Apply(versionDirectory); }
-        catch (Exception ex) { _logger.LogWarning(ex, "FastFlags could not be written to {Dir}", versionDirectory); }
     }
 
     private IProgress<BootstrapProgress> Progress() => new SyncProgress<BootstrapProgress>(p =>
