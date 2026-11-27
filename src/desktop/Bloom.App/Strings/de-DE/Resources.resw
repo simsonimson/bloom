@@ -204,7 +204,7 @@
   <data name="RobloxSignInDenied" xml:space="preserve"><value>Die Roblox-Anmeldung wurde abgebrochen.</value></data>
   <data name="RobloxSignInExpired" xml:space="preserve"><value>Diese Anmeldung ist nicht mehr gültig. Starte sie in bloom unter „Verbindungen“ neu.</value></data>
   <data name="RobloxSignInFailed" xml:space="preserve"><value>Die Roblox-Anmeldung ist fehlgeschlagen. Details im Log.</value></data>
-  <data name="RobloxSigningIn" xml:space="preserve"><value>Anmeldung läuft …</value></data>
+  <data name="RobloxSigningInStatus" xml:space="preserve"><value>Anmeldung läuft …</value></data>
   <data name="DiscordConnectedAs" xml:space="preserve"><value>Verbunden als {0}</value></data>
   <data name="DiscordDisabled" xml:space="preserve"><value>Aus</value></data>
   <data name="DiscordNotConfigured" xml:space="preserve"><value>Keine Discord-App hinterlegt (siehe „Erweitert“).</value></data>

@@ -204,7 +204,7 @@
   <data name="RobloxSignInDenied" xml:space="preserve"><value>The Roblox sign-in was cancelled.</value></data>
   <data name="RobloxSignInExpired" xml:space="preserve"><value>This sign-in is no longer valid. Start it again in bloom under “Connections”.</value></data>
   <data name="RobloxSignInFailed" xml:space="preserve"><value>The Roblox sign-in failed. See the log for details.</value></data>
-  <data name="RobloxSigningIn" xml:space="preserve"><value>Signing in …</value></data>
+  <data name="RobloxSigningInStatus" xml:space="preserve"><value>Signing in …</value></data>
   <data name="DiscordConnectedAs" xml:space="preserve"><value>Connected as {0}</value></data>
   <data name="DiscordDisabled" xml:space="preserve"><value>Off</value></data>
   <data name="DiscordNotConfigured" xml:space="preserve"><value>No Discord app set (see “Advanced”).</value></data>

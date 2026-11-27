@@ -105,7 +105,7 @@ public sealed class OverviewViewModel : ObservableObject, IDisposable
     {
         RobloxAccountState.SignedIn => _account.Profile is { } p ? $"{p.DisplayName} (@{p.Username})" : Strings.Get("OverviewConnected"),
         RobloxAccountState.Expired => Strings.Get("OverviewAccountExpired"),
-        RobloxAccountState.SigningIn => Strings.Get("RobloxSigningIn"),
+        RobloxAccountState.SigningIn => Strings.Get("RobloxSigningInStatus"),
         RobloxAccountState.NotConfigured => Strings.Get("OverviewNotSetUp"),
         _ => Strings.Get("OverviewNotConnected"),
     };
