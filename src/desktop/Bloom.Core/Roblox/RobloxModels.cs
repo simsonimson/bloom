@@ -21,7 +21,9 @@ public sealed record ActivityState(
     DateTimeOffset? SessionStartedAt,
     long? PlaceId,
     string? JobId,
-    ExperienceInfo? Experience)
+    ExperienceInfo? Experience,
+    string? ServerAddress = null,
+    long? UniverseId = null)
 {
     public static ActivityState Idle { get; } = new(false, null, null, null, null);
 }

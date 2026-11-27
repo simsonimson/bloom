@@ -12,6 +12,7 @@ using Bloom.Voice;
 using Bloom.Connect.Discord;
 using Bloom.Connect.Roblox;
 using Bloom.Platform.Windows;
+using Bloom.Performance;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -106,6 +107,34 @@ public static class AppServices
             () => BuildInfo.RobloxClientId(sp.GetRequiredService<AppSettings>()),
             sp.GetRequiredService<IEventBus>(), LogTo<RobloxAccountService>(sp), OpenBrowser));
 
+        // Performance & utility
+        services.AddSingleton(_ => new GameProfileStore(paths.Data));
+        services.AddSingleton(sp => new PerformanceModeService(
+            sp.GetRequiredService<AppSettings>(), sp.GetRequiredService<IEventBus>(), LogTo<PerformanceModeService>(sp)));
+        services.AddSingleton(sp => new PerformanceMonitor(sp.GetRequiredService<IEventBus>(), LogTo<PerformanceMonitor>(sp)));
+        services.AddSingleton(sp =>
+        {
+            var bootstrapper = sp.GetRequiredService<RobloxBootstrapper>();
+            var processes = sp.GetRequiredService<ProcessWatcher>();
+            var launcher = sp.GetRequiredService<LaunchCoordinator>();
+            return new CleanupService(
+                () => new CleanupRoots(RobloxInstallation.OfficialLogs, Path.Combine(Path.GetTempPath(), "Roblox"),
+                    Path.Combine(paths.Roblox, "Downloads"), bootstrapper.VersionsRoot, bootstrapper.GetInstalled()?.Directory),
+                category => category switch
+                {
+                    CleanupCategory.RobloxCache => processes.IsRobloxRunning,
+                    CleanupCategory.OldVersions or CleanupCategory.BloomDownloads => launcher.IsBusy,
+                    _ => false,
+                });
+        });
+        services.AddSingleton(sp => new ServerLocator(sp.GetRequiredKeyedService<HttpClient>(ApiClient)));
+        services.AddSingleton(sp => new ServerBrowser(sp.GetRequiredKeyedService<HttpClient>(ApiClient)));
+        services.AddSingleton<LaunchPreparation>();
+        services.AddSingleton<RobloxControl>();
+        services.AddSingleton<ProfileCoordinator>();
+        services.AddSingleton<OverlayController>();
+        services.AddSingleton<HotkeyService>();
+
         // App
         services.AddSingleton<UpdateService>();
         services.AddSingleton<BackupService>();
@@ -126,6 +155,11 @@ public static class AppServices
         var processes = services.GetRequiredService<ProcessWatcher>();
         // Voice subscribes to process events before the watcher reports the first Roblox process.
         services.GetRequiredService<VoiceCoordinator>().Start(processes.RunningProcessIds);
+        services.GetRequiredService<PerformanceModeService>().Start(processes.RunningProcessIds);
+        services.GetRequiredService<PerformanceMonitor>().Start(processes.RunningProcessIds, services.GetRequiredService<ActivityTracker>().State);
+        services.GetRequiredService<OverlayController>().Start(processes.RunningProcessIds);
+        services.GetRequiredService<ProfileCoordinator>();
+        services.GetRequiredService<HotkeyService>().Start();
         processes.Start();
         services.GetRequiredService<LaunchCoordinator>().EnsureProtocolRegistration();
 
@@ -141,6 +175,13 @@ public static class AppServices
             if (AppSettings.Keys.IsDiscordKey(e.Key) || e.Key == AppSettings.Keys.LogDetectionEnabled) presence.Signal();
             if (e.Key == AppSettings.Keys.RobloxClientId) _ = account.InitializeAsync();
         });
+    }
+
+    /// <summary>Clean exit and update restart: microphone, power plan and guard are restored first.</summary>
+    public static void CleanExit(IServiceProvider services)
+    {
+        try { services.GetRequiredService<PerformanceModeService>().Shutdown(); } catch { }
+        services.GetRequiredService<VoiceCoordinator>().Exit();
     }
 
     /// <summary>Opens a URL in the default browser.</summary>

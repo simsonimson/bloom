@@ -6,6 +6,8 @@ public abstract record LogEvent;
 public sealed record JoiningGame(string JobId, long PlaceId, string? ServerAddress) : LogEvent;
 public sealed record JoiningUniverse(long UniverseId) : LogEvent;
 public sealed record JoinedServer : LogEvent;
+/// <summary>Public relay address of the game server (the "Joining game … at" address can be internal).</summary>
+public sealed record UdmuxAddress(string Address) : LogEvent;
 public sealed record Disconnected : LogEvent;
 public sealed record Teleporting : LogEvent;
 public sealed record LeavingGame : LogEvent;
@@ -35,6 +37,12 @@ public static partial class RobloxLogParser
             return m.Success && long.TryParse(m.Groups[1].Value, out var universe) ? new JoiningUniverse(universe) : null;
         }
 
+        if (line.Contains("[FLog::Network] UDMUX Address = ", StringComparison.Ordinal))
+        {
+            var m = UdmuxPattern().Match(line);
+            return m.Success ? new UdmuxAddress(m.Groups[1].Value) : null;
+        }
+
         if (line.Contains("[FLog::Network] serverId:", StringComparison.Ordinal)) return new JoinedServer();
         if (line.Contains("[FLog::Network] Time to disconnect replication data:", StringComparison.Ordinal)) return new Disconnected();
         if (line.Contains("[FLog::SingleSurfaceApp] initiateTeleport", StringComparison.Ordinal)) return new Teleporting();
@@ -44,6 +52,9 @@ public static partial class RobloxLogParser
 
     [GeneratedRegex(@"! Joining game '([0-9a-fA-F\-]{36})' place ([0-9]+)(?: at ([0-9\.]+))?")]
     private static partial Regex JoiningGamePattern();
+
+    [GeneratedRegex(@"UDMUX Address = ([0-9]{1,3}(?:\.[0-9]{1,3}){3}), Port")]
+    private static partial Regex UdmuxPattern();
 
     [GeneratedRegex(@"universeid:([0-9]+)", RegexOptions.IgnoreCase)]
     private static partial Regex UniversePattern();

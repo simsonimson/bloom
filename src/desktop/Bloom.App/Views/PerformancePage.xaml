@@ -1,0 +1,198 @@
+<Page
+    x:Class="Bloom.App.Views.PerformancePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Bloom.App.Views"
+    Background="{StaticResource BloomBgBrush}">
+
+    <ScrollViewer Style="{StaticResource PageScrollStyle}">
+        <StackPanel MaxWidth="960" HorizontalAlignment="Stretch">
+            <TextBlock x:Uid="PerfTitle" Text="Leistung" Style="{StaticResource PageTitleTextStyle}" />
+
+            <!-- Live stats -->
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="12">
+                    <Grid ColumnSpacing="24">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="CPU" Style="{StaticResource MutedTextStyle}" />
+                            <TextBlock Text="{x:Bind ViewModel.CpuText, Mode=OneWay}" FontSize="22" FontFamily="{StaticResource BloomBrandFont}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="GPU" Style="{StaticResource MutedTextStyle}" />
+                            <TextBlock Text="{x:Bind ViewModel.GpuText, Mode=OneWay}" FontSize="22" FontFamily="{StaticResource BloomBrandFont}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock x:Uid="PerfRam" Text="Arbeitsspeicher" Style="{StaticResource MutedTextStyle}" />
+                            <TextBlock Text="{x:Bind ViewModel.RamText, Mode=OneWay}" FontSize="22" FontFamily="{StaticResource BloomBrandFont}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="3">
+                            <TextBlock x:Uid="PerfGpuMemory" Text="Grafikspeicher" Style="{StaticResource MutedTextStyle}" />
+                            <TextBlock Text="{x:Bind ViewModel.GpuMemoryText, Mode=OneWay}" FontSize="22" FontFamily="{StaticResource BloomBrandFont}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="4">
+                            <TextBlock Text="Ping" Style="{StaticResource MutedTextStyle}" />
+                            <TextBlock Text="{x:Bind ViewModel.PingText, Mode=OneWay}" FontSize="22" FontFamily="{StaticResource BloomBrandFont}" />
+                        </StackPanel>
+                    </Grid>
+                    <TextBlock x:Uid="PerfNoRoblox" Text="Werte erscheinen, sobald Roblox läuft." Style="{StaticResource MutedTextStyle}"
+                               Visibility="{x:Bind ViewModel.NoSample, Mode=OneWay}" />
+                    <TextBlock x:Uid="PerfStatsHint" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap"
+                               Text="Gemessen von Windows, nicht im Spiel. Ping geht an den Roblox-Server und klappt nicht bei jedem Server. FPS zeigt Roblox selbst mit Shift+F5." />
+                    <Grid ColumnSpacing="12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ToggleSwitch x:Uid="PerfOverlay" Header="Kleine Anzeige über Roblox einblenden" IsOn="{x:Bind ViewModel.Overlay, Mode=TwoWay}" />
+                        <ComboBox Grid.Column="1" x:Uid="PerfOverlayCorner" Header="Position" MinWidth="160" VerticalAlignment="Bottom"
+                                  SelectedIndex="{x:Bind ViewModel.OverlayCornerIndex, Mode=TwoWay}" IsEnabled="{x:Bind ViewModel.Overlay, Mode=OneWay}">
+                            <ComboBoxItem x:Uid="CornerTopRight" Content="Oben rechts" />
+                            <ComboBoxItem x:Uid="CornerTopLeft" Content="Oben links" />
+                            <ComboBoxItem x:Uid="CornerBottomRight" Content="Unten rechts" />
+                            <ComboBoxItem x:Uid="CornerBottomLeft" Content="Unten links" />
+                        </ComboBox>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Performance mode -->
+            <TextBlock x:Uid="PerfModeSection" Text="Leistungsmodus" Style="{StaticResource SectionTitleTextStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="12">
+                    <ToggleSwitch x:Uid="PerfModeToggle" Header="Während Roblox läuft auf Leistung trimmen" IsOn="{x:Bind ViewModel.ModeEnabled, Mode=TwoWay}" />
+                    <TextBlock Text="{x:Bind ViewModel.ModeStatus, Mode=OneWay}" Style="{StaticResource BodyTextStyle}" TextWrapping="Wrap" />
+                    <ComboBox x:Uid="PerfPriority" Header="Priorität von Roblox" MinWidth="240" SelectedIndex="{x:Bind ViewModel.PriorityIndex, Mode=TwoWay}">
+                        <ComboBoxItem x:Uid="PriorityNormal" Content="Normal" />
+                        <ComboBoxItem x:Uid="PriorityAboveNormal" Content="Höher als normal (empfohlen)" />
+                        <ComboBoxItem x:Uid="PriorityHigh" Content="Hoch" />
+                    </ComboBox>
+                    <StackPanel>
+                        <ToggleSwitch x:Uid="PerfPowerPlan" Header="Energieplan auf Höchstleistung" IsOn="{x:Bind ViewModel.PowerPlan, Mode=TwoWay}"
+                                      IsEnabled="{x:Bind ViewModel.PowerPlanAvailable}" />
+                        <TextBlock Text="{x:Bind ViewModel.PowerPlanText}" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel>
+                        <ToggleSwitch x:Uid="PerfGpu" Header="Starke Grafikkarte für Roblox verwenden" IsOn="{x:Bind ViewModel.GpuHighPerformance, Mode=TwoWay}" />
+                        <TextBlock x:Uid="PerfGpuHint" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap"
+                                   Text="Wie in den Windows-Grafikeinstellungen. Wichtig für Laptops mit zwei Grafikkarten, wirkt beim nächsten Roblox-Start." />
+                    </StackPanel>
+                    <TextBlock x:Uid="PerfModeHint" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap"
+                               Text="Alles wird zurückgestellt, sobald Roblox beendet wird oder du den Modus ausschaltest. bloom greift nicht in Roblox ein." />
+                </StackPanel>
+            </Border>
+
+            <!-- Graphics preset -->
+            <TextBlock x:Uid="PerfPresetSection" Text="Grafik &amp; FPS" Style="{StaticResource SectionTitleTextStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="12">
+                    <RadioButtons SelectedIndex="{x:Bind ViewModel.PresetIndex, Mode=TwoWay}" MaxColumns="2">
+                        <RadioButton x:Uid="PresetDefault" Content="Standard (wie in Roblox eingestellt)" />
+                        <RadioButton x:Uid="PresetMaxFps" Content="Maximale FPS (weniger Details, kein FPS-Limit)" />
+                        <RadioButton x:Uid="PresetBalanced" Content="Ausgewogen (FPS = Bildwiederholrate)" />
+                        <RadioButton x:Uid="PresetBattery" Content="Akku sparen (30 FPS, weniger Effekte)" />
+                    </RadioButtons>
+                    <StackPanel Orientation="Horizontal" Spacing="16">
+                        <NumberBox x:Uid="PerfFpsCap" Header="Eigenes FPS-Limit (0 = vom Preset)" Minimum="0" Maximum="9999" SmallChange="10"
+                                   SpinButtonPlacementMode="Compact" Width="240" Value="{x:Bind ViewModel.FpsCap, Mode=TwoWay}" />
+                        <TextBlock Text="{x:Bind ViewModel.RefreshRateText}" Style="{StaticResource MutedTextStyle}" VerticalAlignment="Bottom" Margin="0,0,0,8" />
+                    </StackPanel>
+                    <TextBlock Text="{x:Bind ViewModel.CoverageText, Mode=OneWay}" Style="{StaticResource BodyTextStyle}" TextWrapping="Wrap" />
+                    <TextBlock x:Uid="PerfPresetHint" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap"
+                               Text="Nutzt nur FastFlags von der offiziellen Roblox-Allowlist. Wirkt beim nächsten Start von Roblox. Eigene Flags unter „Roblox-Client“ haben Vorrang." />
+                </StackPanel>
+            </Border>
+
+            <!-- Game profiles -->
+            <TextBlock x:Uid="ProfilesSection" Text="Spielprofile" Style="{StaticResource SectionTitleTextStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="12">
+                    <TextBlock x:Uid="ProfilesHint" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap"
+                               Text="Eigene Einstellungen pro Spiel. Das Grafik-Preset greift, wenn du das Spiel über bloom startest; Leistungsmodus und Push-to-Talk, sobald bloom das Spiel erkennt." />
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Button x:Uid="ProfilesAddCurrent" Content="Aktuelles Spiel hinzufügen" Command="{x:Bind ViewModel.AddCurrentGameCommand}"
+                                IsEnabled="{x:Bind ViewModel.HasCurrentGame, Mode=OneWay}" />
+                        <ComboBox x:Uid="ProfilesFavorite" PlaceholderText="Favorit wählen" MinWidth="220" ItemsSource="{x:Bind ViewModel.FavoriteChoices}"
+                                  DisplayMemberPath="Name" SelectedItem="{x:Bind ViewModel.SelectedFavorite, Mode=TwoWay}" />
+                        <Button x:Uid="ProfilesAddFavorite" Content="Hinzufügen" Command="{x:Bind ViewModel.AddFavoriteCommand}" />
+                    </StackPanel>
+                    <TextBlock x:Uid="ProfilesEmpty" Text="Noch keine Spielprofile." Style="{StaticResource MutedTextStyle}"
+                               Visibility="{x:Bind ViewModel.NoProfiles, Mode=OneWay}" />
+                    <ItemsControl ItemsSource="{x:Bind ViewModel.Profiles}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="local:ProfileItem">
+                                <Grid Padding="0,8" ColumnSpacing="8" BorderBrush="{StaticResource BloomBorderBrush}" BorderThickness="0,1,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="170" />
+                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{x:Bind Name}" Style="{StaticResource BodyTextStyle}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                                    <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" SelectedIndex="{x:Bind PresetIndex, Mode=TwoWay}">
+                                        <ComboBoxItem x:Uid="ProfilePresetGlobal" Content="Grafik: wie überall" />
+                                        <ComboBoxItem x:Uid="ProfilePresetDefault" Content="Standard" />
+                                        <ComboBoxItem x:Uid="ProfilePresetMaxFps" Content="Maximale FPS" />
+                                        <ComboBoxItem x:Uid="ProfilePresetBalanced" Content="Ausgewogen" />
+                                        <ComboBoxItem x:Uid="ProfilePresetBattery" Content="Akku sparen" />
+                                    </ComboBox>
+                                    <ComboBox Grid.Column="2" HorizontalAlignment="Stretch" SelectedIndex="{x:Bind PerformanceIndex, Mode=TwoWay}">
+                                        <ComboBoxItem x:Uid="ProfilePerfGlobal" Content="Leistung: wie überall" />
+                                        <ComboBoxItem x:Uid="ProfilePerfOn" Content="Leistungsmodus an" />
+                                        <ComboBoxItem x:Uid="ProfilePerfOff" Content="Leistungsmodus aus" />
+                                    </ComboBox>
+                                    <ComboBox Grid.Column="3" HorizontalAlignment="Stretch" SelectedIndex="{x:Bind PttIndex, Mode=TwoWay}">
+                                        <ComboBoxItem x:Uid="ProfilePttGlobal" Content="PTT: wie überall" />
+                                        <ComboBoxItem x:Uid="ProfilePttOn" Content="PTT an" />
+                                        <ComboBoxItem x:Uid="ProfilePttOff" Content="PTT aus" />
+                                    </ComboBox>
+                                    <Button Grid.Column="4" Tag="{x:Bind}" Click="OnRemoveProfile" Padding="10,4">
+                                        <FontIcon Glyph="&#xE74D;" FontSize="12" />
+                                    </Button>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+
+            <!-- Cleanup -->
+            <TextBlock x:Uid="CleanupSection" Text="Aufräumen" Style="{StaticResource SectionTitleTextStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="8">
+                    <ItemsControl ItemsSource="{x:Bind ViewModel.CleanupItems}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="local:CleanupItem">
+                                <Grid Padding="0,8" ColumnSpacing="12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel>
+                                        <TextBlock Text="{x:Bind Title}" Style="{StaticResource BodyTextStyle}" />
+                                        <TextBlock Text="{x:Bind Description}" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" />
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="1" Text="{x:Bind Size, Mode=OneWay}" Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center" />
+                                    <Button Grid.Column="2" x:Uid="CleanupButton" Content="Löschen" Tag="{x:Bind}" Click="OnClean"
+                                            IsEnabled="{x:Bind CanClean, Mode=OneWay}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <Button x:Uid="CleanupRescan" Content="Neu berechnen" Command="{x:Bind ViewModel.RescanCommand}" />
+                        <TextBlock Text="{x:Bind ViewModel.CleanupStatus, Mode=OneWay}" Style="{StaticResource MutedTextStyle}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

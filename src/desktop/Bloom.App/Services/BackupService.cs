@@ -10,7 +10,8 @@ namespace Bloom.App.Services;
 /// Export/import of bloom settings, favourites and FastFlags (Blueprint L9).
 /// Never contains tokens or the protocol backup (machine specific).
 /// </summary>
-public sealed class BackupService(SqliteSettingsStore settings, IFavoritesStore favorites, FastFlagService fastFlags)
+public sealed class BackupService(SqliteSettingsStore settings, IFavoritesStore favorites, FastFlagService fastFlags,
+    Bloom.Performance.GameProfileStore profiles)
 {
     private const int FormatVersion = 1;
     private static readonly JsonSerializerOptions Json = new(JsonSerializerDefaults.Web) { WriteIndented = true };
@@ -22,6 +23,8 @@ public sealed class BackupService(SqliteSettingsStore settings, IFavoritesStore 
         AppSettings.Keys.BootstrapperEnabled,
         AppSettings.Keys.PttDeviceId,
         AppSettings.Keys.PttButton,
+        AppSettings.Keys.PerfRestorePowerScheme,
+        AppSettings.Keys.PerfGpuBackup,
     ];
 
     public async Task ExportAsync(string path)
@@ -31,7 +34,8 @@ public sealed class BackupService(SqliteSettingsStore settings, IFavoritesStore 
             DateTimeOffset.UtcNow,
             settings.GetAll().Where(kv => !MachineSpecific.Contains(kv.Key)).ToDictionary(kv => kv.Key, kv => kv.Value),
             favorites.All().Select(f => new BackupFavorite(f.PlaceId, f.Name, f.IconUrl)).ToList(),
-            fastFlags.Load().ToDictionary(f => f.Name, f => f.Value));
+            fastFlags.Load().ToDictionary(f => f.Name, f => f.Value),
+            profiles.All().ToList());
         await File.WriteAllTextAsync(path, JsonSerializer.Serialize(file, Json));
     }
 
@@ -59,6 +63,11 @@ public sealed class BackupService(SqliteSettingsStore settings, IFavoritesStore 
             fastFlags.Save(flags.Select(kv => new FastFlag(kv.Key, kv.Value)));
             count += flags.Count;
         }
+        if (file.GameProfiles is { Count: > 0 } games)
+        {
+            profiles.ReplaceAll(games);
+            count += games.Count;
+        }
         return count;
     }
 
@@ -67,7 +76,8 @@ public sealed class BackupService(SqliteSettingsStore settings, IFavoritesStore 
         DateTimeOffset CreatedAt,
         Dictionary<string, string>? Settings,
         List<BackupFavorite>? Favorites,
-        Dictionary<string, string>? FastFlags);
+        Dictionary<string, string>? FastFlags,
+        List<Bloom.Core.Performance.GameProfile>? GameProfiles = null);
 
     private sealed record BackupFavorite(long PlaceId, string Name, string? IconUrl);
 }

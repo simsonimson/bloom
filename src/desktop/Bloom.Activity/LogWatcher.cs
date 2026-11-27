@@ -85,6 +85,9 @@ public sealed class LogWatcher : IDisposable
                         pending = joining;
                         universe = null;
                         break;
+                    case UdmuxAddress relay when pending is not null:
+                        pending = pending with { ServerAddress = relay.Address };
+                        break;
                     case JoiningUniverse u:
                         universe = u.UniverseId;
                         break;

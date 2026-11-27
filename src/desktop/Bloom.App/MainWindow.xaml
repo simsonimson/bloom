@@ -39,6 +39,12 @@
                 <NavigationViewItem x:Uid="NavClient" Tag="client" Content="Roblox-Client">
                     <NavigationViewItem.Icon><FontIcon Glyph="&#xE7FC;" /></NavigationViewItem.Icon>
                 </NavigationViewItem>
+                <NavigationViewItem x:Uid="NavPerformance" Tag="performance" Content="Leistung">
+                    <NavigationViewItem.Icon><FontIcon Glyph="&#xEC4A;" /></NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem x:Uid="NavServers" Tag="servers" Content="Server">
+                    <NavigationViewItem.Icon><FontIcon Glyph="&#xE968;" /></NavigationViewItem.Icon>
+                </NavigationViewItem>
                 <NavigationViewItem x:Uid="NavVoice" Tag="voice" Content="Voice &amp; Audio">
                     <NavigationViewItem.Icon><FontIcon Glyph="&#xE720;" /></NavigationViewItem.Icon>
                 </NavigationViewItem>

@@ -236,4 +236,134 @@
   <data name="ConnectionsDiscordAppId.Header" xml:space="preserve"><value>Discord application ID</value></data>
   <data name="ConnectionsRobloxClientId.Header" xml:space="preserve"><value>Roblox OAuth client ID (public client, redirect bloom://oauth/callback)</value></data>
   <data name="ConnectionsSaveIds.Content" xml:space="preserve"><value>Save</value></data>
+  <data name="NavPerformance.Content" xml:space="preserve"><value>Performance</value></data>
+  <data name="NavServers.Content" xml:space="preserve"><value>Servers</value></data>
+  <data name="PerfTitle.Text" xml:space="preserve"><value>Performance</value></data>
+  <data name="PerfRam.Text" xml:space="preserve"><value>Memory</value></data>
+  <data name="PerfGpuMemory.Text" xml:space="preserve"><value>GPU memory</value></data>
+  <data name="PerfNoRoblox.Text" xml:space="preserve"><value>Values appear once Roblox is running.</value></data>
+  <data name="PerfStatsHint.Text" xml:space="preserve"><value>Measured by Windows, not inside the game. Ping goes to the Roblox server and does not work for every server. Roblox shows FPS itself with Shift+F5.</value></data>
+  <data name="PerfOverlay.Header" xml:space="preserve"><value>Show a small display over Roblox</value></data>
+  <data name="PerfOverlayCorner.Header" xml:space="preserve"><value>Position</value></data>
+  <data name="CornerTopRight.Content" xml:space="preserve"><value>Top right</value></data>
+  <data name="CornerTopLeft.Content" xml:space="preserve"><value>Top left</value></data>
+  <data name="CornerBottomRight.Content" xml:space="preserve"><value>Bottom right</value></data>
+  <data name="CornerBottomLeft.Content" xml:space="preserve"><value>Bottom left</value></data>
+  <data name="PerfModeSection.Text" xml:space="preserve"><value>Performance mode</value></data>
+  <data name="PerfModeToggle.Header" xml:space="preserve"><value>Tune for performance while Roblox runs</value></data>
+  <data name="PerfPriority.Header" xml:space="preserve"><value>Roblox priority</value></data>
+  <data name="PriorityNormal.Content" xml:space="preserve"><value>Normal</value></data>
+  <data name="PriorityAboveNormal.Content" xml:space="preserve"><value>Above normal (recommended)</value></data>
+  <data name="PriorityHigh.Content" xml:space="preserve"><value>High</value></data>
+  <data name="PerfPowerPlan.Header" xml:space="preserve"><value>Power plan: high performance</value></data>
+  <data name="PerfGpu.Header" xml:space="preserve"><value>Use the high-performance GPU for Roblox</value></data>
+  <data name="PerfGpuHint.Text" xml:space="preserve"><value>Same as the Windows graphics settings. Matters on laptops with two GPUs; takes effect on the next Roblox start.</value></data>
+  <data name="PerfModeHint.Text" xml:space="preserve"><value>Everything is reset when Roblox closes or you turn the mode off. bloom does not interfere with Roblox.</value></data>
+  <data name="PerfPresetSection.Text" xml:space="preserve"><value>Graphics &amp; FPS</value></data>
+  <data name="PresetDefault.Content" xml:space="preserve"><value>Default (as set in Roblox)</value></data>
+  <data name="PresetMaxFps.Content" xml:space="preserve"><value>Maximum FPS (fewer details, no FPS limit)</value></data>
+  <data name="PresetBalanced.Content" xml:space="preserve"><value>Balanced (FPS = refresh rate)</value></data>
+  <data name="PresetBattery.Content" xml:space="preserve"><value>Battery saver (30 FPS, fewer effects)</value></data>
+  <data name="PerfFpsCap.Header" xml:space="preserve"><value>Own FPS limit (0 = from preset)</value></data>
+  <data name="PerfPresetHint.Text" xml:space="preserve"><value>Uses only FastFlags from Roblox's official allowlist. Takes effect on the next Roblox start. Your own flags under “Roblox client” take precedence.</value></data>
+  <data name="ProfilesSection.Text" xml:space="preserve"><value>Game profiles</value></data>
+  <data name="ProfilesHint.Text" xml:space="preserve"><value>Settings per game. The graphics preset applies when you start the game through bloom; performance mode and push-to-talk as soon as bloom detects the game.</value></data>
+  <data name="ProfilesAddCurrent.Content" xml:space="preserve"><value>Add current game</value></data>
+  <data name="ProfilesFavorite.PlaceholderText" xml:space="preserve"><value>Choose a favourite</value></data>
+  <data name="ProfilesAddFavorite.Content" xml:space="preserve"><value>Add</value></data>
+  <data name="ProfilesEmpty.Text" xml:space="preserve"><value>No game profiles yet.</value></data>
+  <data name="ProfilePresetGlobal.Content" xml:space="preserve"><value>Graphics: as everywhere</value></data>
+  <data name="ProfilePresetDefault.Content" xml:space="preserve"><value>Default</value></data>
+  <data name="ProfilePresetMaxFps.Content" xml:space="preserve"><value>Maximum FPS</value></data>
+  <data name="ProfilePresetBalanced.Content" xml:space="preserve"><value>Balanced</value></data>
+  <data name="ProfilePresetBattery.Content" xml:space="preserve"><value>Battery saver</value></data>
+  <data name="ProfilePerfGlobal.Content" xml:space="preserve"><value>Performance: as everywhere</value></data>
+  <data name="ProfilePerfOn.Content" xml:space="preserve"><value>Performance mode on</value></data>
+  <data name="ProfilePerfOff.Content" xml:space="preserve"><value>Performance mode off</value></data>
+  <data name="ProfilePttGlobal.Content" xml:space="preserve"><value>PTT: as everywhere</value></data>
+  <data name="ProfilePttOn.Content" xml:space="preserve"><value>PTT on</value></data>
+  <data name="ProfilePttOff.Content" xml:space="preserve"><value>PTT off</value></data>
+  <data name="CleanupSection.Text" xml:space="preserve"><value>Clean up</value></data>
+  <data name="CleanupButton.Content" xml:space="preserve"><value>Delete</value></data>
+  <data name="CleanupRescan.Content" xml:space="preserve"><value>Recalculate</value></data>
+  <data name="ServersTitle.Text" xml:space="preserve"><value>Servers</value></data>
+  <data name="ServerCurrentSection.Text" xml:space="preserve"><value>Current server</value></data>
+  <data name="ServerNotInGame.Text" xml:space="preserve"><value>Not in a game right now. This needs experience detection under “Roblox client”.</value></data>
+  <data name="ServerGame.Text" xml:space="preserve"><value>Game</value></data>
+  <data name="ServerIdLabel.Text" xml:space="preserve"><value>Server ID</value></data>
+  <data name="ServerAddressLabel.Text" xml:space="preserve"><value>Address</value></data>
+  <data name="ServerLocationLabel.Text" xml:space="preserve"><value>Location</value></data>
+  <data name="ServerRejoin.Content" xml:space="preserve"><value>Rejoin the same server</value></data>
+  <data name="ServerNew.Content" xml:space="preserve"><value>Different server</value></data>
+  <data name="ServerCopyLink.Content" xml:space="preserve"><value>Copy link</value></data>
+  <data name="ServerGeolocation.Header" xml:space="preserve"><value>Show server location</value></data>
+  <data name="ServerGeolocationHint.Text" xml:space="preserve"><value>This sends the server address to ipinfo.io. The location is approximate. Rejoin closes Roblox briefly and starts it again.</value></data>
+  <data name="ServerBrowserSection.Text" xml:space="preserve"><value>Server browser (experimental)</value></data>
+  <data name="ServerBrowserPlace.PlaceholderText" xml:space="preserve"><value>Roblox link or place ID</value></data>
+  <data name="ServerSortFewest.Content" xml:space="preserve"><value>Fewest players first</value></data>
+  <data name="ServerSortMost.Content" xml:space="preserve"><value>Most players first</value></data>
+  <data name="ServerBrowserLoad.Content" xml:space="preserve"><value>Load servers</value></data>
+  <data name="ServerJoin.Content" xml:space="preserve"><value>Join</value></data>
+  <data name="ServerBrowserMore.Content" xml:space="preserve"><value>Load more</value></data>
+  <data name="ServerBrowserHint.Text" xml:space="preserve"><value>Ping and FPS are reported by each server itself. The server list comes from a Roblox interface without official documentation and may stop working at any time.</value></data>
+  <data name="SettingsHotkeysSection.Text" xml:space="preserve"><value>Hotkeys</value></data>
+  <data name="SettingsHotkeysHint.Text" xml:space="preserve"><value>Work everywhere, also in game. Every combination needs Ctrl, Alt, Shift or Win so it does not clash with game keys.</value></data>
+  <data name="HotkeyConflict.Text" xml:space="preserve"><value>Already used by another program.</value></data>
+  <data name="HotkeyChange.Content" xml:space="preserve"><value>Change</value></data>
+  <data name="HotkeysReset.Content" xml:space="preserve"><value>Restore defaults</value></data>
+  <data name="PerfPowerPlanTarget" xml:space="preserve"><value>Switches to “{0}” while playing and back afterwards.</value></data>
+  <data name="PerfPowerPlanMissing" xml:space="preserve"><value>This PC has no high-performance power plan (normal on many laptops).</value></data>
+  <data name="PerfSkippedPriority" xml:space="preserve"><value>Priority could not be set.</value></data>
+  <data name="PerfSkippedPowerPlan" xml:space="preserve"><value>Power plan not changed.</value></data>
+  <data name="PerfModeActive" xml:space="preserve"><value>Active.</value></data>
+  <data name="PerfModeProfileOn" xml:space="preserve"><value>Turned on by the game profile.</value></data>
+  <data name="PerfModeProfileOff" xml:space="preserve"><value>Turned off by the game profile.</value></data>
+  <data name="PerfModeWaiting" xml:space="preserve"><value>Ready – applies once Roblox runs.</value></data>
+  <data name="PerfModeOff" xml:space="preserve"><value>Off.</value></data>
+  <data name="PerfModeOnNotice" xml:space="preserve"><value>Performance mode on</value></data>
+  <data name="PerfModeOffNotice" xml:space="preserve"><value>Performance mode off</value></data>
+  <data name="PerfRefreshRate" xml:space="preserve"><value>Display: {0} Hz</value></data>
+  <data name="PerfPresetDefaultHint" xml:space="preserve"><value>Roblox uses its own graphics settings.</value></data>
+  <data name="PerfPresetAllowlistUnknown" xml:space="preserve"><value>Allowlist not loaded yet – bloom checks the flags when Roblox starts.</value></data>
+  <data name="PerfPresetCoverage" xml:space="preserve"><value>Roblox currently allows {0} of {1} settings of this preset.</value></data>
+  <data name="PerfPingUnavailable" xml:space="preserve"><value>not measurable</value></data>
+  <data name="CleanupRobloxLogs" xml:space="preserve"><value>Roblox logs</value></data>
+  <data name="CleanupRobloxLogsHint" xml:space="preserve"><value>Roblox log files older than a day.</value></data>
+  <data name="CleanupRobloxCache" xml:space="preserve"><value>Roblox cache</value></data>
+  <data name="CleanupRobloxCacheHint" xml:space="preserve"><value>Temporary Roblox downloads. Only while Roblox is closed.</value></data>
+  <data name="CleanupBloomDownloads" xml:space="preserve"><value>bloom downloads</value></data>
+  <data name="CleanupBloomDownloadsHint" xml:space="preserve"><value>Packages bloom's bootstrapper downloaded.</value></data>
+  <data name="CleanupOldVersions" xml:space="preserve"><value>Old Roblox versions</value></data>
+  <data name="CleanupOldVersionsHint" xml:space="preserve"><value>Versions installed by bloom except the current one.</value></data>
+  <data name="CleanupEmpty" xml:space="preserve"><value>empty</value></data>
+  <data name="CleanupFiles" xml:space="preserve"><value>{0} files</value></data>
+  <data name="CleanupConfirm" xml:space="preserve"><value>Delete “{0}” permanently? This cannot be undone.</value></data>
+  <data name="CleanupConfirmTitle" xml:space="preserve"><value>Clean up</value></data>
+  <data name="CleanupConfirmYes" xml:space="preserve"><value>Delete</value></data>
+  <data name="CleanupDone" xml:space="preserve"><value>{0} freed.</value></data>
+  <data name="ServerAddressUnknown" xml:space="preserve"><value>unknown</value></data>
+  <data name="ServerLocationOff" xml:space="preserve"><value>off (see below)</value></data>
+  <data name="ServerLocationUnknown" xml:space="preserve"><value>unknown</value></data>
+  <data name="ServerRejoining" xml:space="preserve"><value>Restarting Roblox …</value></data>
+  <data name="ServerNoGame" xml:space="preserve"><value>Not in a detected game right now.</value></data>
+  <data name="ServerLinkCopied" xml:space="preserve"><value>Server link copied.</value></data>
+  <data name="ServerBrowserLoading" xml:space="preserve"><value>Loading servers …</value></data>
+  <data name="ServerBrowserEmpty" xml:space="preserve"><value>No public servers with free slots found.</value></data>
+  <data name="ServerBrowserCount" xml:space="preserve"><value>{0} servers loaded.</value></data>
+  <data name="ServerBrowserRateLimited" xml:space="preserve"><value>Roblox is limiting requests right now. Wait a moment.</value></data>
+  <data name="ServerBrowserFailed" xml:space="preserve"><value>Server list unavailable.</value></data>
+  <data name="ServerRestartTitle" xml:space="preserve"><value>Restart Roblox?</value></data>
+  <data name="ServerRestartText" xml:space="preserve"><value>Roblox will be closed and restarted on the chosen server.</value></data>
+  <data name="ServerRestartYes" xml:space="preserve"><value>Restart</value></data>
+  <data name="HotkeyRejoin" xml:space="preserve"><value>Rejoin the same server</value></data>
+  <data name="HotkeyCopyServerLink" xml:space="preserve"><value>Copy server link</value></data>
+  <data name="HotkeyToggleOverlay" xml:space="preserve"><value>Toggle performance display</value></data>
+  <data name="HotkeyTogglePerformanceMode" xml:space="preserve"><value>Toggle performance mode</value></data>
+  <data name="HotkeyTogglePushToTalk" xml:space="preserve"><value>Toggle push-to-talk</value></data>
+  <data name="HotkeyShowBloom" xml:space="preserve"><value>Open bloom</value></data>
+  <data name="HotkeyPress" xml:space="preserve"><value>Press a combination … (Esc cancels)</value></data>
+  <data name="HotkeyNeedsModifier" xml:space="preserve"><value>Please with Ctrl, Alt, Shift or Win</value></data>
+  <data name="HotkeyNone" xml:space="preserve"><value>–</value></data>
+  <data name="KeyCtrl" xml:space="preserve"><value>Ctrl</value></data>
+  <data name="KeyShift" xml:space="preserve"><value>Shift</value></data>
 </root>

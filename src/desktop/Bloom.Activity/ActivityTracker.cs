@@ -64,7 +64,7 @@ public sealed class ActivityTracker : IDisposable
         lock (_gate)
         {
             if (!_state.RobloxRunning) return;
-            Set(_state with { PlaceId = e.PlaceId, JobId = e.JobId, Experience = null });
+            Set(_state with { PlaceId = e.PlaceId, JobId = e.JobId, Experience = null, ServerAddress = e.ServerAddress, UniverseId = e.UniverseId });
         }
         _ = ResolveAsync(e);
     }
@@ -74,7 +74,7 @@ public sealed class ActivityTracker : IDisposable
         lock (_gate)
         {
             if (!_state.RobloxRunning) return;
-            Set(_state with { PlaceId = null, JobId = null, Experience = null });
+            Set(_state with { PlaceId = null, JobId = null, Experience = null, ServerAddress = null, UniverseId = null });
         }
     }
 

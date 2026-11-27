@@ -22,6 +22,7 @@ internal static class UninstallCleanup
             var paths = new BloomPaths();
             var settings = File.Exists(paths.Database) ? new AppSettings(new SqliteSettingsStore(new BloomDatabase(paths.Database))) : null;
             ProtocolRegistration.Restore(settings?.ProtocolBackup ?? new Dictionary<string, string?>(), "bloom.exe");
+            if (settings is not null) RestorePerformanceMode(settings);
         }
         catch
         {
@@ -31,6 +32,24 @@ internal static class UninstallCleanup
         RestoreMicrophone();
         try { BloomProtocol.Remove(); } catch { }
         try { File.Delete(Path.Combine(new BloomPaths().Data, "roblox-session.bin")); } catch { }
+    }
+
+    /// <summary>Power plan and GPU preferences the performance mode changed.</summary>
+    private static void RestorePerformanceMode(AppSettings settings)
+    {
+        if (settings.PerfRestorePowerScheme is { } scheme) Platform.Windows.Hardware.PowerPlans.SetActive(scheme);
+        foreach (var (exe, previous) in settings.PerfGpuBackup)
+        {
+            try
+            {
+                if (previous is null) Platform.Windows.Hardware.GpuPreference.Delete(exe);
+                else Platform.Windows.Hardware.GpuPreference.Write(exe, previous);
+            }
+            catch
+            {
+                // Best effort.
+            }
+        }
     }
 
     private static void RestoreMicrophone()

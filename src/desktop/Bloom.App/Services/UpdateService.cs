@@ -53,7 +53,7 @@ public sealed class UpdateService
         await _manager.DownloadUpdatesAsync(_pending, progress);
         _logger.LogInformation("Applying update {Version}", _pending.TargetFullRelease.Version);
         // Restore the microphone and release Bloom.Guard before the files are replaced.
-        _voice.Exit();
+        AppServices.CleanExit(App.Services);
         _manager.ApplyUpdatesAndRestart(_pending.TargetFullRelease);
     }
 }
