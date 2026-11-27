@@ -15,9 +15,7 @@
   <data name="OverviewRobloxValue.Text" xml:space="preserve"><value>Nicht erkannt</value></data>
   <data name="OverviewPtt.Text" xml:space="preserve"><value>Push-to-Talk</value></data>
   <data name="OverviewDiscord.Text" xml:space="preserve"><value>Discord</value></data>
-  <data name="OverviewDiscordValue.Text" xml:space="preserve"><value>Nicht verbunden</value></data>
   <data name="OverviewAccount.Text" xml:space="preserve"><value>Roblox-Konto</value></data>
-  <data name="OverviewAccountValue.Text" xml:space="preserve"><value>Nicht verbunden</value></data>
   <data name="OverviewQuickLaunch.Text" xml:space="preserve"><value>Schnellstart</value></data>
   <data name="OverviewQuickLaunchEmpty.Text" xml:space="preserve"><value>Noch keine Favoriten. Füge sie unter „Spielen“ hinzu.</value></data>
   <data name="OverviewActivity.Text" xml:space="preserve"><value>Letzte Aktivität</value></data>
@@ -28,7 +26,6 @@
   <data name="ClientPlaceholder.Text" xml:space="preserve"><value>Bootstrapper, Roblox-Version und erlaubte FastFlags kommen in Phase 2.</value></data>
   <data name="VoiceTitle.Text" xml:space="preserve"><value>Voice &amp; Audio</value></data>
   <data name="ConnectionsTitle.Text" xml:space="preserve"><value>Verbindungen</value></data>
-  <data name="ConnectionsPlaceholder.Text" xml:space="preserve"><value>Discord Rich Presence und Roblox-Konto kommen in Phase 4.</value></data>
   <data name="SettingsTitle.Text" xml:space="preserve"><value>Einstellungen</value></data>
   <data name="SettingsStartSection.Text" xml:space="preserve"><value>Start &amp; Intro</value></data>
   <data name="SettingsIntro.Header" xml:space="preserve"><value>Startanimation</value></data>
@@ -199,4 +196,44 @@
   <data name="PttConfirmText" xml:space="preserve"><value>Diese Methode schaltet das Mikrofon in Windows stumm. Solange Roblox läuft und du die Taste nicht drückst, hören dich auch Discord und andere Apps nicht.</value></data>
   <data name="PttConfirmYes" xml:space="preserve"><value>Verstanden, einschalten</value></data>
   <data name="PttConfirmNo" xml:space="preserve"><value>Abbrechen</value></data>
+  <data name="PresenceRoblox" xml:space="preserve"><value>Roblox</value></data>
+  <data name="PresenceInGame" xml:space="preserve"><value>Im Spiel</value></data>
+  <data name="PresenceInMenu" xml:space="preserve"><value>Im Menü</value></data>
+  <data name="PresenceViewGame" xml:space="preserve"><value>Spiel ansehen</value></data>
+  <data name="PresenceJoin" xml:space="preserve"><value>Beitreten</value></data>
+  <data name="RobloxSignInDenied" xml:space="preserve"><value>Die Roblox-Anmeldung wurde abgebrochen.</value></data>
+  <data name="RobloxSignInExpired" xml:space="preserve"><value>Diese Anmeldung ist nicht mehr gültig. Starte sie in bloom unter „Verbindungen“ neu.</value></data>
+  <data name="RobloxSignInFailed" xml:space="preserve"><value>Die Roblox-Anmeldung ist fehlgeschlagen. Details im Log.</value></data>
+  <data name="RobloxSigningIn" xml:space="preserve"><value>Anmeldung läuft …</value></data>
+  <data name="DiscordConnectedAs" xml:space="preserve"><value>Verbunden als {0}</value></data>
+  <data name="DiscordDisabled" xml:space="preserve"><value>Aus</value></data>
+  <data name="DiscordNotConfigured" xml:space="preserve"><value>Keine Discord-App hinterlegt (siehe „Erweitert“).</value></data>
+  <data name="DiscordNotRunning" xml:space="preserve"><value>Discord läuft nicht</value></data>
+  <data name="ConnectionsBuiltInIds" xml:space="preserve"><value>Nur für selbst gebaute Versionen nötig. In dieser Version eingebaut – Discord: {0}, Roblox: {1}. Ein Wert hier hat Vorrang.</value></data>
+  <data name="ConnectionsNone" xml:space="preserve"><value>keine</value></data>
+  <data name="ConnectionsPresent" xml:space="preserve"><value>vorhanden</value></data>
+  <data name="OverviewConnected" xml:space="preserve"><value>Verbunden</value></data>
+  <data name="OverviewNotConnected" xml:space="preserve"><value>Nicht verbunden</value></data>
+  <data name="OverviewNotSetUp" xml:space="preserve"><value>Nicht eingerichtet</value></data>
+  <data name="OverviewAccountExpired" xml:space="preserve"><value>Sitzung abgelaufen</value></data>
+  <data name="RobloxAccountSection.Text" xml:space="preserve"><value>Roblox-Konto</value></data>
+  <data name="RobloxExpiredBar.Title" xml:space="preserve"><value>Sitzung abgelaufen</value></data>
+  <data name="RobloxExpiredBar.Message" xml:space="preserve"><value>Roblox hat die Verbindung beendet (nach 90 Tagen oder weil du den Zugriff entfernt hast). Melde dich neu an.</value></data>
+  <data name="RobloxNotConfiguredBar.Message" xml:space="preserve"><value>In dieser bloom-Version ist keine Roblox-App hinterlegt. Trage unten unter „Erweitert“ eine OAuth-Client-ID ein.</value></data>
+  <data name="RobloxOfflineNote.Text" xml:space="preserve"><value>Roblox gerade nicht erreichbar – zeige gespeicherte Daten.</value></data>
+  <data name="RobloxOpenProfile.Content" xml:space="preserve"><value>Profil öffnen</value></data>
+  <data name="RobloxSignOut.Content" xml:space="preserve"><value>Abmelden</value></data>
+  <data name="RobloxSignInHint.Text" xml:space="preserve"><value>Verknüpfe dein Roblox-Konto. Die Anmeldung läuft im Browser direkt bei Roblox – bloom sieht dein Passwort nie und speichert nur einen verschlüsselten Zugriffsschlüssel.</value></data>
+  <data name="RobloxSignIn.Content" xml:space="preserve"><value>Mit Roblox anmelden</value></data>
+  <data name="RobloxSigningIn.Text" xml:space="preserve"><value>Warte auf die Anmeldung im Browser …</value></data>
+  <data name="RobloxCancelSignIn.Content" xml:space="preserve"><value>Abbrechen</value></data>
+  <data name="DiscordSection.Text" xml:space="preserve"><value>Discord-Status</value></data>
+  <data name="DiscordEnable.Header" xml:space="preserve"><value>Roblox-Status in Discord anzeigen</value></data>
+  <data name="DiscordShowExperience.Header" xml:space="preserve"><value>Spielname und Bild zeigen (sonst nur „Roblox“)</value></data>
+  <data name="DiscordShowJoin.Header" xml:space="preserve"><value>Button „Beitreten“ zeigen</value></data>
+  <data name="DiscordJoinHint.Text" xml:space="preserve"><value>Mit „Beitreten“ kann jeder, der deinen Discord-Status sieht, direkt deinem Roblox-Server beitreten. Spielname und Server kommen aus der experimentellen Spielerkennung.</value></data>
+  <data name="ConnectionsAdvanced.Header" xml:space="preserve"><value>Erweitert: eigene App-IDs</value></data>
+  <data name="ConnectionsDiscordAppId.Header" xml:space="preserve"><value>Discord-Anwendungs-ID</value></data>
+  <data name="ConnectionsRobloxClientId.Header" xml:space="preserve"><value>Roblox-OAuth-Client-ID (öffentlicher Client, Weiterleitung bloom://oauth/callback)</value></data>
+  <data name="ConnectionsSaveIds.Content" xml:space="preserve"><value>Speichern</value></data>
 </root>

@@ -121,6 +121,13 @@ public sealed partial class MainWindow : Window
         }
     }
 
+    /// <summary>Selects a page by its navigation tag ("overview", "connections", …).</summary>
+    public void NavigateTo(string tag)
+    {
+        var item = Nav.MenuItems.Concat(Nav.FooterMenuItems).OfType<NavigationViewItem>().FirstOrDefault(i => i.Tag as string == tag);
+        if (item is not null) Nav.SelectedItem = item;
+    }
+
     private void OnNavSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
     {
         if (args.SelectedItem is NavigationViewItem { Tag: string tag } && Pages.TryGetValue(tag, out var page)

@@ -37,13 +37,19 @@
                     <TextBlock Grid.Row="1" Grid.Column="1" x:Uid="OverviewPtt" Text="Push-to-Talk" Style="{StaticResource BodyTextStyle}" />
                     <TextBlock Grid.Row="1" Grid.Column="2" Text="{x:Bind ViewModel.PttStatus, Mode=OneWay}" Style="{StaticResource BodyTextStyle}" Foreground="{StaticResource BloomTextMutedBrush}" />
 
-                    <Ellipse Grid.Row="2" Grid.Column="0" Width="8" Height="8" Fill="{StaticResource BloomTextMutedBrush}" VerticalAlignment="Center" />
+                    <Grid Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">
+                        <Ellipse Width="8" Height="8" Fill="{StaticResource BloomTextMutedBrush}" />
+                        <Ellipse Width="8" Height="8" Fill="{StaticResource BloomSuccessBrush}" Visibility="{x:Bind ViewModel.DiscordConnected, Mode=OneWay}" />
+                    </Grid>
                     <TextBlock Grid.Row="2" Grid.Column="1" x:Uid="OverviewDiscord" Text="Discord" Style="{StaticResource BodyTextStyle}" />
-                    <TextBlock Grid.Row="2" Grid.Column="2" x:Uid="OverviewDiscordValue" Text="Nicht verbunden" Style="{StaticResource BodyTextStyle}" Foreground="{StaticResource BloomTextMutedBrush}" />
+                    <TextBlock Grid.Row="2" Grid.Column="2" Text="{x:Bind ViewModel.DiscordStatus, Mode=OneWay}" Style="{StaticResource BodyTextStyle}" Foreground="{StaticResource BloomTextMutedBrush}" />
 
-                    <Ellipse Grid.Row="3" Grid.Column="0" Width="8" Height="8" Fill="{StaticResource BloomTextMutedBrush}" VerticalAlignment="Center" />
+                    <Grid Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">
+                        <Ellipse Width="8" Height="8" Fill="{StaticResource BloomTextMutedBrush}" />
+                        <Ellipse Width="8" Height="8" Fill="{StaticResource BloomSuccessBrush}" Visibility="{x:Bind ViewModel.AccountConnected, Mode=OneWay}" />
+                    </Grid>
                     <TextBlock Grid.Row="3" Grid.Column="1" x:Uid="OverviewAccount" Text="Roblox-Konto" Style="{StaticResource BodyTextStyle}" />
-                    <TextBlock Grid.Row="3" Grid.Column="2" x:Uid="OverviewAccountValue" Text="Nicht verbunden" Style="{StaticResource BodyTextStyle}" Foreground="{StaticResource BloomTextMutedBrush}" />
+                    <TextBlock Grid.Row="3" Grid.Column="2" Text="{x:Bind ViewModel.AccountStatus, Mode=OneWay}" Style="{StaticResource BodyTextStyle}" Foreground="{StaticResource BloomTextMutedBrush}" />
                 </Grid>
             </Border>
 

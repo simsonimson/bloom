@@ -13,5 +13,7 @@
 | ADR-009 | [Bloom.Server: ein selbst hostbarer Prozess](adr-009-bloom-server-ein-selbst-hostbarer-prozess.md) | angenommen |
 | ADR-010 | [Lizenz MIT](adr-010-lizenz-mit.md) | angenommen |
 | ADR-011 | [Code-Signing über SignPath Foundation](adr-011-code-signing-ueber-signpath-foundation.md) | angenommen |
+| ADR-012 | [Eigener Discord-IPC-Client statt DiscordRichPresence](adr-012-eigener-discord-ipc-client.md) | angenommen |
+| ADR-013 | [Performance & Utility vor dem Community-Server](adr-013-performance-und-utility-vor-server.md) | angenommen |
 
 Änderungen an einer Entscheidung brauchen ein neues ADR, das das alte ersetzt.

@@ -9,6 +9,9 @@ using Bloom.Launcher.Bootstrapper;
 using Bloom.Launcher.FastFlags;
 using Bloom.Launcher.Installation;
 using Bloom.Voice;
+using Bloom.Connect.Discord;
+using Bloom.Connect.Roblox;
+using Bloom.Platform.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -84,6 +87,25 @@ public static class AppServices
             sp.GetRequiredService<IEventBus>(), sp.GetRequiredService<JournalStore>(), LogTo<VoiceService>(sp)));
         services.AddSingleton<VoiceCoordinator>();
 
+        // Connect
+        services.AddSingleton(sp => new DiscordPresenceService(
+            sp.GetRequiredService<IEventBus>(),
+            () =>
+            {
+                var settings = sp.GetRequiredService<AppSettings>();
+                return new DiscordPresenceConfig(settings.DiscordEnabled, BuildInfo.DiscordAppId(settings),
+                    new PresenceOptions(settings.DiscordShowExperience, settings.DiscordShowJoin));
+            },
+            () => new PresenceTexts(Strings.Get("PresenceRoblox"), Strings.Get("PresenceInGame"), Strings.Get("PresenceInMenu"),
+                Strings.Get("PresenceViewGame"), Strings.Get("PresenceJoin")),
+            LogTo<DiscordPresenceService>(sp)));
+        services.AddSingleton(sp => new RobloxOAuth(sp.GetRequiredKeyedService<HttpClient>(ApiClient)));
+        services.AddSingleton(_ => new SessionVault(Path.Combine(paths.Data, "roblox-session.bin")));
+        services.AddSingleton(sp => new RobloxAccountService(
+            sp.GetRequiredService<RobloxOAuth>(), sp.GetRequiredService<SessionVault>(),
+            () => BuildInfo.RobloxClientId(sp.GetRequiredService<AppSettings>()),
+            sp.GetRequiredService<IEventBus>(), LogTo<RobloxAccountService>(sp), OpenBrowser));
+
         // App
         services.AddSingleton<UpdateService>();
         services.AddSingleton<BackupService>();
@@ -106,6 +128,32 @@ public static class AppServices
         services.GetRequiredService<VoiceCoordinator>().Start(processes.RunningProcessIds);
         processes.Start();
         services.GetRequiredService<LaunchCoordinator>().EnsureProtocolRegistration();
+
+        // Connect: bloom:// for the OAuth return, Discord presence, Roblox session refresh.
+        try { BloomProtocol.Ensure(LaunchCoordinator.BloomExecutable); }
+        catch (Exception ex) { services.GetRequiredService<ILogger<App>>().LogWarning(ex, "bloom:// registration failed"); }
+        var presence = services.GetRequiredService<DiscordPresenceService>();
+        presence.Start(services.GetRequiredService<ActivityTracker>().State);
+        var account = services.GetRequiredService<RobloxAccountService>();
+        _ = account.InitializeAsync();
+        services.GetRequiredService<IEventBus>().Subscribe<SettingChanged>(e =>
+        {
+            if (AppSettings.Keys.IsDiscordKey(e.Key) || e.Key == AppSettings.Keys.LogDetectionEnabled) presence.Signal();
+            if (e.Key == AppSettings.Keys.RobloxClientId) _ = account.InitializeAsync();
+        });
+    }
+
+    /// <summary>Opens a URL in the default browser.</summary>
+    public static void OpenBrowser(string url)
+    {
+        try
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(url) { UseShellExecute = true })?.Dispose();
+        }
+        catch (Exception)
+        {
+            // No default browser; nothing sensible to do.
+        }
     }
 
     private static HttpClient CreateHttpClient(TimeSpan timeout)

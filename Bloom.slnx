@@ -5,6 +5,7 @@
     <Project Path="src/desktop/Bloom.App/Bloom.App.csproj">
       <Platform Project="x64" />
     </Project>
+    <Project Path="src/desktop/Bloom.Connect/Bloom.Connect.csproj" />
     <Project Path="src/desktop/Bloom.Core/Bloom.Core.csproj" />
     <Project Path="src/desktop/Bloom.Data/Bloom.Data.csproj" />
     <Project Path="src/desktop/Bloom.Guard/Bloom.Guard.csproj" />
@@ -14,6 +15,7 @@
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Bloom.Activity.Tests/Bloom.Activity.Tests.csproj" />
+    <Project Path="tests/Bloom.Connect.Tests/Bloom.Connect.Tests.csproj" />
     <Project Path="tests/Bloom.Core.Tests/Bloom.Core.Tests.csproj" />
     <Project Path="tests/Bloom.Data.Tests/Bloom.Data.Tests.csproj" />
     <Project Path="tests/Bloom.Launcher.Tests/Bloom.Launcher.Tests.csproj" />
