@@ -40,6 +40,7 @@
     <ProjectReference Include="..\Bloom.Launcher\Bloom.Launcher.csproj" />
     <ProjectReference Include="..\Bloom.Activity\Bloom.Activity.csproj" />
     <ProjectReference Include="..\Bloom.Voice\Bloom.Voice.csproj" />
+    <ProjectReference Include="..\Bloom.Connect\Bloom.Connect.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,4 +49,10 @@
     <Content Include="..\..\..\LICENSE" Link="LICENSE.txt" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
+  <!-- Public IDs baked into release builds (CI repository variables). Not secrets: a Discord
+       application ID and a Roblox OAuth client ID of a public PKCE client. -->
+  <ItemGroup>
+    <AssemblyMetadata Include="BloomDiscordAppId" Value="$(BloomDiscordAppId)" />
+    <AssemblyMetadata Include="BloomRobloxClientId" Value="$(BloomRobloxClientId)" />
+  </ItemGroup>
 </Project>

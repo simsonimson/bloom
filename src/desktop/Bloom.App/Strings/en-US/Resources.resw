@@ -15,9 +15,7 @@
   <data name="OverviewRobloxValue.Text" xml:space="preserve"><value>Not detected</value></data>
   <data name="OverviewPtt.Text" xml:space="preserve"><value>Push-to-talk</value></data>
   <data name="OverviewDiscord.Text" xml:space="preserve"><value>Discord</value></data>
-  <data name="OverviewDiscordValue.Text" xml:space="preserve"><value>Not connected</value></data>
   <data name="OverviewAccount.Text" xml:space="preserve"><value>Roblox account</value></data>
-  <data name="OverviewAccountValue.Text" xml:space="preserve"><value>Not connected</value></data>
   <data name="OverviewQuickLaunch.Text" xml:space="preserve"><value>Quick launch</value></data>
   <data name="OverviewQuickLaunchEmpty.Text" xml:space="preserve"><value>No favourites yet. Add them under “Play”.</value></data>
   <data name="OverviewActivity.Text" xml:space="preserve"><value>Recent activity</value></data>
@@ -28,7 +26,6 @@
   <data name="ClientPlaceholder.Text" xml:space="preserve"><value>Bootstrapper, Roblox version and allowed FastFlags arrive in phase 2.</value></data>
   <data name="VoiceTitle.Text" xml:space="preserve"><value>Voice &amp; audio</value></data>
   <data name="ConnectionsTitle.Text" xml:space="preserve"><value>Connections</value></data>
-  <data name="ConnectionsPlaceholder.Text" xml:space="preserve"><value>Discord Rich Presence and Roblox account arrive in phase 4.</value></data>
   <data name="SettingsTitle.Text" xml:space="preserve"><value>Settings</value></data>
   <data name="SettingsStartSection.Text" xml:space="preserve"><value>Startup &amp; intro</value></data>
   <data name="SettingsIntro.Header" xml:space="preserve"><value>Startup animation</value></data>
@@ -199,4 +196,44 @@
   <data name="PttConfirmText" xml:space="preserve"><value>This method mutes the microphone in Windows. While Roblox is running and you are not pressing the key, Discord and other apps cannot hear you either.</value></data>
   <data name="PttConfirmYes" xml:space="preserve"><value>Got it, turn on</value></data>
   <data name="PttConfirmNo" xml:space="preserve"><value>Cancel</value></data>
+  <data name="PresenceRoblox" xml:space="preserve"><value>Roblox</value></data>
+  <data name="PresenceInGame" xml:space="preserve"><value>In game</value></data>
+  <data name="PresenceInMenu" xml:space="preserve"><value>In the menu</value></data>
+  <data name="PresenceViewGame" xml:space="preserve"><value>View game</value></data>
+  <data name="PresenceJoin" xml:space="preserve"><value>Join</value></data>
+  <data name="RobloxSignInDenied" xml:space="preserve"><value>The Roblox sign-in was cancelled.</value></data>
+  <data name="RobloxSignInExpired" xml:space="preserve"><value>This sign-in is no longer valid. Start it again in bloom under “Connections”.</value></data>
+  <data name="RobloxSignInFailed" xml:space="preserve"><value>The Roblox sign-in failed. See the log for details.</value></data>
+  <data name="RobloxSigningInStatus" xml:space="preserve"><value>Signing in …</value></data>
+  <data name="DiscordConnectedAs" xml:space="preserve"><value>Connected as {0}</value></data>
+  <data name="DiscordDisabled" xml:space="preserve"><value>Off</value></data>
+  <data name="DiscordNotConfigured" xml:space="preserve"><value>No Discord app set (see “Advanced”).</value></data>
+  <data name="DiscordNotRunning" xml:space="preserve"><value>Discord is not running</value></data>
+  <data name="ConnectionsBuiltInIds" xml:space="preserve"><value>Only needed for self-built versions. Built into this version – Discord: {0}, Roblox: {1}. A value here takes precedence.</value></data>
+  <data name="ConnectionsNone" xml:space="preserve"><value>none</value></data>
+  <data name="ConnectionsPresent" xml:space="preserve"><value>present</value></data>
+  <data name="OverviewConnected" xml:space="preserve"><value>Connected</value></data>
+  <data name="OverviewNotConnected" xml:space="preserve"><value>Not connected</value></data>
+  <data name="OverviewNotSetUp" xml:space="preserve"><value>Not set up</value></data>
+  <data name="OverviewAccountExpired" xml:space="preserve"><value>Session expired</value></data>
+  <data name="RobloxAccountSection.Text" xml:space="preserve"><value>Roblox account</value></data>
+  <data name="RobloxExpiredBar.Title" xml:space="preserve"><value>Session expired</value></data>
+  <data name="RobloxExpiredBar.Message" xml:space="preserve"><value>Roblox ended the connection (after 90 days or because you removed access). Sign in again.</value></data>
+  <data name="RobloxNotConfiguredBar.Message" xml:space="preserve"><value>This bloom version has no Roblox app set. Enter an OAuth client ID under “Advanced” below.</value></data>
+  <data name="RobloxOfflineNote.Text" xml:space="preserve"><value>Roblox is unreachable right now – showing saved data.</value></data>
+  <data name="RobloxOpenProfile.Content" xml:space="preserve"><value>Open profile</value></data>
+  <data name="RobloxSignOut.Content" xml:space="preserve"><value>Sign out</value></data>
+  <data name="RobloxSignInHint.Text" xml:space="preserve"><value>Link your Roblox account. You sign in on Roblox in your browser – bloom never sees your password and only stores an encrypted access key.</value></data>
+  <data name="RobloxSignIn.Content" xml:space="preserve"><value>Sign in with Roblox</value></data>
+  <data name="RobloxSigningIn.Text" xml:space="preserve"><value>Waiting for the sign-in in your browser …</value></data>
+  <data name="RobloxCancelSignIn.Content" xml:space="preserve"><value>Cancel</value></data>
+  <data name="DiscordSection.Text" xml:space="preserve"><value>Discord status</value></data>
+  <data name="DiscordEnable.Header" xml:space="preserve"><value>Show Roblox status in Discord</value></data>
+  <data name="DiscordShowExperience.Header" xml:space="preserve"><value>Show game name and image (otherwise just “Roblox”)</value></data>
+  <data name="DiscordShowJoin.Header" xml:space="preserve"><value>Show a “Join” button</value></data>
+  <data name="DiscordJoinHint.Text" xml:space="preserve"><value>With “Join”, anyone who sees your Discord status can join your Roblox server directly. Game name and server come from the experimental experience detection.</value></data>
+  <data name="ConnectionsAdvanced.Header" xml:space="preserve"><value>Advanced: own app IDs</value></data>
+  <data name="ConnectionsDiscordAppId.Header" xml:space="preserve"><value>Discord application ID</value></data>
+  <data name="ConnectionsRobloxClientId.Header" xml:space="preserve"><value>Roblox OAuth client ID (public client, redirect bloom://oauth/callback)</value></data>
+  <data name="ConnectionsSaveIds.Content" xml:space="preserve"><value>Save</value></data>
 </root>

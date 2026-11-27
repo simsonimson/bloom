@@ -52,6 +52,14 @@ public sealed class AppSettings
         public const string PttSounds = "voice.sounds";
         public const string PttSystemWideConfirmed = "voice.systemWideConfirmed";
 
+        public const string DiscordEnabled = "discord.enabled";
+        public const string DiscordShowExperience = "discord.showExperience";
+        public const string DiscordShowJoin = "discord.showJoin";
+        public const string DiscordAppId = "discord.appId";
+        public const string RobloxClientId = "roblox.oauthClientId";
+
+        public static bool IsDiscordKey(string key) => key.StartsWith("discord.", StringComparison.Ordinal);
+
         public static bool IsVoiceKey(string key) => key.StartsWith("voice.", StringComparison.Ordinal);
     }
 
@@ -190,6 +198,40 @@ public sealed class AppSettings
     {
         get => Get(Keys.PttSystemWideConfirmed, false);
         set => Set(Keys.PttSystemWideConfirmed, value);
+    }
+
+    public bool DiscordEnabled
+    {
+        get => Get(Keys.DiscordEnabled, true);
+        set => Set(Keys.DiscordEnabled, value);
+    }
+
+    /// <summary>Show the experience name and icon instead of just "Roblox".</summary>
+    public bool DiscordShowExperience
+    {
+        get => Get(Keys.DiscordShowExperience, true);
+        set => Set(Keys.DiscordShowExperience, value);
+    }
+
+    /// <summary>Adds a "Join" button with the current server (off by default: anyone who sees the status can join).</summary>
+    public bool DiscordShowJoin
+    {
+        get => Get(Keys.DiscordShowJoin, false);
+        set => Set(Keys.DiscordShowJoin, value);
+    }
+
+    /// <summary>Override for self-built versions; empty = the ID baked into the release build.</summary>
+    public string? DiscordAppIdOverride
+    {
+        get => Get<string?>(Keys.DiscordAppId, null);
+        set => Set(Keys.DiscordAppId, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
+    }
+
+    /// <summary>Override for self-built versions; empty = the ID baked into the release build.</summary>
+    public string? RobloxClientIdOverride
+    {
+        get => Get<string?>(Keys.RobloxClientId, null);
+        set => Set(Keys.RobloxClientId, string.IsNullOrWhiteSpace(value) ? null : value.Trim());
     }
 
     public PttConfig PttConfig => new(PttEnabled, PttMode, PttKey, PttMethod, PttForegroundOnly, PttDeviceId, PttOnRobloxExit, PttButton, PttSounds);

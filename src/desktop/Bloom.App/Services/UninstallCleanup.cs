@@ -29,6 +29,8 @@ internal static class UninstallCleanup
         }
         try { Autostart.Set(false, ""); } catch { }
         RestoreMicrophone();
+        try { BloomProtocol.Remove(); } catch { }
+        try { File.Delete(Path.Combine(new BloomPaths().Data, "roblox-session.bin")); } catch { }
     }
 
     private static void RestoreMicrophone()

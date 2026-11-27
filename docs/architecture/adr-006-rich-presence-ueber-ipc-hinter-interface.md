@@ -1,6 +1,6 @@
 # ADR-006: Rich Presence über IPC hinter Interface
 
-- Status: angenommen
+- Status: angenommen (Bibliothekswahl durch ADR-012 ersetzt)
 - Datum: 2026-11-26
 
 ## Kontext

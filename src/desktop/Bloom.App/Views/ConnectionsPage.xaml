@@ -3,12 +3,92 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Background="{StaticResource BloomBgBrush}">
+
     <ScrollViewer Style="{StaticResource PageScrollStyle}">
         <StackPanel MaxWidth="960" HorizontalAlignment="Stretch">
             <TextBlock x:Uid="ConnectionsTitle" Text="Verbindungen" Style="{StaticResource PageTitleTextStyle}" />
+
+            <!-- Roblox account -->
+            <TextBlock x:Uid="RobloxAccountSection" Text="Roblox-Konto" Style="{StaticResource SectionTitleTextStyle}" Margin="0,0,0,8" />
             <Border Style="{StaticResource CardStyle}">
-                <TextBlock x:Uid="ConnectionsPlaceholder" Text="Discord Rich Presence und Roblox-Konto kommen in Phase 4." Style="{StaticResource MutedTextStyle}" />
+                <StackPanel Spacing="12">
+                    <InfoBar IsOpen="{x:Bind ViewModel.RobloxExpired, Mode=OneWay}" IsClosable="False" Severity="Warning"
+                             x:Uid="RobloxExpiredBar" Title="Sitzung abgelaufen" Message="Roblox hat die Verbindung beendet (nach 90 Tagen oder weil du den Zugriff entfernt hast). Melde dich neu an." />
+                    <InfoBar IsOpen="{x:Bind ViewModel.RobloxNotConfigured, Mode=OneWay}" IsClosable="False" Severity="Informational"
+                             x:Uid="RobloxNotConfiguredBar" Message="In dieser bloom-Version ist keine Roblox-App hinterlegt. Trage unten unter „Erweitert“ eine OAuth-Client-ID ein." />
+
+                    <Grid ColumnSpacing="16" Visibility="{x:Bind ViewModel.RobloxSignedIn, Mode=OneWay}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Border Width="64" Height="64" CornerRadius="32" Background="{StaticResource BloomSurfaceRaisedBrush}">
+                            <Image Source="{x:Bind ViewModel.RobloxAvatar, Mode=OneWay}" Stretch="UniformToFill" />
+                        </Border>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
+                            <TextBlock Text="{x:Bind ViewModel.RobloxDisplayName, Mode=OneWay}" Style="{StaticResource BodyTextStyle}" FontSize="18" />
+                            <TextBlock Text="{x:Bind ViewModel.RobloxUsername, Mode=OneWay}" Style="{StaticResource MutedTextStyle}" />
+                            <TextBlock x:Uid="RobloxOfflineNote" Text="Roblox gerade nicht erreichbar – zeige gespeicherte Daten." Style="{StaticResource MutedTextStyle}"
+                                       Visibility="{x:Bind ViewModel.RobloxOffline, Mode=OneWay}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <Button x:Uid="RobloxOpenProfile" Content="Profil öffnen" Command="{x:Bind ViewModel.OpenProfileCommand}" />
+                            <Button x:Uid="RobloxSignOut" Content="Abmelden" Command="{x:Bind ViewModel.SignOutCommand}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <StackPanel Spacing="8" Visibility="{x:Bind ViewModel.RobloxCanSignIn, Mode=OneWay}">
+                        <TextBlock x:Uid="RobloxSignInHint" Style="{StaticResource BodyTextStyle}" TextWrapping="Wrap"
+                                   Text="Verknüpfe dein Roblox-Konto. Die Anmeldung läuft im Browser direkt bei Roblox – bloom sieht dein Passwort nie und speichert nur einen verschlüsselten Zugriffsschlüssel." />
+                        <Button x:Uid="RobloxSignIn" Content="Mit Roblox anmelden" Style="{StaticResource AccentButtonStyle}" Command="{x:Bind ViewModel.SignInCommand}" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Spacing="12" Visibility="{x:Bind ViewModel.RobloxSigningIn, Mode=OneWay}">
+                        <ProgressRing IsActive="{x:Bind ViewModel.RobloxSigningIn, Mode=OneWay}" Width="20" Height="20" />
+                        <TextBlock x:Uid="RobloxSigningIn" Text="Warte auf die Anmeldung im Browser …" Style="{StaticResource BodyTextStyle}" VerticalAlignment="Center" />
+                        <Button x:Uid="RobloxCancelSignIn" Content="Abbrechen" Command="{x:Bind ViewModel.CancelSignInCommand}" />
+                    </StackPanel>
+                </StackPanel>
             </Border>
+
+            <!-- Discord -->
+            <TextBlock x:Uid="DiscordSection" Text="Discord-Status" Style="{StaticResource SectionTitleTextStyle}" />
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel Spacing="12">
+                    <Grid ColumnSpacing="12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Border Width="40" Height="40" CornerRadius="20" Background="{StaticResource BloomSurfaceRaisedBrush}">
+                            <Image Source="{x:Bind ViewModel.DiscordAvatar, Mode=OneWay}" Stretch="UniformToFill" />
+                        </Border>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock Text="{x:Bind ViewModel.DiscordStatusText, Mode=OneWay}" Style="{StaticResource BodyTextStyle}" />
+                            <TextBlock Text="{x:Bind ViewModel.DiscordHandle, Mode=OneWay}" Style="{StaticResource MutedTextStyle}" />
+                        </StackPanel>
+                    </Grid>
+                    <ToggleSwitch x:Uid="DiscordEnable" Header="Roblox-Status in Discord anzeigen" IsOn="{x:Bind ViewModel.DiscordEnabled, Mode=TwoWay}" />
+                    <ToggleSwitch x:Uid="DiscordShowExperience" Header="Spielname und Bild zeigen (sonst nur „Roblox“)"
+                                  IsOn="{x:Bind ViewModel.DiscordShowExperience, Mode=TwoWay}" IsEnabled="{x:Bind ViewModel.DiscordEnabled, Mode=OneWay}" />
+                    <ToggleSwitch x:Uid="DiscordShowJoin" Header="Button „Beitreten“ zeigen"
+                                  IsOn="{x:Bind ViewModel.DiscordShowJoin, Mode=TwoWay}" IsEnabled="{x:Bind ViewModel.DiscordShowExperience, Mode=OneWay}" />
+                    <TextBlock x:Uid="DiscordJoinHint" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap"
+                               Text="Mit „Beitreten“ kann jeder, der deinen Discord-Status sieht, direkt deinem Roblox-Server beitreten. Spielname und Server kommen aus der experimentellen Spielerkennung." />
+                </StackPanel>
+            </Border>
+
+            <!-- Advanced -->
+            <Expander x:Uid="ConnectionsAdvanced" Header="Erweitert: eigene App-IDs" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="0,24,0,0">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="{x:Bind ViewModel.BuiltInIdsText}" Style="{StaticResource MutedTextStyle}" TextWrapping="Wrap" />
+                    <TextBox x:Uid="ConnectionsDiscordAppId" Header="Discord-Anwendungs-ID" Text="{x:Bind ViewModel.DiscordAppId, Mode=TwoWay}" />
+                    <TextBox x:Uid="ConnectionsRobloxClientId" Header="Roblox-OAuth-Client-ID (öffentlicher Client, Weiterleitung bloom://oauth/callback)"
+                             Text="{x:Bind ViewModel.RobloxClientId, Mode=TwoWay}" />
+                    <Button x:Uid="ConnectionsSaveIds" Content="Speichern" Command="{x:Bind ViewModel.SaveIdsCommand}" />
+                </StackPanel>
+            </Expander>
         </StackPanel>
     </ScrollViewer>
 </Page>

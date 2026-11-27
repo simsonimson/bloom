@@ -4,6 +4,7 @@ using Bloom.Core.Events;
 using Bloom.Core.Settings;
 using Bloom.Core.Voice;
 using Bloom.Voice;
+using Bloom.Connect.Roblox;
 using Bloom.Launcher.Links;
 using Bloom.Platform.Windows;
 using Microsoft.Extensions.DependencyInjection;
@@ -56,7 +57,7 @@ public partial class App : Application
         Services = AppServices.Build(new BloomPaths());
         _logger = Services.GetRequiredService<ILogger<App>>();
         var settings = Services.GetRequiredService<AppSettings>();
-        _logger.LogInformation("bloom starting, args: {Args}", string.Join(' ', _args));
+        _logger.LogInformation("bloom starting, args: {Args}", string.Join(' ', _args.Select(RobloxOAuth.Redact)));
 
         ApplyLanguage(settings.Language);
         AppInstance.GetCurrent().Activated += OnRedirectedActivation;
@@ -67,6 +68,14 @@ public partial class App : Application
         SubscribeLaunchFeedback();
         SubscribeVoiceFeedback();
         AppServices.StartBackground(Services);
+
+        // Returning from the Roblox sign-in page in a fresh bloom process: the sign-in that started
+        // it is gone, so show the page and let the user start again.
+        if (_args.FirstOrDefault(RobloxOAuth.IsCallback) is { } callback)
+        {
+            HandleOAuthCallback(callback);
+            return;
+        }
 
         // Started by the browser through roblox-player:/roblox: — launch without any window.
         if (LinkParser.FindProtocolArgument(_args) is { } protocol && LinkParser.TryParse(protocol, out var request))
@@ -191,12 +200,44 @@ public partial class App : Application
         if (e.Kind == ExtendedActivationKind.Launch && e.Data is Windows.ApplicationModel.Activation.ILaunchActivatedEventArgs launch)
             commandLine = launch.Arguments;
 
+        if (FindOAuthCallback(commandLine) is { } callback)
+        {
+            _dispatcher.TryEnqueue(() => HandleOAuthCallback(callback));
+            return;
+        }
+
         if (LinkParser.FindProtocolArgument(commandLine) is { } protocol && LinkParser.TryParse(protocol, out var request))
         {
             _dispatcher.TryEnqueue(() => _ = Services.GetRequiredService<LaunchCoordinator>().LaunchAsync(request));
             return;
         }
         _dispatcher.TryEnqueue(ShowMainWindow);
+    }
+
+    private static string? FindOAuthCallback(string? commandLine)
+    {
+        if (string.IsNullOrEmpty(commandLine)) return null;
+        var start = commandLine.IndexOf(RobloxOAuth.RedirectUri, StringComparison.OrdinalIgnoreCase);
+        if (start < 0) return null;
+        var end = commandLine.IndexOfAny(['"', ' '], start);
+        return end < 0 ? commandLine[start..] : commandLine[start..end];
+    }
+
+    private async void HandleOAuthCallback(string callback)
+    {
+        ShowMainWindow();
+        _main?.NavigateTo("connections");
+        var result = await Services.GetRequiredService<RobloxAccountService>().CompleteSignInAsync(callback);
+        _logger?.LogInformation("Roblox sign-in callback: {Result}", result);
+        if (result != CallbackResult.Ok)
+        {
+            _tray?.ShowNotification("bloom", Strings.Get(result switch
+            {
+                CallbackResult.Denied => "RobloxSignInDenied",
+                CallbackResult.StateMismatch => "RobloxSignInExpired",
+                _ => "RobloxSignInFailed",
+            }));
+        }
     }
 
     private void SubscribeLaunchFeedback()
